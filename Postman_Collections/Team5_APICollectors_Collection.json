@@ -2681,6 +2681,7 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "f7bc22ca-8aa8-4279-8f23-5a80c5f98dfd",
 								"exec": [
 									"// Test1 - Validate status code",
 									"pm.test(\"Status code should be 200 OK\", function () {",
@@ -2805,12 +2806,11 @@
 									"",
 									"// Test5 - Validate the updated details",
 									"pm.test(\"Details updated\", () => {",
-									"    pm.expect(filteredUser[0].role.roleId).to.eql(pm.variables.get(\"roleId\"));",
+									"    pm.expect(parseInt(filteredUser[0].role.roleId)).to.eql(pm.variables.get(\"roleId\"));",
 									"    pm.expect(filteredUser[0].userRoleStatus).to.eql(pm.variables.get(\"userRoleStatus\"));",
 									"});"
 								],
-								"type": "text/javascript",
-								"id": "f7bc22ca-8aa8-4279-8f23-5a80c5f98dfd"
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -5015,169 +5015,169 @@
 	],
 	"variable": [
 		{
-			"id": "808ac6c0-20d4-4f61-99b4-ee929cba14c2",
+			"id": "0270bdcf-03bc-448f-bce7-314338828602",
 			"key": "BaseURL",
 			"value": "https://lms-api-hackathon-june2023-930a8b0f895d.herokuapp.com/lms",
 			"type": "string"
 		},
 		{
-			"id": "800e7b8c-13d4-41d1-b3e4-685b539e4f9c",
+			"id": "770ba05a-16cd-4620-a321-f0019bcc8932",
 			"key": "userComments",
 			"value": "creating new user",
 			"type": "string"
 		},
 		{
-			"id": "5120919f-5d60-494c-aba9-cf28dfe403e7",
+			"id": "ac052621-bd89-4f6d-bf00-8fa08a327702",
 			"key": "userEduPg",
 			"value": "MS",
 			"type": "string"
 		},
 		{
-			"id": "f0b02493-0450-4169-af6c-f08ccdbafab2",
+			"id": "ec39f9cc-5e50-4f7a-97e3-25b31028d199",
 			"key": "userEduUg",
 			"value": "BE",
 			"type": "string"
 		},
 		{
-			"id": "f0f2eb1f-af51-4472-a8f2-63949c27f28f",
+			"id": "19c555e0-554c-41d0-9f6a-c00fe5fc8aad",
 			"key": "userFirstName",
 			"value": "APICollectors_",
 			"type": "string"
 		},
 		{
-			"id": "6dc2563d-abf6-490e-b4f8-099fc03661dd",
+			"id": "de5bea4f-5781-4b08-b794-ad61b5d0978e",
 			"key": "adminUserFirstName",
 			"value": "APICollectors_",
 			"type": "string"
 		},
 		{
-			"id": "ddc7f883-0840-478d-8399-29a6bc423358",
+			"id": "a10030aa-0ba1-48d8-8d35-52e070c51e46",
 			"key": "staffUserFirstName",
 			"value": "APICollectors_",
 			"type": "string"
 		},
 		{
-			"id": "1506d91d-5530-4adc-b400-b05b06472417",
+			"id": "73b3c1b5-2ea5-4ce7-bbde-033811fec0a4",
 			"key": "studentUserFirstName",
 			"value": "APICollectors_",
 			"type": "string"
 		},
 		{
-			"id": "080e4e8c-f0e9-4810-8f4f-5f53826e0436",
+			"id": "1e5c3e5f-043b-44ec-bb15-28af8a283b3e",
 			"key": "userLastName",
 			"value": "User",
 			"type": "string"
 		},
 		{
-			"id": "2722a3bb-16d4-4a38-adc5-658e8ab9e21c",
+			"id": "510f7565-5de7-446c-a1e4-554d365949e6",
 			"key": "userLinkedinUrl",
 			"value": "www.linkedin.com/Test1234",
 			"type": "string"
 		},
 		{
-			"id": "966b6385-f134-43c1-b0c8-4ae131e6bfc1",
+			"id": "1f46e10d-ecfc-4d70-b06b-445feafd1f71",
 			"key": "userLocation",
 			"value": "India",
 			"type": "string"
 		},
 		{
-			"id": "0af8a47b-e44e-40e9-8ddd-07e78cfbcc81",
+			"id": "5f71f2cf-1a53-4c02-be27-1a7a7ae971e4",
 			"key": "userMiddleName",
 			"value": "",
 			"type": "string"
 		},
 		{
-			"id": "e75dff7f-b2af-40e4-ab78-4608b4a75888",
+			"id": "ce2e239a-22e4-4984-b332-4939883a21a5",
 			"key": "roleId",
 			"value": "R02",
 			"type": "string"
 		},
 		{
-			"id": "01587651-f75a-4bfc-9790-e4193674bb53",
+			"id": "1903ccfb-680c-4b13-b14e-22d64ee4ffe9",
 			"key": "userRoleStatus",
 			"value": "Active",
 			"type": "string"
 		},
 		{
-			"id": "dc7f7b50-0f58-44d0-b011-ddec55a982c3",
+			"id": "66ccfa00-6c7e-4954-975b-4fff4ffad019",
 			"key": "userTimeZone",
 			"value": "IST",
 			"type": "string"
 		},
 		{
-			"id": "89da5a09-1546-4272-a83c-a7d0aaf79e09",
+			"id": "272e84c0-1707-4135-a984-7259c1bd2f77",
 			"key": "userVisaStatus",
 			"value": "NA",
 			"type": "string"
 		},
 		{
-			"id": "37720a06-8923-4ca1-afd2-cf454450c950",
+			"id": "bf66584d-5ba9-44d9-951e-7d4d2861db2f",
 			"key": "invalidUserRoleId",
 			"value": "invalidRoleID",
 			"type": "string"
 		},
 		{
-			"id": "0fb08593-50f9-4420-b2de-5cce771766a3",
+			"id": "76a2a5a7-86ed-4543-ae48-8fc9d5717418",
 			"key": "integerUserRoleId",
 			"value": "46546",
 			"type": "string"
 		},
 		{
-			"id": "ed222781-3272-4a1a-88a9-e00965e5f62b",
+			"id": "01fbad22-707f-499d-82c6-1b0209df8a76",
 			"key": "invalidUserVisaStatus",
 			"value": "invalidVisaStatus",
 			"type": "string"
 		},
 		{
-			"id": "468ea665-f5be-438f-87e3-70d24f0c6d9d",
+			"id": "da364df2-4ae0-4500-ae1e-a3384c64b342",
 			"key": "invalidUserTimeZone",
 			"value": "invalidTimeZone",
 			"type": "string"
 		},
 		{
-			"id": "b3209411-7629-4184-916e-7005fac6d7b7",
+			"id": "8eb63856-adef-4d81-baff-ec8d38d854e8",
 			"key": "stringUserPhoneNumber",
 			"value": "strPhone",
 			"type": "string"
 		},
 		{
-			"id": "4e723265-abac-4944-9e00-d5d8fc744673",
+			"id": "4639e0c6-3b42-4bfe-8f30-ff6cd36cb315",
 			"key": "blankRoleId",
 			"value": "",
 			"type": "string"
 		},
 		{
-			"id": "d3a3a3c7-804c-4328-b217-67fd344edb3d",
+			"id": "b66b26eb-d3c6-4ce2-85c3-d4daadf47e79",
 			"key": "blankUserRoleStatus",
 			"value": "",
 			"type": "string"
 		},
 		{
-			"id": "8591ac99-345a-4ffd-9cf8-215063bdef6d",
+			"id": "762f74bf-710e-4141-9394-fdd9a2547b92",
 			"key": "blankUserFirstName",
 			"value": "",
 			"type": "string"
 		},
 		{
-			"id": "393679b0-57b3-4c16-a190-b32b89bc61f0",
+			"id": "0157f048-10e4-461b-be28-cbb7ab0007fd",
 			"key": "blankUserLastName",
 			"value": "",
 			"type": "string"
 		},
 		{
-			"id": "59c945f4-4c18-4be1-91bf-107065dda598",
+			"id": "4242464a-0b93-4518-97f1-f836a281547d",
 			"key": "blankUserTimeZone",
 			"value": "",
 			"type": "string"
 		},
 		{
-			"id": "19567431-0b7a-42dd-8728-01d4bf025098",
+			"id": "81971ce3-44d7-4669-b0ac-da5723404427",
 			"key": "blankUserVisaStatus",
 			"value": "",
 			"type": "string"
 		},
 		{
-			"id": "5ee105d9-7787-4527-960c-7bb174935bdb",
+			"id": "fbb851e9-7ce9-4acc-93a3-0a935dbf4627",
 			"key": "userNameCounter",
 			"value": "0",
 			"type": "string"
