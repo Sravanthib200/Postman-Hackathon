@@ -1,0 +1,4105 @@
+{
+	"info": {
+		"_postman_id": "1a3c4b9a-5512-432b-842d-b7724ecd03d7",
+		"name": "Team5_APICollectors",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Create new Admin user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Test1 - Validate status code",
+									"pm.test(\"Status code should be 201 Created\", function () {",
+									"    pm.response.to.have.status(201);",
+									"    pm.expect(pm.response.status).to.eql('Created');",
+									"});",
+									"",
+									"// Test2 - Validate Response body type",
+									"pm.test(\"Response body should be JSON\", function () {",
+									"  pm.response.to.be.json;",
+									"});",
+									"",
+									"// Expected schema",
+									"var schema = {",
+									"    \"type\": \"object\",",
+									"     \"required\": [",
+									"      \"userId\",",
+									"      \"userFirstName\",",
+									"      \"userLastName\",",
+									"      \"userMiddleName\",",
+									"      \"userPhoneNumber\",",
+									"      \"userLocation\",",
+									"      \"userTimeZone\",",
+									"      \"userLinkedinUrl\",",
+									"      \"userEduUg\",",
+									"      \"userEduPg\",",
+									"      \"userComments\",",
+									"      \"userVisaStatus\"",
+									"    ],",
+									"    \"properties\": {",
+									"        \"userId\": {",
+									"            \"type\": \"string\"",
+									"        },",
+									"        \"userFirstName\": {",
+									"            \"type\": \"string\"",
+									"        },",
+									"        \"userLastName\": {",
+									"            \"type\": \"string\"",
+									"        },",
+									"        \"userMiddleName\": {",
+									"            \"type\": \"string\"",
+									"        },",
+									"        \"userPhoneNumber\": {",
+									"            \"type\": \"integer\"",
+									"        },",
+									"        \"userLocation\": {",
+									"            \"type\": \"string\"",
+									"        },",
+									"        \"userTimeZone\": {",
+									"            \"type\": \"string\"",
+									"        },",
+									"        \"userLinkedinUrl\": {",
+									"            \"type\": \"string\"",
+									"        },",
+									"        \"userEduUg\": {",
+									"            \"type\": \"string\"",
+									"        },",
+									"        \"userEduPg\": {",
+									"            \"type\": \"string\"",
+									"        },",
+									"        \"userComments\": {",
+									"            \"type\": \"string\"",
+									"        },",
+									"        \"userVisaStatus\": {",
+									"            \"type\": \"string\"",
+									"        }",
+									"    }",
+									"};",
+									"",
+									"// Test4 - Validate schema of the response",
+									"pm.test('Schema validation', () => {",
+									"    pm.response.to.have.jsonSchema(schema);",
+									"});",
+									"",
+									"// Get json from response",
+									"const responseJson = pm.response.json();",
+									"",
+									"// Test5 - Validate userId starts with U",
+									"pm.test(\"Auto-created userId should have U\", () => {",
+									"    pm.expect(responseJson.userId).to.contain('U');",
+									"});",
+									"",
+									"// Test6 - Validate all values",
+									"pm.test(\"Validate values in response\", function () {",
+									"    pm.expect(responseJson.userFirstName).to.eql(pm.variables.get(\"adminUserFirstName\"));",
+									"    pm.expect(responseJson.userLastName).to.eql(pm.variables.get(\"userLastName\"));",
+									"    pm.expect(responseJson.userMiddleName).to.eql(pm.variables.get(\"userMiddleName\"));",
+									"    pm.expect(responseJson.userPhoneNumber).to.eql(parseInt(pm.environment.get(\"userPhoneNumber\")));",
+									"    pm.expect(responseJson.userLocation).to.eql(pm.variables.get(\"userLocation\"));",
+									"    pm.expect(responseJson.userTimeZone).to.eql(pm.variables.get(\"userTimeZone\"));",
+									"    pm.expect(responseJson.userLinkedinUrl).to.eql(pm.variables.get(\"userLinkedinUrl\"));",
+									"    pm.expect(responseJson.userEduUg).to.eql(pm.variables.get(\"userEduUg\"));",
+									"    pm.expect(responseJson.userEduPg).to.eql(pm.variables.get(\"userEduPg\"));",
+									"    pm.expect(responseJson.userComments).to.eql(pm.variables.get(\"userComments\"));",
+									"    pm.expect(responseJson.userVisaStatus).to.eql(pm.variables.get(\"userVisaStatus\"));",
+									"});",
+									"",
+									"// Set global variables from response, to be used by other requests",
+									"if(responseJson)",
+									"{",
+									"    pm.environment.set(\"adminUserId\", responseJson.userId);",
+									"}",
+									"",
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript",
+								"id": "cb03b68e-d956-4889-9e69-47dbf0e124a1"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const phoneNumber = Math.floor(Math.random() * 10000000);",
+									"pm.environment.set(\"userPhoneNumber\", phoneNumber);"
+								],
+								"type": "text/javascript",
+								"id": "a65e1264-6d19-458a-933e-5f11e0c1f74c"
+							}
+						}
+					],
+					"_postman_id": "32d8e2bf-a7dd-4618-8542-cda7df6e6ff0",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userComments\": \"{{userComments}}\",\n    \"userEduPg\": \"{{userEduPg}}\",\n    \"userEduUg\": \"{{userEduUg}}\",\n    \"userFirstName\": \"{{adminUserFirstName}}\",\n    \"userLastName\": \"{{userLastName}}\",\n    \"userLinkedinUrl\": \"{{userLinkedinUrl}}\",\n    \"userLocation\": \"{{userLocation}}\",\n    \"userMiddleName\": \"\",\n    \"userPhoneNumber\": {{userPhoneNumber}},\n    \"userRoleMaps\": [\n        {\n            \"roleId\": \"{{roleId}}\",\n            \"userRoleStatus\": \"{{userRoleStatus}}\"\n        }\n    ],\n    \"userTimeZone\": \"{{userTimeZone}}\",\n    \"userVisaStatus\": \"{{userVisaStatus}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BaseURL}}/users/users/roleStatus"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Admin User info by Id",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// var firstName = pm.variables.get(\"userFirstName\");",
+									"",
+									"// //pm.variables.set(\"userFirstName\", generateDynamicName(firstName));",
+									"// console.log(pm.generateDynamicName('firstName'));",
+									"",
+									"//  var arr = val.split('_');",
+									"// arr[1] = parseInt(arr[1]) + 1;",
+									"// if(arr[1] < 10)",
+									"//     val = arr[0] + \"_00\" + arr[1];",
+									"// else if(arr[1]>10 && arr[1]<100)",
+									"//     val = arr[0] + \"_0\" + arr[1];",
+									"// else",
+									"//     val = arr[0] + \"_\" + arr[1];"
+								],
+								"type": "text/javascript",
+								"id": "9127c70e-689a-4b30-a80b-ceacddb262a6"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Test1 - Validate status code",
+									"pm.test(\"Status code should be 200 OK\", function () {",
+									"    pm.response.to.have.status(200);",
+									"    pm.expect(pm.response.status).to.eql('OK');",
+									"});",
+									"",
+									"// Test2 - Validate Response body type",
+									"pm.test(\"Response body should be JSON\", function () {",
+									"  pm.response.to.be.json;",
+									"});",
+									"",
+									"var schema = {",
+									"  \"type\": \"array\",",
+									"  \"items\": {",
+									"      \"type\": \"object\",",
+									"      \"required\": [",
+									"          \"userRoleId\",",
+									"          \"user\",",
+									"          \"role\",",
+									"          \"batches\",",
+									"          \"userRoleStatus\"",
+									"      ],",
+									"      \"properties\": {",
+									"          \"userRoleId\": {",
+									"              \"type\": \"integer\"",
+									"          },",
+									"          \"user\": {",
+									"              \"type\": \"object\",",
+									"              \"required\": [",
+									"                  \"userId\",",
+									"                  \"userFirstName\",",
+									"                  \"userLastName\",",
+									"                  \"userPhoneNumber\",",
+									"                  \"userTimeZone\",",
+									"                  \"userVisaStatus\"",
+									"              ],",
+									"              \"properties\": {",
+									"                  \"userId\": {",
+									"                      \"type\": \"string\"",
+									"                  },",
+									"                  \"userFirstName\": {",
+									"                      \"type\": \"string\"",
+									"                  },",
+									"                  \"userLastName\": {",
+									"                      \"type\": \"string\"",
+									"                  },",
+									"                  \"userPhoneNumber\": {",
+									"                      \"type\": \"integer\"",
+									"                  },",
+									"                  \"userTimeZone\": {",
+									"                      \"type\": \"string\"",
+									"                  },",
+									"                  \"userVisaStatus\": {",
+									"                      \"type\": \"string\"",
+									"                  }",
+									"                }",
+									"          },",
+									"          \"role\": {",
+									"              \"type\": \"object\",",
+									"              \"required\": [",
+									"                  \"roleId\",",
+									"                  \"roleName\",",
+									"                  \"roleDesc\",",
+									"                  \"creationTime\",",
+									"                  \"lastModTime\",",
+									"                  \"hibernateLazyInitializer\"",
+									"              ],",
+									"              \"properties\": {",
+									"                  \"roleId\": {",
+									"                      \"type\": \"string\"",
+									"                  },",
+									"                  \"roleName\": {",
+									"                      \"type\": \"string\"",
+									"                  },",
+									"                  \"roleDesc\": {",
+									"                      \"type\": \"string\"",
+									"                  },",
+									"                  \"creationTime\": {",
+									"                      \"type\": \"null\"",
+									"                  },",
+									"                  \"lastModTime\": {",
+									"                      \"type\": \"null\"",
+									"                  },",
+									"                  \"hibernateLazyInitializer\": {",
+									"                      \"type\": \"object\"",
+									"                  }",
+									"              }",
+									"           },",
+									"          \"batches\": {",
+									"              \"type\": \"array\",",
+									"              \"items\": {}",
+									"          },",
+									"          \"userRoleStatus\": {",
+									"              \"type\": \"string\"",
+									"          }",
+									"      }",
+									"  }",
+									"};",
+									"",
+									"// Test3 - Validate schema of the response",
+									"pm.test('Schema validation', () => {",
+									"    pm.response.to.have.jsonSchema(schema);",
+									"});",
+									"",
+									"",
+									"// Get json from response",
+									"const responseJson = pm.response.json();",
+									"",
+									"// Test4 - Validate all values",
+									"pm.test(\"Validate values in response\", function () {",
+									"    pm.expect(responseJson[0].user.userId).to.eql(pm.environment.get(\"adminUserId\"));",
+									"    pm.expect(responseJson[0].user.userFirstName).to.eql(pm.variables.get(\"adminUserFirstName\"));",
+									"    pm.expect(responseJson[0].user.userLastName).to.eql(pm.variables.get(\"userLastName\"));",
+									"    pm.expect(responseJson[0].user.userMiddleName).to.eql(pm.variables.get(\"userMiddleName\"));",
+									"    pm.expect(responseJson[0].user.userPhoneNumber).to.eql(parseInt(pm.environment.get(\"userPhoneNumber\")));",
+									"    pm.expect(responseJson[0].user.userLocation).to.eql(pm.variables.get(\"userLocation\"));",
+									"    pm.expect(responseJson[0].user.userTimeZone).to.eql(pm.variables.get(\"userTimeZone\"));",
+									"    pm.expect(responseJson[0].user.userLinkedinUrl).to.eql(pm.variables.get(\"userLinkedinUrl\"));",
+									"    pm.expect(responseJson[0].user.userEduUg).to.eql(pm.variables.get(\"userEduUg\"));",
+									"    pm.expect(responseJson[0].user.userEduPg).to.eql(pm.variables.get(\"userEduPg\"));",
+									"    pm.expect(responseJson[0].user.userComments).to.eql(pm.variables.get(\"userComments\"));",
+									"    pm.expect(responseJson[0].user.userVisaStatus).to.eql(pm.variables.get(\"userVisaStatus\"));",
+									"    pm.expect(responseJson[0].role.roleId).to.eql(pm.variables.get(\"roleId\"));",
+									"    pm.expect(responseJson[0].userRoleStatus).to.eql(pm.variables.get(\"userRoleStatus\"));",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"id": "b41f69c2-8ef4-485f-b857-8702701080f7"
+							}
+						}
+					],
+					"_postman_id": "0a5060b3-f66a-4d57-8a33-85b37e1bfd98",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseURL}}/users/users/:userId",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"users",
+								"users",
+								":userId"
+							],
+							"variable": [
+								{
+									"id": "04a0c4e5-16c1-45ff-8712-37f69af19c92",
+									"key": "userId",
+									"value": "{{adminUserId}}",
+									"type": "string"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create new Staff user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Test1 - Validate status code",
+									"pm.test(\"Status code should be 201 Created\", function () {",
+									"    pm.response.to.have.status(201);",
+									"    pm.expect(pm.response.status).to.eql('Created');",
+									"});",
+									"",
+									"// Test2 - Validate Response body type",
+									"pm.test(\"Response body should be JSON\", function () {",
+									"  pm.response.to.be.json;",
+									"});",
+									"",
+									"// Expected schema",
+									"var schema = {",
+									"    \"type\": \"object\",",
+									"    \"required\": [",
+									"      \"userId\",",
+									"      \"userFirstName\",",
+									"      \"userLastName\",",
+									"      \"userMiddleName\",",
+									"      \"userPhoneNumber\",",
+									"      \"userLocation\",",
+									"      \"userTimeZone\",",
+									"      \"userLinkedinUrl\",",
+									"      \"userEduUg\",",
+									"      \"userEduPg\",",
+									"      \"userComments\",",
+									"      \"userVisaStatus\"",
+									"    ],",
+									"    \"properties\": {",
+									"        \"userId\": {",
+									"            \"type\": \"string\"",
+									"        },",
+									"        \"userFirstName\": {",
+									"            \"type\": \"string\"",
+									"        },",
+									"        \"userLastName\": {",
+									"            \"type\": \"string\"",
+									"        },",
+									"        \"userMiddleName\": {",
+									"            \"type\": \"string\"",
+									"        },",
+									"        \"userPhoneNumber\": {",
+									"            \"type\": \"integer\"",
+									"        },",
+									"        \"userLocation\": {",
+									"            \"type\": \"string\"",
+									"        },",
+									"        \"userTimeZone\": {",
+									"            \"type\": \"string\"",
+									"        },",
+									"        \"userLinkedinUrl\": {",
+									"            \"type\": \"string\"",
+									"        },",
+									"        \"userEduUg\": {",
+									"            \"type\": \"string\"",
+									"        },",
+									"        \"userEduPg\": {",
+									"            \"type\": \"string\"",
+									"        },",
+									"        \"userComments\": {",
+									"            \"type\": \"string\"",
+									"        },",
+									"        \"userVisaStatus\": {",
+									"            \"type\": \"string\"",
+									"        }",
+									"    }",
+									"};",
+									"",
+									"// Test4 - Validate schema of the response",
+									"pm.test('Schema validation', () => {",
+									"    pm.response.to.have.jsonSchema(schema);",
+									"});",
+									"",
+									"// Get json from response",
+									"const responseJson = pm.response.json();",
+									"",
+									"// Test5 - Validate userId starts with U",
+									"pm.test(\"Auto-created userId should have U\", () => {",
+									"    pm.expect(responseJson.userId).to.contain('U');",
+									"});",
+									"",
+									"// Test6 - Validate all values",
+									"pm.test(\"Validate values in response\", function () {",
+									"    pm.expect(responseJson.userFirstName).to.eql(pm.variables.get(\"staffUserFirstName\"));",
+									"    pm.expect(responseJson.userLastName).to.eql(pm.variables.get(\"userLastName\"));",
+									"    pm.expect(responseJson.userMiddleName).to.eql(pm.variables.get(\"userMiddleName\"));",
+									"    pm.expect(responseJson.userPhoneNumber).to.eql(parseInt(pm.environment.get(\"userPhoneNumber\")));",
+									"    pm.expect(responseJson.userLocation).to.eql(pm.variables.get(\"userLocation\"));",
+									"    pm.expect(responseJson.userTimeZone).to.eql(pm.variables.get(\"userTimeZone\"));",
+									"    pm.expect(responseJson.userLinkedinUrl).to.eql(pm.variables.get(\"userLinkedinUrl\"));",
+									"    pm.expect(responseJson.userEduUg).to.eql(pm.variables.get(\"userEduUg\"));",
+									"    pm.expect(responseJson.userEduPg).to.eql(pm.variables.get(\"userEduPg\"));",
+									"    pm.expect(responseJson.userComments).to.eql(pm.variables.get(\"userComments\"));",
+									"    pm.expect(responseJson.userVisaStatus).to.eql(pm.variables.get(\"userVisaStatus\"));",
+									"});",
+									"",
+									"// Set global variables from response, to be used by other requests",
+									"if(responseJson)",
+									"{",
+									"    pm.environment.set(\"staffUserId\", responseJson.userId);",
+									"}",
+									"",
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript",
+								"id": "c43ae7a9-1e80-4028-8381-4b126b3ab170"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const phoneNumber = Math.floor(Math.random() * 10000000);",
+									"pm.environment.set(\"userPhoneNumber\", phoneNumber);"
+								],
+								"type": "text/javascript",
+								"id": "48556099-4f06-4d5d-9410-63431c248328"
+							}
+						}
+					],
+					"_postman_id": "0fe7d32f-a30a-4d5a-8c46-a6997cdc2c80",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userComments\": \"{{userComments}}\",\n    \"userEduPg\": \"{{userEduPg}}\",\n    \"userEduUg\": \"{{userEduUg}}\",\n    \"userFirstName\": \"{{staffUserFirstName}}\",\n    \"userLastName\": \"{{userLastName}}\",\n    \"userLinkedinUrl\": \"{{userLinkedinUrl}}\",\n    \"userLocation\": \"{{userLocation}}\",\n    \"userMiddleName\": \"\",\n    \"userPhoneNumber\": {{userPhoneNumber}},\n    \"userRoleMaps\": [\n        {\n            \"roleId\": \"{{roleId}}\",\n            \"userRoleStatus\": \"{{userRoleStatus}}\"\n        }\n    ],\n    \"userTimeZone\": \"{{userTimeZone}}\",\n    \"userVisaStatus\": \"{{userVisaStatus}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BaseURL}}/users/users/roleStatus"
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Staff",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Test1 - Validate status code",
+									"pm.test(\"Status code should be 200 OK\", function () {",
+									"    pm.response.to.have.status(200);",
+									"    pm.expect(pm.response.status).to.eql('OK');",
+									"});",
+									"",
+									"// Test2 - Validate Response body type",
+									"pm.test(\"Response body should be JSON\", function () {",
+									"  pm.response.to.be.json;",
+									"});",
+									"",
+									"var schema = {",
+									"  \"type\": \"array\",",
+									"  \"items\": {",
+									"      \"type\": \"object\",",
+									"      \"required\": [",
+									"          \"userRoleId\",",
+									"          \"user\",",
+									"          \"role\",",
+									"          \"batches\",",
+									"          \"userRoleStatus\"",
+									"      ],",
+									"      \"properties\": {",
+									"          \"userRoleId\": {",
+									"              \"type\": \"integer\"",
+									"          },",
+									"          \"user\": {",
+									"              \"type\": \"object\",",
+									"              \"required\": [",
+									"                  \"userId\",",
+									"                  \"userFirstName\",",
+									"                  \"userLastName\",",
+									"                  \"userPhoneNumber\",",
+									"                  \"userTimeZone\",",
+									"                  \"userVisaStatus\",",
+									"                  \"hibernateLazyInitializer\"",
+									"              ],",
+									"              \"properties\": {",
+									"                  \"userId\": {",
+									"                      \"type\": \"string\"",
+									"                  },",
+									"                  \"userFirstName\": {",
+									"                      \"type\": \"string\"",
+									"                  },",
+									"                  \"userLastName\": {",
+									"                      \"type\": \"string\"",
+									"                  },",
+									"                  \"userPhoneNumber\": {",
+									"                      \"type\": \"integer\"",
+									"                  },",
+									"                  \"userTimeZone\": {",
+									"                      \"type\": \"string\"",
+									"                  },",
+									"                  \"userVisaStatus\": {",
+									"                      \"type\": \"string\"",
+									"                  },",
+									"                  \"hibernateLazyInitializer\": {",
+									"                      \"type\": \"object\"",
+									"                  }",
+									"                }",
+									"          },",
+									"          \"role\": {",
+									"              \"type\": \"object\",",
+									"              \"required\": [",
+									"                  \"roleId\",",
+									"                  \"roleName\",",
+									"                  \"roleDesc\",",
+									"                  \"creationTime\",",
+									"                  \"lastModTime\",",
+									"                  \"hibernateLazyInitializer\"",
+									"              ],",
+									"              \"properties\": {",
+									"                  \"roleId\": {",
+									"                      \"type\": \"string\"",
+									"                  },",
+									"                  \"roleName\": {",
+									"                      \"type\": \"string\"",
+									"                  },",
+									"                  \"roleDesc\": {",
+									"                      \"type\": \"string\"",
+									"                  },",
+									"                  \"creationTime\": {",
+									"                      \"type\": \"null\"",
+									"                  },",
+									"                  \"lastModTime\": {",
+									"                      \"type\": \"null\"",
+									"                  },",
+									"                  \"hibernateLazyInitializer\": {",
+									"                      \"type\": \"object\"",
+									"                  }",
+									"              }",
+									"           },",
+									"          \"batches\": {",
+									"              \"type\": \"array\",",
+									"              \"items\": {}",
+									"          },",
+									"          \"userRoleStatus\": {",
+									"              \"type\": \"string\"",
+									"          }",
+									"      }",
+									"  }",
+									"};",
+									"",
+									"// Test3 - Validate schema of the response",
+									"pm.test('Schema validation', () => {",
+									"    pm.response.to.have.jsonSchema(schema);",
+									"});",
+									"",
+									"",
+									"// Get json from response",
+									"const responseJson = pm.response.json();",
+									"",
+									"// Filter staff user created earlier",
+									"if(responseJson.user)",
+									"{",
+									"    const staffUser = responseJson.filter((user) => user.user.userId === pm.environment.get(\"staffUserId\"));",
+									"",
+									"    // Test5 - Validate Staff user",
+									"    pm.test(\"Staff user created should be in All users\", () => {",
+									"        pm.expect(staffUser.length).to.eql(1);",
+									"        pm.expect(staffUser[0]).to.be.an('object');",
+									"    });",
+									"}",
+									"else",
+									"{",
+									"    pm.test(\"Staff user found\", () => {",
+									"        pm.expect(responseJson.user).to.be.true;",
+									"    });",
+									"}"
+								],
+								"type": "text/javascript",
+								"id": "e43233eb-363d-4992-91e8-8e58bc0c594a"
+							}
+						}
+					],
+					"_postman_id": "223f3fda-0b34-488e-afda-62e93fe4b75c",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{BaseURL}}/users/users/getAllStaff"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Staff User info by Id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Test1 - Validate status code",
+									"pm.test(\"Status code should be 200 OK\", function () {",
+									"    pm.response.to.have.status(200);",
+									"    pm.expect(pm.response.status).to.eql('OK');",
+									"});",
+									"",
+									"// Test2 - Validate Response body type",
+									"pm.test(\"Response body should be JSON\", function () {",
+									"  pm.response.to.be.json;",
+									"});",
+									"",
+									"var schema = {",
+									"  \"type\": \"array\",",
+									"  \"items\": {",
+									"      \"type\": \"object\",",
+									"      \"required\": [",
+									"          \"userRoleId\",",
+									"          \"user\",",
+									"          \"role\",",
+									"          \"batches\",",
+									"          \"userRoleStatus\"",
+									"      ],",
+									"      \"properties\": {",
+									"          \"userRoleId\": {",
+									"              \"type\": \"integer\"",
+									"          },",
+									"          \"user\": {",
+									"              \"type\": \"object\",",
+									"              \"required\": [",
+									"                  \"userId\",",
+									"                  \"userFirstName\",",
+									"                  \"userLastName\",",
+									"                  \"userPhoneNumber\",",
+									"                  \"userTimeZone\",",
+									"                  \"userVisaStatus\"",
+									"              ],",
+									"              \"properties\": {",
+									"                  \"userId\": {",
+									"                      \"type\": \"string\"",
+									"                  },",
+									"                  \"userFirstName\": {",
+									"                      \"type\": \"string\"",
+									"                  },",
+									"                  \"userLastName\": {",
+									"                      \"type\": \"string\"",
+									"                  },",
+									"                  \"userPhoneNumber\": {",
+									"                      \"type\": \"integer\"",
+									"                  },",
+									"                  \"userTimeZone\": {",
+									"                      \"type\": \"string\"",
+									"                  },",
+									"                  \"userVisaStatus\": {",
+									"                      \"type\": \"string\"",
+									"                  }",
+									"                }",
+									"          },",
+									"          \"role\": {",
+									"              \"type\": \"object\",",
+									"              \"required\": [",
+									"                  \"roleId\",",
+									"                  \"roleName\",",
+									"                  \"roleDesc\",",
+									"                  \"creationTime\",",
+									"                  \"lastModTime\",",
+									"                  \"hibernateLazyInitializer\"",
+									"              ],",
+									"              \"properties\": {",
+									"                  \"roleId\": {",
+									"                      \"type\": \"string\"",
+									"                  },",
+									"                  \"roleName\": {",
+									"                      \"type\": \"string\"",
+									"                  },",
+									"                  \"roleDesc\": {",
+									"                      \"type\": \"string\"",
+									"                  },",
+									"                  \"creationTime\": {",
+									"                      \"type\": \"null\"",
+									"                  },",
+									"                  \"lastModTime\": {",
+									"                      \"type\": \"null\"",
+									"                  },",
+									"                  \"hibernateLazyInitializer\": {",
+									"                      \"type\": \"object\"",
+									"                  }",
+									"              }",
+									"           },",
+									"          \"batches\": {",
+									"              \"type\": \"array\",",
+									"              \"items\": {}",
+									"          },",
+									"          \"userRoleStatus\": {",
+									"              \"type\": \"string\"",
+									"          }",
+									"      }",
+									"  }",
+									"};",
+									"",
+									"// Test3 - Validate schema of the response",
+									"pm.test('Schema validation', () => {",
+									"    pm.response.to.have.jsonSchema(schema);",
+									"});",
+									"",
+									"",
+									"// Get json from response",
+									"const responseJson = pm.response.json();",
+									"",
+									"// Test4 - Validate all values",
+									"pm.test(\"Validate values in response\", function () {",
+									"    pm.expect(responseJson[0].user.userId).to.eql(pm.environment.get(\"staffUserId\"));",
+									"    pm.expect(responseJson[0].user.userFirstName).to.eql(pm.variables.get(\"staffUserFirstName\"));",
+									"    pm.expect(responseJson[0].user.userLastName).to.eql(pm.variables.get(\"userLastName\"));",
+									"    pm.expect(responseJson[0].user.userMiddleName).to.eql(pm.variables.get(\"userMiddleName\"));",
+									"    pm.expect(responseJson[0].user.userPhoneNumber).to.eql(parseInt(pm.environment.get(\"userPhoneNumber\")));",
+									"    pm.expect(responseJson[0].user.userLocation).to.eql(pm.variables.get(\"userLocation\"));",
+									"    pm.expect(responseJson[0].user.userTimeZone).to.eql(pm.variables.get(\"userTimeZone\"));",
+									"    pm.expect(responseJson[0].user.userLinkedinUrl).to.eql(pm.variables.get(\"userLinkedinUrl\"));",
+									"    pm.expect(responseJson[0].user.userEduUg).to.eql(pm.variables.get(\"userEduUg\"));",
+									"    pm.expect(responseJson[0].user.userEduPg).to.eql(pm.variables.get(\"userEduPg\"));",
+									"    pm.expect(responseJson[0].user.userComments).to.eql(pm.variables.get(\"userComments\"));",
+									"    pm.expect(responseJson[0].user.userVisaStatus).to.eql(pm.variables.get(\"userVisaStatus\"));",
+									"    pm.expect(responseJson[0].role.roleId).to.eql(pm.variables.get(\"roleId\"));",
+									"    pm.expect(responseJson[0].userRoleStatus).to.eql(pm.variables.get(\"userRoleStatus\"));",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"id": "6d24cf17-3748-4711-9962-815bf5a678f4"
+							}
+						}
+					],
+					"_postman_id": "d5d7fd87-d3ea-4673-8a09-843631e43085",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseURL}}/users/users/:userId",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"users",
+								"users",
+								":userId"
+							],
+							"variable": [
+								{
+									"id": "5ed13914-0839-485f-898a-ba6ea1b2bdf0",
+									"key": "userId",
+									"value": "{{staffUserId}}",
+									"type": "string"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create new Student user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Test1 - Validate status code",
+									"pm.test(\"Status code should be 201 Created\", function () {",
+									"    pm.response.to.have.status(201);",
+									"    pm.expect(pm.response.status).to.eql('Created');",
+									"});",
+									"",
+									"// Test2 - Validate Response body type",
+									"pm.test(\"Response body should be JSON\", function () {",
+									"  pm.response.to.be.json;",
+									"});",
+									"",
+									"// Expected schema",
+									"var schema = {",
+									"    \"type\": \"object\",",
+									"    \"required\": [",
+									"      \"userId\",",
+									"      \"userFirstName\",",
+									"      \"userLastName\",",
+									"      \"userMiddleName\",",
+									"      \"userPhoneNumber\",",
+									"      \"userLocation\",",
+									"      \"userTimeZone\",",
+									"      \"userLinkedinUrl\",",
+									"      \"userEduUg\",",
+									"      \"userEduPg\",",
+									"      \"userComments\",",
+									"      \"userVisaStatus\"",
+									"    ],",
+									"    \"properties\": {",
+									"        \"userId\": {",
+									"            \"type\": \"string\"",
+									"        },",
+									"        \"userFirstName\": {",
+									"            \"type\": \"string\"",
+									"        },",
+									"        \"userLastName\": {",
+									"            \"type\": \"string\"",
+									"        },",
+									"        \"userMiddleName\": {",
+									"            \"type\": \"string\"",
+									"        },",
+									"        \"userPhoneNumber\": {",
+									"            \"type\": \"integer\"",
+									"        },",
+									"        \"userLocation\": {",
+									"            \"type\": \"string\"",
+									"        },",
+									"        \"userTimeZone\": {",
+									"            \"type\": \"string\"",
+									"        },",
+									"        \"userLinkedinUrl\": {",
+									"            \"type\": \"string\"",
+									"        },",
+									"        \"userEduUg\": {",
+									"            \"type\": \"string\"",
+									"        },",
+									"        \"userEduPg\": {",
+									"            \"type\": \"string\"",
+									"        },",
+									"        \"userComments\": {",
+									"            \"type\": \"string\"",
+									"        },",
+									"        \"userVisaStatus\": {",
+									"            \"type\": \"string\"",
+									"        }",
+									"    }",
+									"};",
+									"",
+									"// Test4 - Validate schema of the response",
+									"pm.test('Schema validation', () => {",
+									"    pm.response.to.have.jsonSchema(schema);",
+									"});",
+									"",
+									"// Get json from response",
+									"const responseJson = pm.response.json();",
+									"",
+									"// Test5 - Validate userId starts with U",
+									"pm.test(\"Auto-created userId should have U\", () => {",
+									"    pm.expect(responseJson.userId).to.contain('U');",
+									"});",
+									"",
+									"// Test6 - Validate all values",
+									"pm.test(\"Validate values in response\", function () {",
+									"    pm.expect(responseJson.userFirstName).to.eql(pm.variables.get(\"studentUserFirstName\"));",
+									"    pm.expect(responseJson.userLastName).to.eql(pm.variables.get(\"userLastName\"));",
+									"    pm.expect(responseJson.userMiddleName).to.eql(pm.variables.get(\"userMiddleName\"));",
+									"    pm.expect(responseJson.userPhoneNumber).to.eql(parseInt(pm.environment.get(\"userPhoneNumber\")));",
+									"    pm.expect(responseJson.userLocation).to.eql(pm.variables.get(\"userLocation\"));",
+									"    pm.expect(responseJson.userTimeZone).to.eql(pm.variables.get(\"userTimeZone\"));",
+									"    pm.expect(responseJson.userLinkedinUrl).to.eql(pm.variables.get(\"userLinkedinUrl\"));",
+									"    pm.expect(responseJson.userEduUg).to.eql(pm.variables.get(\"userEduUg\"));",
+									"    pm.expect(responseJson.userEduPg).to.eql(pm.variables.get(\"userEduPg\"));",
+									"    pm.expect(responseJson.userComments).to.eql(pm.variables.get(\"userComments\"));",
+									"    pm.expect(responseJson.userVisaStatus).to.eql(pm.variables.get(\"userVisaStatus\"));",
+									"});",
+									"",
+									"// Set global variables from response, to be used by other requests",
+									"if(responseJson)",
+									"{",
+									"    pm.environment.set(\"studentUserId\", responseJson.userId);",
+									"}",
+									"",
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript",
+								"id": "bb8eb8d4-2d2f-4163-aa24-5ac69cfdece5"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const phoneNumber = Math.floor(Math.random() * 10000000);",
+									"pm.environment.set(\"userPhoneNumber\", phoneNumber);"
+								],
+								"type": "text/javascript",
+								"id": "7fe785aa-d867-4c08-b34c-b71a79053fe7"
+							}
+						}
+					],
+					"_postman_id": "2717d287-8ed0-4532-9410-be2563c4cdcb",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userComments\": \"{{userComments}}\",\n    \"userEduPg\": \"{{userEduPg}}\",\n    \"userEduUg\": \"{{userEduUg}}\",\n    \"userFirstName\": \"{{studentUserFirstName}}\",\n    \"userLastName\": \"{{userLastName}}\",\n    \"userLinkedinUrl\": \"{{userLinkedinUrl}}\",\n    \"userLocation\": \"{{userLocation}}\",\n    \"userMiddleName\": \"\",\n    \"userPhoneNumber\": {{userPhoneNumber}},\n    \"userRoleMaps\": [\n        {\n            \"roleId\": \"{{roleId}}\",\n            \"userRoleStatus\": \"{{userRoleStatus}}\"\n        }\n    ],\n    \"userTimeZone\": \"{{userTimeZone}}\",\n    \"userVisaStatus\": \"{{userVisaStatus}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BaseURL}}/users/users/roleStatus"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Student User info by Id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Test1 - Validate status code",
+									"pm.test(\"Status code should be 200 OK\", function () {",
+									"    pm.response.to.have.status(200);",
+									"    pm.expect(pm.response.status).to.eql('OK');",
+									"});",
+									"",
+									"// Test2 - Validate Response body type",
+									"pm.test(\"Response body should be JSON\", function () {",
+									"  pm.response.to.be.json;",
+									"});",
+									"",
+									"var schema = {",
+									"  \"type\": \"array\",",
+									"  \"items\": {",
+									"      \"type\": \"object\",",
+									"      \"required\": [",
+									"          \"userRoleId\",",
+									"          \"user\",",
+									"          \"role\",",
+									"          \"batches\",",
+									"          \"userRoleStatus\"",
+									"      ],",
+									"      \"properties\": {",
+									"          \"userRoleId\": {",
+									"              \"type\": \"integer\"",
+									"          },",
+									"          \"user\": {",
+									"              \"type\": \"object\",",
+									"              \"required\": [",
+									"                  \"userId\",",
+									"                  \"userFirstName\",",
+									"                  \"userLastName\",",
+									"                  \"userPhoneNumber\",",
+									"                  \"userTimeZone\",",
+									"                  \"userVisaStatus\"",
+									"              ],",
+									"              \"properties\": {",
+									"                  \"userId\": {",
+									"                      \"type\": \"string\"",
+									"                  },",
+									"                  \"userFirstName\": {",
+									"                      \"type\": \"string\"",
+									"                  },",
+									"                  \"userLastName\": {",
+									"                      \"type\": \"string\"",
+									"                  },",
+									"                  \"userPhoneNumber\": {",
+									"                      \"type\": \"integer\"",
+									"                  },",
+									"                  \"userTimeZone\": {",
+									"                      \"type\": \"string\"",
+									"                  },",
+									"                  \"userVisaStatus\": {",
+									"                      \"type\": \"string\"",
+									"                  }",
+									"                }",
+									"          },",
+									"          \"role\": {",
+									"              \"type\": \"object\",",
+									"              \"required\": [",
+									"                  \"roleId\",",
+									"                  \"roleName\",",
+									"                  \"roleDesc\",",
+									"                  \"creationTime\",",
+									"                  \"lastModTime\",",
+									"                  \"hibernateLazyInitializer\"",
+									"              ],",
+									"              \"properties\": {",
+									"                  \"roleId\": {",
+									"                      \"type\": \"string\"",
+									"                  },",
+									"                  \"roleName\": {",
+									"                      \"type\": \"string\"",
+									"                  },",
+									"                  \"roleDesc\": {",
+									"                      \"type\": \"string\"",
+									"                  },",
+									"                  \"creationTime\": {",
+									"                      \"type\": \"null\"",
+									"                  },",
+									"                  \"lastModTime\": {",
+									"                      \"type\": \"null\"",
+									"                  },",
+									"                  \"hibernateLazyInitializer\": {",
+									"                      \"type\": \"object\"",
+									"                  }",
+									"              }",
+									"           },",
+									"          \"batches\": {",
+									"              \"type\": \"array\",",
+									"              \"items\": {}",
+									"          },",
+									"          \"userRoleStatus\": {",
+									"              \"type\": \"string\"",
+									"          }",
+									"      }",
+									"  }",
+									"};",
+									"",
+									"// Test3 - Validate schema of the response",
+									"pm.test('Schema validation', () => {",
+									"    pm.response.to.have.jsonSchema(schema);",
+									"});",
+									"",
+									"",
+									"// Get json from response",
+									"const responseJson = pm.response.json();",
+									"",
+									"// Test4 - Validate all values",
+									"pm.test(\"Validate values in response\", function () {",
+									"    pm.expect(responseJson[0].user.userId).to.eql(pm.environment.get(\"studentUserId\"));",
+									"    pm.expect(responseJson[0].user.userFirstName).to.eql(pm.variables.get(\"studentUserFirstName\"));",
+									"    pm.expect(responseJson[0].user.userLastName).to.eql(pm.variables.get(\"userLastName\"));",
+									"    pm.expect(responseJson[0].user.userMiddleName).to.eql(pm.variables.get(\"userMiddleName\"));",
+									"    pm.expect(responseJson[0].user.userPhoneNumber).to.eql(parseInt(pm.environment.get(\"userPhoneNumber\")));",
+									"    pm.expect(responseJson[0].user.userLocation).to.eql(pm.variables.get(\"userLocation\"));",
+									"    pm.expect(responseJson[0].user.userTimeZone).to.eql(pm.variables.get(\"userTimeZone\"));",
+									"    pm.expect(responseJson[0].user.userLinkedinUrl).to.eql(pm.variables.get(\"userLinkedinUrl\"));",
+									"    pm.expect(responseJson[0].user.userEduUg).to.eql(pm.variables.get(\"userEduUg\"));",
+									"    pm.expect(responseJson[0].user.userEduPg).to.eql(pm.variables.get(\"userEduPg\"));",
+									"    pm.expect(responseJson[0].user.userComments).to.eql(pm.variables.get(\"userComments\"));",
+									"    pm.expect(responseJson[0].user.userVisaStatus).to.eql(pm.variables.get(\"userVisaStatus\"));",
+									"    pm.expect(responseJson[0].role.roleId).to.eql(pm.variables.get(\"roleId\"));",
+									"    pm.expect(responseJson[0].userRoleStatus).to.eql(pm.variables.get(\"userRoleStatus\"));",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"id": "2c2037d4-c3e5-4d58-905f-9cab9aea199e"
+							}
+						}
+					],
+					"_postman_id": "8e74ea1a-0da4-43c8-b9be-b069b0aa28f8",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseURL}}/users/users/:userId",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"users",
+								"users",
+								":userId"
+							],
+							"variable": [
+								{
+									"id": "cda6551a-cbaa-44f0-9722-2cee43797d06",
+									"key": "userId",
+									"value": "{{studentUserId}}",
+									"type": "string"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Users",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Test1 - Validate status code",
+									"pm.test(\"Status code should be 200 OK\", function () {",
+									"    pm.response.to.have.status(200);",
+									"    pm.expect(pm.response.status).to.eql('OK');",
+									"});",
+									"",
+									"// Test2 - Validate Response body type",
+									"pm.test(\"Response body should be JSON\", function () {",
+									"  pm.response.to.be.json;",
+									"});",
+									"",
+									"// Expected schema",
+									"var schema = {",
+									"    \"type\": \"array\",",
+									"    \"items\": {",
+									"        \"type\": \"object\",",
+									"        \"required\": [",
+									"            \"userId\",",
+									"            \"userFirstName\",",
+									"            \"userLastName\",",
+									"            \"userPhoneNumber\",",
+									"            \"userTimeZone\",",
+									"            \"userVisaStatus\"",
+									"        ],",
+									"        \"properties\": {",
+									"            \"userId\": {",
+									"                \"type\": \"string\"",
+									"            },",
+									"            \"userFirstName\": {",
+									"                \"type\": \"string\"",
+									"            },",
+									"            \"userLastName\": {",
+									"                \"type\": \"string\"",
+									"            },",
+									"            \"userPhoneNumber\": {",
+									"                \"type\": \"integer\"",
+									"            },",
+									"            \"userTimeZone\": {",
+									"                \"type\": \"string\"",
+									"            },",
+									"            \"userVisaStatus\": {",
+									"                \"type\": \"string\"",
+									"            }",
+									"        }",
+									"    }",
+									"};",
+									"",
+									"// Test3 - Validate schema of the response",
+									"pm.test('Schema validation', () => {",
+									"    pm.response.to.have.jsonSchema(schema);",
+									"});",
+									"",
+									"",
+									"// Get json from response",
+									"const responseJson = pm.response.json();",
+									"",
+									"// Filter admin user created earlier",
+									"const adminUser = responseJson.filter((user) => user.userId === pm.environment.get(\"adminUserId\"));",
+									"",
+									"// Test4 - Validate Admin user",
+									"pm.test(\"Admin user created should be in All users\", () => {",
+									"    pm.expect(adminUser.length).to.eql(1);",
+									"    pm.expect(adminUser[0]).to.be.an('object');",
+									"});",
+									"",
+									"// Filter staff user created earlier",
+									"const staffUser = responseJson.filter((user) => user.userId === pm.environment.get(\"staffUserId\"));",
+									"",
+									"// Test5 - Validate Staff user",
+									"pm.test(\"Staff user created should be in All users\", () => {",
+									"    pm.expect(staffUser.length).to.eql(1);",
+									"    pm.expect(staffUser[0]).to.be.an('object');",
+									"});",
+									"",
+									"// Filter student user created earlier",
+									"const studentUser = responseJson.filter((user) => user.userId === pm.environment.get(\"studentUserId\"));",
+									"",
+									"// Test6 - Validate Student user",
+									"pm.test(\"Student user created should be in All users\", () => {",
+									"    pm.expect(studentUser.length).to.eql(1);",
+									"    pm.expect(studentUser[0]).to.be.an('object');",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"id": "2a11093a-de49-474b-b44f-6a181d09358d"
+							}
+						}
+					],
+					"_postman_id": "b2f5af93-0d94-4294-b701-9a06f13befcf",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{BaseURL}}/users/users"
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Users with Roles",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Test1 - Validate status code",
+									"pm.test(\"Status code should be 200 OK\", function () {",
+									"    pm.response.to.have.status(200);",
+									"    pm.expect(pm.response.status).to.eql('OK');",
+									"});",
+									"",
+									"// Test2 - Validate Response body type",
+									"pm.test(\"Response body should be JSON\", function () {",
+									"  pm.response.to.be.json;",
+									"});",
+									"",
+									"var schema = {",
+									"  \"type\": \"array\",",
+									"  \"items\": {",
+									"      \"type\": \"object\",",
+									"      \"required\": [",
+									"          \"userRoleId\",",
+									"          \"user\",",
+									"          \"role\",",
+									"          \"batches\",",
+									"          \"userRoleStatus\"",
+									"      ],",
+									"      \"properties\": {",
+									"          \"userRoleId\": {",
+									"              \"type\": \"integer\"",
+									"          },",
+									"          \"user\": {",
+									"              \"type\": \"object\",",
+									"              \"required\": [",
+									"                  \"userId\",",
+									"                  \"userFirstName\",",
+									"                  \"userLastName\",",
+									"                  \"userPhoneNumber\",",
+									"                  \"userTimeZone\",",
+									"                  \"userVisaStatus\",",
+									"                  \"hibernateLazyInitializer\"",
+									"              ],",
+									"              \"properties\": {",
+									"                  \"userId\": {",
+									"                      \"type\": \"string\"",
+									"                  },",
+									"                  \"userFirstName\": {",
+									"                      \"type\": \"string\"",
+									"                  },",
+									"                  \"userLastName\": {",
+									"                      \"type\": \"string\"",
+									"                  },",
+									"                  \"userPhoneNumber\": {",
+									"                      \"type\": \"integer\"",
+									"                  },",
+									"                  \"userTimeZone\": {",
+									"                      \"type\": \"string\"",
+									"                  },",
+									"                  \"userVisaStatus\": {",
+									"                      \"type\": \"string\"",
+									"                  },",
+									"                  \"hibernateLazyInitializer\": {",
+									"                      \"type\": \"object\"",
+									"                  }",
+									"                }",
+									"          },",
+									"          \"role\": {",
+									"              \"type\": \"object\",",
+									"              \"required\": [",
+									"                  \"roleId\",",
+									"                  \"roleName\",",
+									"                  \"roleDesc\",",
+									"                  \"creationTime\",",
+									"                  \"lastModTime\",",
+									"                  \"hibernateLazyInitializer\"",
+									"              ],",
+									"              \"properties\": {",
+									"                  \"roleId\": {",
+									"                      \"type\": \"string\"",
+									"                  },",
+									"                  \"roleName\": {",
+									"                      \"type\": \"string\"",
+									"                  },",
+									"                  \"roleDesc\": {",
+									"                      \"type\": \"string\"",
+									"                  },",
+									"                  \"creationTime\": {",
+									"                      \"type\": \"null\"",
+									"                  },",
+									"                  \"lastModTime\": {",
+									"                      \"type\": \"null\"",
+									"                  },",
+									"                  \"hibernateLazyInitializer\": {",
+									"                      \"type\": \"object\"",
+									"                  }",
+									"              }",
+									"           },",
+									"          \"batches\": {",
+									"              \"type\": \"array\",",
+									"              \"items\": {}",
+									"          },",
+									"          \"userRoleStatus\": {",
+									"              \"type\": \"string\"",
+									"          }",
+									"      }",
+									"  }",
+									"};",
+									"",
+									"// Test3 - Validate schema of the response",
+									"pm.test('Schema validation', () => {",
+									"    pm.response.to.have.jsonSchema(schema);",
+									"});",
+									"",
+									"",
+									"// Get json from response",
+									"const responseJson = pm.response.json();",
+									"",
+									"// Filter admin user created earlier",
+									"const adminUser = responseJson.filter((user) => user.user.userId === pm.environment.get(\"adminUserId\"));",
+									"",
+									"// Test4 - Validate Admin user",
+									"pm.test(\"Admin user created should be in All users\", () => {",
+									"    pm.expect(adminUser.length).to.eql(1);",
+									"    pm.expect(adminUser[0]).to.be.an('object');",
+									"});",
+									"",
+									"// Filter staff user created earlier",
+									"const staffUser = responseJson.filter((user) => user.user.userId === pm.environment.get(\"staffUserId\"));",
+									"",
+									"// Test5 - Validate Staff user",
+									"pm.test(\"Staff user created should be in All users\", () => {",
+									"    pm.expect(staffUser.length).to.eql(1);",
+									"    pm.expect(staffUser[0]).to.be.an('object');",
+									"});",
+									"",
+									"// Filter student user created earlier",
+									"const studentUser = responseJson.filter((user) => user.user.userId === pm.environment.get(\"studentUserId\"));",
+									"",
+									"// Test6 - Validate Student user",
+									"pm.test(\"Student user created should be in All users\", () => {",
+									"    pm.expect(studentUser.length).to.eql(1);",
+									"    pm.expect(studentUser[0]).to.be.an('object');",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"id": "b2819e3c-0480-443b-853e-b9d3fdfd89a4"
+							}
+						}
+					],
+					"_postman_id": "26217c1f-89c7-4173-a0e4-d7e363625c0e",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{BaseURL}}/users/users/roles"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Admin user by Id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.unset(\"adminUserId\");"
+								],
+								"type": "text/javascript",
+								"id": "47f5b425-e1e6-4806-b80c-5a0c6c94fae7"
+							}
+						}
+					],
+					"_postman_id": "727460f0-91e5-4b7b-ac7f-a5dc95c79725",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BaseURL}}/users/users/:userID",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"users",
+								"users",
+								":userID"
+							],
+							"variable": [
+								{
+									"id": "34b94605-f997-41a6-8321-1bb1479606bc",
+									"key": "userID",
+									"value": "{{adminUserId}}",
+									"type": "string"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Staff user by Id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.unset(\"staffUserId\");"
+								],
+								"type": "text/javascript",
+								"id": "45eeba4c-19b3-4562-a87c-fb51440645f5"
+							}
+						}
+					],
+					"_postman_id": "9dff239e-5c64-45b4-8efd-9e5ccb8b87b2",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BaseURL}}/users/users/:userID",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"users",
+								"users",
+								":userID"
+							],
+							"variable": [
+								{
+									"id": "47a9c9ae-37c6-458f-924c-1ff14c689dff",
+									"key": "userID",
+									"value": "{{staffUserId}}",
+									"type": "string"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Student user by Id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.unset(\"studentUserId\");"
+								],
+								"type": "text/javascript",
+								"id": "572fbbe9-4622-417d-8eba-7fb6bcd648aa"
+							}
+						}
+					],
+					"_postman_id": "488e6285-1698-4cf4-9e5a-02b4a7675a4f",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BaseURL}}/users/users/:userID",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"users",
+								"users",
+								":userID"
+							],
+							"variable": [
+								{
+									"id": "2c670947-0a88-4cb4-8487-60c39c966851",
+									"key": "userID",
+									"value": "{{studentUserId}}",
+									"type": "string"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create new user only mandatory fields",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Test1 - Validate status code",
+									"pm.test(\"Status code should be 201 Created\", function () {",
+									"    pm.response.to.have.status(201);",
+									"    pm.expect(pm.response.status).to.eql('Created');",
+									"});",
+									"",
+									"// Test2 - Validate Response body type",
+									"pm.test(\"Response body should be JSON\", function () {",
+									"  pm.response.to.be.json;",
+									"});",
+									"",
+									"// Expected schema",
+									"var schema = {",
+									"    \"type\": \"object\",",
+									"    \"required\": [",
+									"      \"userId\",",
+									"      \"userFirstName\",",
+									"      \"userLastName\",",
+									"      \"userPhoneNumber\",",
+									"      \"userTimeZone\",",
+									"      \"userLinkedinUrl\",",
+									"      \"userEduUg\",",
+									"      \"userEduPg\",",
+									"      \"userVisaStatus\"",
+									"    ],",
+									"    \"properties\": {",
+									"        \"userId\": {",
+									"            \"type\": \"string\"",
+									"        },",
+									"        \"userFirstName\": {",
+									"            \"type\": \"string\"",
+									"        },",
+									"        \"userLastName\": {",
+									"            \"type\": \"string\"",
+									"        },",
+									"        \"userPhoneNumber\": {",
+									"            \"type\": \"integer\"",
+									"        },",
+									"        \"userTimeZone\": {",
+									"            \"type\": \"string\"",
+									"        },",
+									"        \"userVisaStatus\": {",
+									"            \"type\": \"string\"",
+									"        }",
+									"    }",
+									"};",
+									"",
+									"// Test4 - Validate schema of the response",
+									"pm.test('Schema validation', () => {",
+									"    pm.response.to.have.jsonSchema(schema);",
+									"});",
+									"",
+									"// Get json from response",
+									"const responseJson = pm.response.json();",
+									"",
+									"// Test5 - Validate userId starts with U",
+									"pm.test(\"Auto-created userId should have U\", () => {",
+									"    pm.expect(responseJson.userId).to.contain('U');",
+									"});",
+									"",
+									"// Test6 - Validate all values",
+									"pm.test(\"Validate values in response\", function () {",
+									"    pm.expect(responseJson.userFirstName).to.eql(pm.variables.get(\"userFirstName\"));",
+									"    pm.expect(responseJson.userLastName).to.eql(pm.variables.get(\"userLastName\"));",
+									"    pm.expect(responseJson.userMiddleName).to.be.undefined;",
+									"    pm.expect(responseJson.userPhoneNumber).to.eql(parseInt(pm.variables.get(\"userPhoneNumber\")));",
+									"    pm.expect(responseJson.userLocation).to.eql(pm.variables.get(\"userLocation\"));",
+									"    pm.expect(responseJson.userTimeZone).to.eql(pm.variables.get(\"userTimeZone\"));",
+									"    pm.expect(responseJson.userLinkedinUrl).to.eql(pm.variables.get(\"userLinkedinUrl\"));",
+									"    pm.expect(responseJson.userEduUg).to.eql(pm.variables.get(\"userEduUg\"));",
+									"    pm.expect(responseJson.userEduPg).to.eql(pm.variables.get(\"userEduPg\"));",
+									"    pm.expect(responseJson.userComments).to.be.undefined;",
+									"    pm.expect(responseJson.userVisaStatus).to.eql(pm.variables.get(\"userVisaStatus\"));",
+									"});",
+									"",
+									"// Set global variables from response, to be used by other requests",
+									"if(responseJson)",
+									"{",
+									"    pm.environment.set(\"userId\", responseJson.userId);",
+									"}",
+									"",
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript",
+								"id": "8be94d8e-e525-457d-b252-4284c2f1ded6"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const phoneNumber = Math.floor(Math.random() * 10000000);",
+									"pm.environment.set(\"userPhoneNumber\", phoneNumber);"
+								],
+								"type": "text/javascript",
+								"id": "75286a06-7695-44db-95e0-22cf6665e949"
+							}
+						}
+					],
+					"_postman_id": "7fdd041f-4a85-49cb-b1d3-ab8fb730f41e",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userFirstName\": \"{{userFirstName}}\",\n    \"userLastName\": \"{{userLastName}}\",\n    \"userPhoneNumber\": {{userPhoneNumber}},\n    \"userRoleMaps\": [\n        {\n            \"roleId\": \"{{roleId}}\",\n            \"userRoleStatus\": \"{{userRoleStatus}}\"\n        }\n    ],\n    \"userTimeZone\": \"{{userTimeZone}}\",\n    \"userVisaStatus\": \"{{userVisaStatus}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BaseURL}}/users/users/roleStatus"
+					},
+					"response": []
+				},
+				{
+					"name": "Create new user with duplicate phone number",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Test1 - Validate status code",
+									"pm.test(\"Status code should be 400 Bad Request\", function () {",
+									"    pm.response.to.have.status(400);",
+									"    pm.expect(pm.response.status).to.eql('Bad Request');",
+									"});",
+									"",
+									"// Test2 - Validate Response body type",
+									"pm.test(\"Response body should be JSON\", function () {",
+									"  pm.response.to.be.json;",
+									"});",
+									"",
+									"// Expected schema",
+									"var schema = {",
+									"    \"type\": \"object\",",
+									"    \"required\": [",
+									"        \"message\",",
+									"        \"success\",",
+									"    ],",
+									"    \"properties\": {",
+									"        \"message\": {",
+									"            \"type\": \"string\"",
+									"        },",
+									"        \"success\": {",
+									"            \"type\": \"boolean\"",
+									"        }",
+									"    }",
+									"};",
+									"",
+									"// Test3 - Validate schema of the response",
+									"pm.test('Schema validation', () => {",
+									"    pm.response.to.have.jsonSchema(schema);",
+									"});",
+									"",
+									"// Get json from response",
+									"const responseJson = pm.response.json();",
+									"",
+									"// Test4 - Validate all values",
+									"pm.test(\"Validate values in response\", function () {",
+									"    pm.expect(responseJson.message).to.eql(\"Failed to create new User as phone number \" + pm.environment.get(\"userPhoneNumber\") + \" already exists !!\");",
+									"    pm.expect(responseJson.success).to.be.false;",
+									"});",
+									"",
+									"pm.environment.unset(\"userPhoneNumber\");"
+								],
+								"type": "text/javascript",
+								"id": "328f401a-5cb5-4557-b956-09662b023b23"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"id": "cfbeeedf-e158-4169-b26c-61e4c50fde34"
+							}
+						}
+					],
+					"_postman_id": "077fac04-4260-497f-8c4a-94e1ffdbad97",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userComments\": \"{{userComments}}\",\n    \"userEduPg\": \"{{userEduPg}}\",\n    \"userEduUg\": \"{{userEduUg}}\",\n    \"userFirstName\": \"{{userFirstName}}\",\n    \"userLastName\": \"{{userLastName}}\",\n    \"userLinkedinUrl\": \"{{userLinkedinUrl}}\",\n    \"userLocation\": \"{{userLocation}}\",\n    \"userPhoneNumber\": {{userPhoneNumber}},\n    \"userMiddleName\": \"\",\n    \"userRoleMaps\": [\n        {\n            \"roleId\": \"{{roleId}}\",\n            \"userRoleStatus\": \"{{userRoleStatus}}\"\n        }\n    ],\n    \"userTimeZone\": \"{{userTimeZone}}\",\n    \"userVisaStatus\": \"{{userVisaStatus}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BaseURL}}/users/users/roleStatus"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete User by Id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"id": "21504951-978f-4efd-8232-b4ffd46565e3"
+							}
+						}
+					],
+					"_postman_id": "4e821f9c-66a3-4482-a463-46964b7489ba",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BaseURL}}/users/users/:userID",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"users",
+								"users",
+								":userID"
+							],
+							"variable": [
+								{
+									"id": "57b5194f-e3bf-404e-aeb7-b73f40ed7011",
+									"key": "userID",
+									"value": "{{userId}}",
+									"type": "string"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get deleted user by Id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Test1 - Validate status code",
+									"pm.test(\"Status code should be 404 Not Found\", function () {",
+									"    pm.response.to.have.status(404);",
+									"    pm.expect(pm.response.status).to.eql('Not Found');",
+									"});",
+									"",
+									"// Test2 - Validate Response body type",
+									"pm.test(\"Response body should be JSON\", function () {",
+									"  pm.response.to.be.json;",
+									"});",
+									"",
+									"var schema = {",
+									"    \"type\": \"object\",",
+									"    \"required\": [",
+									"        \"message\",",
+									"        \"success\",",
+									"    ],",
+									"    \"properties\": {",
+									"        \"message\": {",
+									"            \"type\": \"string\"",
+									"        },",
+									"        \"success\": {",
+									"            \"type\": \"boolean\"",
+									"        }",
+									"    }",
+									"};",
+									"",
+									"// Test3 - Validate schema of the response",
+									"pm.test('Schema validation', () => {",
+									"    pm.response.to.have.jsonSchema(schema);",
+									"});",
+									"",
+									"",
+									"// Get json from response",
+									"const responseJson = pm.response.json();",
+									"",
+									"// Test4 - Validate all values",
+									"pm.test(\"Validate values in response\", function () {",
+									"    pm.expect(responseJson.message).to.eql(\"User Id \" + pm.environment.get(\"userId\") + \" not found\");",
+									"    pm.expect(responseJson.success).to.be.false;",
+									"});",
+									"",
+									"pm.environment.unset(\"userId\");"
+								],
+								"type": "text/javascript",
+								"id": "7ea46895-e71a-42b1-bf6c-df017c05b64e"
+							}
+						}
+					],
+					"_postman_id": "9dbffac0-42df-406e-8016-961d76406036",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseURL}}/users/users/:userId",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"users",
+								"users",
+								":userId"
+							],
+							"variable": [
+								{
+									"id": "243f4cdc-3d9f-4342-bc55-44a4d2c03880",
+									"key": "userId",
+									"value": "{{userId}}",
+									"type": "string"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create new user with string values as integers",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Test1 - Validate status code",
+									"pm.test(\"Status code should be 201 Created\", function () {",
+									"    pm.response.to.have.status(201);",
+									"    pm.expect(pm.response.status).to.eql('Created');",
+									"});",
+									"",
+									"// Test2 - Validate Response body type",
+									"pm.test(\"Response body should be JSON\", function () {",
+									"  pm.response.to.be.json;",
+									"});",
+									"",
+									"// Expected schema",
+									"var schema = {",
+									"    \"type\": \"object\",",
+									"     \"required\": [",
+									"      \"userId\",",
+									"      \"userFirstName\",",
+									"      \"userLastName\",",
+									"      \"userMiddleName\",",
+									"      \"userPhoneNumber\",",
+									"      \"userLocation\",",
+									"      \"userTimeZone\",",
+									"      \"userLinkedinUrl\",",
+									"      \"userEduUg\",",
+									"      \"userEduPg\",",
+									"      \"userComments\",",
+									"      \"userVisaStatus\"",
+									"    ],",
+									"    \"properties\": {",
+									"        \"userId\": {",
+									"            \"type\": \"string\"",
+									"        },",
+									"        \"userFirstName\": {",
+									"            \"type\": \"string\"",
+									"        },",
+									"        \"userLastName\": {",
+									"            \"type\": \"string\"",
+									"        },",
+									"        \"userMiddleName\": {",
+									"            \"type\": \"string\"",
+									"        },",
+									"        \"userPhoneNumber\": {",
+									"            \"type\": \"integer\"",
+									"        },",
+									"        \"userLocation\": {",
+									"            \"type\": \"string\"",
+									"        },",
+									"        \"userTimeZone\": {",
+									"            \"type\": \"string\"",
+									"        },",
+									"        \"userLinkedinUrl\": {",
+									"            \"type\": \"string\"",
+									"        },",
+									"        \"userEduUg\": {",
+									"            \"type\": \"string\"",
+									"        },",
+									"        \"userEduPg\": {",
+									"            \"type\": \"string\"",
+									"        },",
+									"        \"userComments\": {",
+									"            \"type\": \"string\"",
+									"        },",
+									"        \"userVisaStatus\": {",
+									"            \"type\": \"string\"",
+									"        }",
+									"    }",
+									"};",
+									"",
+									"// Test4 - Validate schema of the response",
+									"pm.test('Schema validation', () => {",
+									"    pm.response.to.have.jsonSchema(schema);",
+									"});",
+									"",
+									"// Get json from response",
+									"const responseJson = pm.response.json();",
+									"",
+									"// Test5 - Validate userId starts with U",
+									"pm.test(\"Auto-created userId should have U\", () => {",
+									"    pm.expect(responseJson.userId).to.contain('U');",
+									"});",
+									"",
+									"// Test6 - Validate all values",
+									"pm.test(\"Validate values in response\", function () {",
+									"    pm.expect(responseJson.userFirstName).to.be.string;",
+									"    pm.expect(responseJson.userLastName).to.be.string;",
+									"    pm.expect(responseJson.userMiddleName).to.be.string;",
+									"    pm.expect(responseJson.userEduUg).to.be.string;",
+									"    pm.expect(responseJson.userEduPg).to.be.string;",
+									"    pm.expect(responseJson.userComments).to.be.string;",
+									"    pm.expect(responseJson.userLinkedinUrl).to.be.string;",
+									"    pm.expect(responseJson.userLocation).to.be.string;",
+									"    pm.expect(responseJson.userVisaStatus).to.be.string;",
+									"    pm.expect(parseInt(responseJson.userFirstName)).to.eql(pm.variables.get(\"userFirstName\"));",
+									"    pm.expect(parseInt(responseJson.userLastName)).to.eql(pm.variables.get(\"userLastName\"));",
+									"    pm.expect(parseInt(responseJson.userMiddleName)).to.eql(pm.variables.get(\"userMiddleName\"));",
+									"    pm.expect(responseJson.userPhoneNumber).to.eql(parseInt(pm.environment.get(\"userPhoneNumber\")));",
+									"    pm.expect(parseInt(responseJson.userLocation)).to.eql(pm.variables.get(\"userLocation\"));",
+									"    pm.expect(responseJson.userTimeZone).to.eql(pm.variables.get(\"userTimeZone\"));",
+									"    pm.expect(parseInt(responseJson.userLinkedinUrl)).to.eql(pm.variables.get(\"userLinkedinUrl\"));",
+									"    pm.expect(parseInt(responseJson.userEduUg)).to.eql(pm.variables.get(\"userEduUg\"));",
+									"    pm.expect(parseInt(responseJson.userEduPg)).to.eql(pm.variables.get(\"userEduPg\"));",
+									"    pm.expect(parseInt(responseJson.userComments)).to.eql(pm.variables.get(\"userComments\"));",
+									"    pm.expect(responseJson.userVisaStatus).to.eql(pm.variables.get(\"userVisaStatus\"));",
+									"});",
+									"",
+									"// Set global variables from response, to be used by other requests",
+									"if(responseJson)",
+									"{",
+									"    pm.environment.set(\"userId\", responseJson.userId);",
+									"}",
+									"",
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript",
+								"id": "915c1eef-f4d3-44c7-9b8a-e887abd5938f"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const phoneNumber = Math.floor(Math.random() * 10000000);",
+									"pm.environment.set(\"userPhoneNumber\", phoneNumber);",
+									"",
+									"pm.variables.set(\"userFirstName\", phoneNumber);",
+									"pm.variables.set(\"userLastName\", phoneNumber);",
+									"pm.variables.set(\"userMiddleName\", phoneNumber);",
+									"pm.variables.set(\"userComments\", phoneNumber);",
+									"pm.variables.set(\"userEduPg\", phoneNumber);",
+									"pm.variables.set(\"userEduUg\", phoneNumber);",
+									"pm.variables.set(\"userLinkedinUrl\", phoneNumber);",
+									"pm.variables.set(\"userLocation\", phoneNumber);",
+									"pm.variables.set(\"userRoleStatus\", phoneNumber);"
+								],
+								"type": "text/javascript",
+								"id": "464620df-f330-4d9b-a539-7ec4072ebbf6"
+							}
+						}
+					],
+					"_postman_id": "7690f5ee-0748-446d-8245-99a75596d5e1",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userComments\": {{userComments}},\n    \"userEduPg\": {{userEduPg}},\n    \"userEduUg\": {{userEduUg}},\n    \"userFirstName\": {{userFirstName}},\n    \"userLastName\": {{userLastName}},\n    \"userLinkedinUrl\": {{userLinkedinUrl}},\n    \"userLocation\": {{userLocation}},\n    \"userMiddleName\": {{userMiddleName}},\n    \"userPhoneNumber\": {{userPhoneNumber}},\n    \"userRoleMaps\": [\n        {\n            \"roleId\": \"{{roleId}}\",\n            \"userRoleStatus\": {{userRoleStatus}}\n        }\n    ],\n    \"userTimeZone\": \"{{userTimeZone}}\",\n    \"userVisaStatus\": \"{{userVisaStatus}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BaseURL}}/users/users/roleStatus"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete User by Id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.unset(\"userId\");"
+								],
+								"type": "text/javascript",
+								"id": "21abafb5-f5e4-428e-ba49-02909420b43d"
+							}
+						}
+					],
+					"_postman_id": "3ea56d58-f77d-4763-8496-f60807348595",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BaseURL}}/users/users/:userID",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"users",
+								"users",
+								":userID"
+							],
+							"variable": [
+								{
+									"id": "c9ce3008-8a68-4c37-aadd-acc6b9d372b2",
+									"key": "userID",
+									"value": "{{userId}}",
+									"type": "string"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create new user with missing phone number",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Test1 - Validate status code",
+									"pm.test(\"Status code should be 400 Bad Request\", function () {",
+									"    pm.response.to.have.status(400);",
+									"    pm.expect(pm.response.status).to.eql('Bad Request');",
+									"});",
+									"",
+									"// Test2 - Validate Response body type",
+									"pm.test(\"Response body should be JSON\", function () {",
+									"  pm.response.to.be.json;",
+									"});",
+									"",
+									"// Expected schema",
+									"var schema = {",
+									"    \"type\": \"object\",",
+									"    \"required\": [",
+									"        \"message\",",
+									"        \"success\",",
+									"    ],",
+									"    \"properties\": {",
+									"        \"message\": {",
+									"            \"type\": \"string\"",
+									"        },",
+									"        \"success\": {",
+									"            \"type\": \"boolean\"",
+									"        }",
+									"    }",
+									"};",
+									"",
+									"// Test3 - Validate schema of the response",
+									"pm.test('Schema validation', () => {",
+									"    pm.response.to.have.jsonSchema(schema);",
+									"});",
+									"",
+									"// Get json from response",
+									"const responseJson = pm.response.json();",
+									"",
+									"// Test4 - Validate all values",
+									"pm.test(\"Validate values in response\", function () {",
+									"    pm.expect(responseJson.message).to.eql(\"Phone Number is required\");",
+									"    pm.expect(responseJson.success).to.be.false;",
+									"});"
+								],
+								"type": "text/javascript",
+								"id": "2980ae15-bdcc-4b57-8204-44892cd81f43"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"id": "496dd962-8724-47c9-ae2c-9e5bb9c449f4"
+							}
+						}
+					],
+					"_postman_id": "b65396fe-608e-4b69-9bb2-74a1fcfc399a",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userComments\": \"{{userComments}}\",\n    \"userEduPg\": \"{{userEduPg}}\",\n    \"userEduUg\": \"{{userEduUg}}\",\n    \"userFirstName\": \"{{userFirstName}}\",\n    \"userLastName\": \"{{userLastName}}\",\n    \"userLinkedinUrl\": \"{{userLinkedinUrl}}\",\n    \"userLocation\": \"{{userLocation}}\",\n    \"userMiddleName\": \"\",\n    \"userRoleMaps\": [\n        {\n            \"roleId\": \"{{roleId}}\",\n            \"userRoleStatus\": \"{{userRoleStatus}}\"\n        }\n    ],\n    \"userTimeZone\": \"{{userTimeZone}}\",\n    \"userVisaStatus\": \"{{userVisaStatus}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BaseURL}}/users/users/roleStatus"
+					},
+					"response": []
+				},
+				{
+					"name": "Create new user with blank phone number",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Test1 - Validate status code",
+									"pm.test(\"Status code should be 400 Bad Request\", function () {",
+									"    pm.response.to.have.status(400);",
+									"    pm.expect(pm.response.status).to.eql('Bad Request');",
+									"});",
+									"",
+									"// Test2 - Validate Response body type",
+									"pm.test(\"Response body should be JSON\", function () {",
+									"  pm.response.to.be.json;",
+									"});",
+									"",
+									"// Expected schema",
+									"var schema = {",
+									"    \"type\": \"object\",",
+									"    \"required\": [",
+									"        \"message\",",
+									"        \"success\",",
+									"    ],",
+									"    \"properties\": {",
+									"        \"message\": {",
+									"            \"type\": \"string\"",
+									"        },",
+									"        \"success\": {",
+									"            \"type\": \"boolean\"",
+									"        }",
+									"    }",
+									"};",
+									"",
+									"// Test3 - Validate schema of the response",
+									"pm.test('Schema validation', () => {",
+									"    pm.response.to.have.jsonSchema(schema);",
+									"});",
+									"",
+									"// Get json from response",
+									"const responseJson = pm.response.json();",
+									"",
+									"// Test4 - Validate all values",
+									"pm.test(\"Validate values in response\", function () {",
+									"    pm.expect(responseJson.message).to.eql(\"Phone Number is required\");",
+									"    pm.expect(responseJson.success).to.be.false;",
+									"});"
+								],
+								"type": "text/javascript",
+								"id": "3b1bdb2c-b40d-49dc-938c-e500d4bac9cb"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"userPhoneNumber\", undefined);"
+								],
+								"type": "text/javascript",
+								"id": "0ed99ff2-e9aa-4982-b03c-8241b5df9df8"
+							}
+						}
+					],
+					"_postman_id": "b761ef3d-88de-47ba-8b07-9ef71f7f91a3",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userComments\": \"{{userComments}}\",\n    \"userEduPg\": \"{{userEduPg}}\",\n    \"userEduUg\": \"{{userEduUg}}\",\n    \"userFirstName\": \"{{userFirstName}}\",\n    \"userLastName\": \"{{userLastName}}\",\n    \"userLinkedinUrl\": \"{{userLinkedinUrl}}\",\n    \"userLocation\": \"{{userLocation}}\",\n    \"userPhoneNumber\": {{userPhoneNumber}},\n    \"userMiddleName\": \"\",\n    \"userRoleMaps\": [\n        {\n            \"roleId\": \"{{roleId}}\",\n            \"userRoleStatus\": \"{{userRoleStatus}}\"\n        }\n    ],\n    \"userTimeZone\": \"{{userTimeZone}}\",\n    \"userVisaStatus\": \"{{userVisaStatus}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BaseURL}}/users/users/roleStatus"
+					},
+					"response": []
+				},
+				{
+					"name": "Create new user with string phone number",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Test1 - Validate status code",
+									"pm.test(\"Status code should be 400 Bad Request\", function () {",
+									"    pm.response.to.have.status(400);",
+									"    pm.expect(pm.response.status).to.eql('Bad Request');",
+									"});",
+									"",
+									"// Test2 - Validate Response body type",
+									"pm.test(\"Response body should be JSON\", function () {",
+									"  pm.response.to.be.json;",
+									"});",
+									"",
+									"// Expected schema",
+									"var schema = {",
+									"    \"type\": \"object\",",
+									"    \"required\": [",
+									"        \"message\",",
+									"        \"success\",",
+									"    ],",
+									"    \"properties\": {",
+									"        \"message\": {",
+									"            \"type\": \"string\"",
+									"        },",
+									"        \"success\": {",
+									"            \"type\": \"boolean\"",
+									"        }",
+									"    }",
+									"};",
+									"",
+									"// Test3 - Validate schema of the response",
+									"pm.test('Schema validation', () => {",
+									"    pm.response.to.have.jsonSchema(schema);",
+									"});",
+									"",
+									"// Get json from response",
+									"const responseJson = pm.response.json();",
+									"",
+									"// Test4 - Validate all values",
+									"pm.test(\"Validate values in response\", function () {",
+									"    pm.expect(responseJson.message).to.eql(\"Phone number cannot be string\");",
+									"    pm.expect(responseJson.success).to.be.false;",
+									"});"
+								],
+								"type": "text/javascript",
+								"id": "a1bad699-7086-4d41-a81a-5c11bdb9604d"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"id": "ba908784-ca7b-43b3-a093-43836a690922"
+							}
+						}
+					],
+					"_postman_id": "158f8f8d-4cb2-4202-9890-6a07e1a601e2",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userComments\": \"{{userComments}}\",\n    \"userEduPg\": \"{{userEduPg}}\",\n    \"userEduUg\": \"{{userEduUg}}\",\n    \"userFirstName\": \"{{userFirstName}}\",\n    \"userLastName\": \"{{userLastName}}\",\n    \"userLinkedinUrl\": \"{{userLinkedinUrl}}\",\n    \"userLocation\": \"{{userLocation}}\",\n    \"stringUserPhoneNumber\": \"{{stringUserPhoneNumber}}\",\n    \"userMiddleName\": \"\",\n    \"userRoleMaps\": [\n        {\n            \"roleId\": \"{{roleId}}\",\n            \"userRoleStatus\": \"{{userRoleStatus}}\"\n        }\n    ],\n    \"userTimeZone\": \"{{userTimeZone}}\",\n    \"userVisaStatus\": \"{{userVisaStatus}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BaseURL}}/users/users/roleStatus"
+					},
+					"response": []
+				},
+				{
+					"name": "Create new user with missing role id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Test1 - Validate status code",
+									"pm.test(\"Status code should be 400 Bad Request\", function () {",
+									"    pm.response.to.have.status(400);",
+									"    pm.expect(pm.response.status).to.eql('Bad Request');",
+									"});",
+									"",
+									"// Test2 - Validate Response body type",
+									"pm.test(\"Response body should be JSON\", function () {",
+									"  pm.response.to.be.json;",
+									"});",
+									"",
+									"// Expected schema",
+									"var schema = {",
+									"    \"type\": \"object\",",
+									"    \"required\": [",
+									"        \"message\",",
+									"        \"success\",",
+									"    ],",
+									"    \"properties\": {",
+									"        \"message\": {",
+									"            \"type\": \"string\"",
+									"        },",
+									"        \"success\": {",
+									"            \"type\": \"boolean\"",
+									"        }",
+									"    }",
+									"};",
+									"",
+									"// Test3 - Validate schema of the response",
+									"pm.test('Schema validation', () => {",
+									"    pm.response.to.have.jsonSchema(schema);",
+									"});",
+									"",
+									"// Get json from response",
+									"const responseJson = pm.response.json();",
+									"",
+									"// Test4 - Validate all values",
+									"pm.test(\"Validate values in response\", function () {",
+									"    pm.expect(responseJson.message).to.eql(\"Role Id is mandatory\");",
+									"    pm.expect(responseJson.success).to.be.false;",
+									"});"
+								],
+								"type": "text/javascript",
+								"id": "505c2436-f28a-4f97-87f3-bf07e8ea75ca"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const phoneNumber = Math.floor(Math.random() * 10000000);",
+									"pm.environment.set(\"userPhoneNumber\", phoneNumber);"
+								],
+								"type": "text/javascript",
+								"id": "43c03281-e340-4ab0-9301-2d1dfa647020"
+							}
+						}
+					],
+					"_postman_id": "5d5023a5-4e61-40c1-a264-ac9b8650767d",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userComments\": \"{{userComments}}\",\n    \"userEduPg\": \"{{userEduPg}}\",\n    \"userEduUg\": \"{{userEduUg}}\",\n    \"userFirstName\": \"{{userFirstName}}\",\n    \"userLastName\": \"{{userLastName}}\",\n    \"userLinkedinUrl\": \"{{userLinkedinUrl}}\",\n    \"userLocation\": \"{{userLocation}}\",\n    \"userMiddleName\": \"\",\n    \"userPhoneNumber\": {{userPhoneNumber}},\n    \"userRoleMaps\": [\n        {\n            \"userRoleStatus\": \"{{userRoleStatus}}\"\n        }\n    ],\n    \"userTimeZone\": \"{{userTimeZone}}\",\n    \"userVisaStatus\": \"{{userVisaStatus}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BaseURL}}/users/users/roleStatus"
+					},
+					"response": []
+				},
+				{
+					"name": "Create new user with blank role id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Test1 - Validate status code",
+									"pm.test(\"Status code should be 400 Bad Request\", function () {",
+									"    pm.response.to.have.status(400);",
+									"    pm.expect(pm.response.status).to.eql('Bad Request');",
+									"});",
+									"",
+									"// Test2 - Validate Response body type",
+									"pm.test(\"Response body should be JSON\", function () {",
+									"  pm.response.to.be.json;",
+									"});",
+									"",
+									"// Expected schema",
+									"var schema = {",
+									"    \"type\": \"object\",",
+									"    \"required\": [",
+									"        \"message\",",
+									"        \"success\",",
+									"    ],",
+									"    \"properties\": {",
+									"        \"message\": {",
+									"            \"type\": \"string\"",
+									"        },",
+									"        \"success\": {",
+									"            \"type\": \"boolean\"",
+									"        }",
+									"    }",
+									"};",
+									"",
+									"// Test3 - Validate schema of the response",
+									"pm.test('Schema validation', () => {",
+									"    pm.response.to.have.jsonSchema(schema);",
+									"});",
+									"",
+									"// Get json from response",
+									"const responseJson = pm.response.json();",
+									"",
+									"// Test4 - Validate all values",
+									"pm.test(\"Validate values in response\", function () {",
+									"    pm.expect(responseJson.message).to.eql(\"Role Id is mandatory\");",
+									"    pm.expect(responseJson.success).to.be.false;",
+									"});"
+								],
+								"type": "text/javascript",
+								"id": "c0dba77b-4b7b-40f8-ab14-9fffd79f0ec8"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const phoneNumber = Math.floor(Math.random() * 10000000);",
+									"pm.environment.set(\"userPhoneNumber\", phoneNumber);",
+									""
+								],
+								"type": "text/javascript",
+								"id": "4deb3d53-e2fc-4c60-a094-2636da1e095f"
+							}
+						}
+					],
+					"_postman_id": "fefbdc4d-6d21-495d-8d15-9b7fbc8e4a81",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userComments\": \"{{userComments}}\",\n    \"userEduPg\": \"{{userEduPg}}\",\n    \"userEduUg\": \"{{userEduUg}}\",\n    \"userFirstName\": \"{{userFirstName}}\",\n    \"userLastName\": \"{{userLastName}}\",\n    \"userLinkedinUrl\": \"{{userLinkedinUrl}}\",\n    \"userLocation\": \"{{userLocation}}\",\n    \"userMiddleName\": \"\",\n    \"userPhoneNumber\": {{userPhoneNumber}},\n    \"userRoleMaps\": [\n        {\n            \"roleId\": \"{{blankRoleId}}\",\n            \"userRoleStatus\": \"{{userRoleStatus}}\"\n        }\n    ],\n    \"userTimeZone\": \"{{userTimeZone}}\",\n    \"userVisaStatus\": \"{{userVisaStatus}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BaseURL}}/users/users/roleStatus"
+					},
+					"response": []
+				},
+				{
+					"name": "Create new user with invalid role id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Test1 - Validate status code",
+									"pm.test(\"Status code should be 400 Bad Request\", function () {",
+									"    pm.response.to.have.status(400);",
+									"    pm.expect(pm.response.status).to.eql('Bad Request');",
+									"});",
+									"",
+									"// Test2 - Validate Response body type",
+									"pm.test(\"Response body should be JSON\", function () {",
+									"  pm.response.to.be.json;",
+									"});",
+									"",
+									"// Expected schema",
+									"var schema = {",
+									"    \"type\": \"object\",",
+									"    \"required\": [",
+									"        \"message\",",
+									"        \"success\",",
+									"    ],",
+									"    \"properties\": {",
+									"        \"message\": {",
+									"            \"type\": \"string\"",
+									"        },",
+									"        \"success\": {",
+									"            \"type\": \"boolean\"",
+									"        }",
+									"    }",
+									"};",
+									"",
+									"// Test3 - Validate schema of the response",
+									"pm.test('Schema validation', () => {",
+									"    pm.response.to.have.jsonSchema(schema);",
+									"});",
+									"",
+									"// Get json from response",
+									"const responseJson = pm.response.json();",
+									"",
+									"// Test4 - Validate all values",
+									"pm.test(\"Validate values in response\", function () {",
+									"    pm.expect(responseJson.message).to.eql(\"Invalid Role id\");",
+									"    pm.expect(responseJson.success).to.be.false;",
+									"});"
+								],
+								"type": "text/javascript",
+								"id": "64a9f314-1d64-4402-ae55-d96969bc5f8e"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const phoneNumber = Math.floor(Math.random() * 10000000);",
+									"pm.environment.set(\"userPhoneNumber\", phoneNumber);"
+								],
+								"type": "text/javascript",
+								"id": "b1691aae-ed83-4bd4-ad88-9e405c5036b3"
+							}
+						}
+					],
+					"_postman_id": "aa8f415a-8f26-49b6-98dd-9be963253879",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userComments\": \"{{userComments}}\",\n    \"userEduPg\": \"{{userEduPg}}\",\n    \"userEduUg\": \"{{userEduUg}}\",\n    \"userFirstName\": \"{{userFirstName}}\",\n    \"userLastName\": \"{{userLastName}}\",\n    \"userLinkedinUrl\": \"{{userLinkedinUrl}}\",\n    \"userLocation\": \"{{userLocation}}\",\n    \"userMiddleName\": \"\",\n    \"userPhoneNumber\": {{userPhoneNumber}},\n    \"userRoleMaps\": [\n        {\n            \"roleId\": \"{{invalidRoleId}}\",\n            \"userRoleStatus\": \"{{userRoleStatus}}\"\n        }\n    ],\n    \"userTimeZone\": \"{{userTimeZone}}\",\n    \"userVisaStatus\": \"{{userVisaStatus}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BaseURL}}/users/users/roleStatus"
+					},
+					"response": []
+				},
+				{
+					"name": "Create new user with integer role id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Test1 - Validate status code",
+									"pm.test(\"Status code should be 400 Bad Request\", function () {",
+									"    pm.response.to.have.status(400);",
+									"    pm.expect(pm.response.status).to.eql('Bad Request');",
+									"});",
+									"",
+									"// Test2 - Validate Response body type",
+									"pm.test(\"Response body should be JSON\", function () {",
+									"  pm.response.to.be.json;",
+									"});",
+									"",
+									"// Expected schema",
+									"var schema = {",
+									"    \"type\": \"object\",",
+									"    \"required\": [",
+									"        \"message\",",
+									"        \"success\",",
+									"    ],",
+									"    \"properties\": {",
+									"        \"message\": {",
+									"            \"type\": \"string\"",
+									"        },",
+									"        \"success\": {",
+									"            \"type\": \"boolean\"",
+									"        }",
+									"    }",
+									"};",
+									"",
+									"// Test3 - Validate schema of the response",
+									"pm.test('Schema validation', () => {",
+									"    pm.response.to.have.jsonSchema(schema);",
+									"});",
+									"",
+									"// Get json from response",
+									"const responseJson = pm.response.json();",
+									"",
+									"// Test4 - Validate all values",
+									"pm.test(\"Validate values in response\", function () {",
+									"    pm.expect(responseJson.message).to.eql(\"Invalid Role id\");",
+									"    pm.expect(responseJson.success).to.be.false;",
+									"});"
+								],
+								"type": "text/javascript",
+								"id": "df529af6-e21e-487a-b221-cc3d2f7cb58c"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const phoneNumber = Math.floor(Math.random() * 10000000);",
+									"pm.environment.set(\"userPhoneNumber\", phoneNumber);"
+								],
+								"type": "text/javascript",
+								"id": "4af5dd15-17d0-4400-8c32-c0a1fc64735e"
+							}
+						}
+					],
+					"_postman_id": "5035d56b-0a4e-4bd8-877c-78b00e31ad66",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userComments\": \"{{userComments}}\",\n    \"userEduPg\": \"{{userEduPg}}\",\n    \"userEduUg\": \"{{userEduUg}}\",\n    \"userFirstName\": \"{{userFirstName}}\",\n    \"userLastName\": \"{{userLastName}}\",\n    \"userLinkedinUrl\": \"{{userLinkedinUrl}}\",\n    \"userLocation\": \"{{userLocation}}\",\n    \"userMiddleName\": \"\",\n    \"userPhoneNumber\": {{userPhoneNumber}},\n    \"userRoleMaps\": [\n        {\n            \"roleId\": {{integerRoleId}},\n            \"userRoleStatus\": \"{{userRoleStatus}}\"\n        }\n    ],\n    \"userTimeZone\": \"{{userTimeZone}}\",\n    \"userVisaStatus\": \"{{userVisaStatus}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BaseURL}}/users/users/roleStatus"
+					},
+					"response": []
+				},
+				{
+					"name": "Create new user with missing role status",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Test1 - Validate status code",
+									"pm.test(\"Status code should be 400 Bad Request\", function () {",
+									"    pm.response.to.have.status(400);",
+									"    pm.expect(pm.response.status).to.eql('Bad Request');",
+									"});",
+									"",
+									"// Test2 - Validate Response body type",
+									"pm.test(\"Response body should be JSON\", function () {",
+									"  pm.response.to.be.json;",
+									"});",
+									"",
+									"// Expected schema",
+									"var schema = {",
+									"    \"type\": \"object\",",
+									"    \"required\": [",
+									"        \"message\",",
+									"        \"success\",",
+									"    ],",
+									"    \"properties\": {",
+									"        \"message\": {",
+									"            \"type\": \"string\"",
+									"        },",
+									"        \"success\": {",
+									"            \"type\": \"boolean\"",
+									"        }",
+									"    }",
+									"};",
+									"",
+									"// Test3 - Validate schema of the response",
+									"pm.test('Schema validation', () => {",
+									"    pm.response.to.have.jsonSchema(schema);",
+									"});",
+									"",
+									"// Get json from response",
+									"const responseJson = pm.response.json();",
+									"",
+									"// Test4 - Validate all values",
+									"pm.test(\"Validate values in response\", function () {",
+									"    pm.expect(responseJson.message).to.eql(\"Role Status is Mandatory\");",
+									"    pm.expect(responseJson.success).to.be.false;",
+									"});"
+								],
+								"type": "text/javascript",
+								"id": "e6f300d4-362d-4842-b4af-285fd83e1d26"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const phoneNumber = Math.floor(Math.random() * 10000000);",
+									"pm.environment.set(\"userPhoneNumber\", phoneNumber);"
+								],
+								"type": "text/javascript",
+								"id": "07bf1fac-f8c7-40c2-aee4-1f5e37a0695b"
+							}
+						}
+					],
+					"_postman_id": "5c700cfa-0c86-4c32-b2bc-8b9d82e34867",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userComments\": \"{{userComments}}\",\n    \"userEduPg\": \"{{userEduPg}}\",\n    \"userEduUg\": \"{{userEduUg}}\",\n    \"userFirstName\": \"{{userFirstName}}\",\n    \"userLastName\": \"{{userLastName}}\",\n    \"userLinkedinUrl\": \"{{userLinkedinUrl}}\",\n    \"userLocation\": \"{{userLocation}}\",\n    \"userMiddleName\": \"\",\n    \"userPhoneNumber\": {{userPhoneNumber}},\n    \"userRoleMaps\": [\n        {\n            \"roleId\": \"{{roleId}}\"\n        }\n    ],\n    \"userTimeZone\": \"{{userTimeZone}}\",\n    \"userVisaStatus\": \"{{userVisaStatus}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BaseURL}}/users/users/roleStatus"
+					},
+					"response": []
+				},
+				{
+					"name": "Create new user with blank role status",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Test1 - Validate status code",
+									"pm.test(\"Status code should be 400 Bad Request\", function () {",
+									"    pm.response.to.have.status(400);",
+									"    pm.expect(pm.response.status).to.eql('Bad Request');",
+									"});",
+									"",
+									"// Test2 - Validate Response body type",
+									"pm.test(\"Response body should be JSON\", function () {",
+									"  pm.response.to.be.json;",
+									"});",
+									"",
+									"// Expected schema",
+									"var schema = {",
+									"    \"type\": \"object\",",
+									"    \"required\": [",
+									"        \"message\",",
+									"        \"success\",",
+									"    ],",
+									"    \"properties\": {",
+									"        \"message\": {",
+									"            \"type\": \"string\"",
+									"        },",
+									"        \"success\": {",
+									"            \"type\": \"boolean\"",
+									"        }",
+									"    }",
+									"};",
+									"",
+									"// Test3 - Validate schema of the response",
+									"pm.test('Schema validation', () => {",
+									"    pm.response.to.have.jsonSchema(schema);",
+									"});",
+									"",
+									"// Get json from response",
+									"const responseJson = pm.response.json();",
+									"",
+									"// Test4 - Validate all values",
+									"pm.test(\"Validate values in response\", function () {",
+									"    pm.expect(responseJson.message).to.eql(\"Role Status is Mandatory\");",
+									"    pm.expect(responseJson.success).to.be.false;",
+									"});"
+								],
+								"type": "text/javascript",
+								"id": "64de514d-af84-42b7-ae0a-9f89837c27de"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const phoneNumber = Math.floor(Math.random() * 10000000);",
+									"pm.environment.set(\"userPhoneNumber\", phoneNumber);"
+								],
+								"type": "text/javascript",
+								"id": "f92e939c-19b2-4034-b2e0-f0eeab028d07"
+							}
+						}
+					],
+					"_postman_id": "772aaaa4-2883-4481-9cd7-242219455cc4",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userComments\": \"{{userComments}}\",\n    \"userEduPg\": \"{{userEduPg}}\",\n    \"userEduUg\": \"{{userEduUg}}\",\n    \"userFirstName\": \"{{userFirstName}}\",\n    \"userLastName\": \"{{userLastName}}\",\n    \"userLinkedinUrl\": \"{{userLinkedinUrl}}\",\n    \"userLocation\": \"{{userLocation}}\",\n    \"userMiddleName\": \"\",\n    \"userPhoneNumber\": {{userPhoneNumber}},\n    \"userRoleMaps\": [\n        {\n            \"roleId\": \"{{roleId}}\",\n            \"userRoleStatus\": \"{{blankUserRoleStatus}}\"\n        }\n    ],\n    \"userTimeZone\": \"{{userTimeZone}}\",\n    \"userVisaStatus\": \"{{userVisaStatus}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BaseURL}}/users/users/roleStatus"
+					},
+					"response": []
+				},
+				{
+					"name": "Create new user with missing first name",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Test1 - Validate status code",
+									"pm.test(\"Status code should be 400 Bad Request\", function () {",
+									"    pm.response.to.have.status(400);",
+									"    pm.expect(pm.response.status).to.eql('Bad Request');",
+									"});",
+									"",
+									"// Test2 - Validate Response body type",
+									"pm.test(\"Response body should be JSON\", function () {",
+									"  pm.response.to.be.json;",
+									"});",
+									"",
+									"// Expected schema",
+									"var schema = {",
+									"    \"type\": \"object\",",
+									"    \"required\": [",
+									"        \"message\",",
+									"        \"success\",",
+									"    ],",
+									"    \"properties\": {",
+									"        \"message\": {",
+									"            \"type\": \"string\"",
+									"        },",
+									"        \"success\": {",
+									"            \"type\": \"boolean\"",
+									"        }",
+									"    }",
+									"};",
+									"",
+									"// Test3 - Validate schema of the response",
+									"pm.test('Schema validation', () => {",
+									"    pm.response.to.have.jsonSchema(schema);",
+									"});",
+									"",
+									"// Get json from response",
+									"const responseJson = pm.response.json();",
+									"",
+									"// Test4 - Validate all values",
+									"pm.test(\"Validate values in response\", function () {",
+									"    pm.expect(responseJson.message).to.eql(\"User First Name is cannot be null or empty\");",
+									"    pm.expect(responseJson.success).to.be.false;",
+									"});"
+								],
+								"type": "text/javascript",
+								"id": "224d2603-d0d4-401f-ab9a-591e3e5c3b8a"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const phoneNumber = Math.floor(Math.random() * 10000000);",
+									"pm.environment.set(\"userPhoneNumber\", phoneNumber);"
+								],
+								"type": "text/javascript",
+								"id": "383c4fff-37d0-4d70-9e70-00e45e47a09c"
+							}
+						}
+					],
+					"_postman_id": "56dadb61-6d5d-4b42-a47f-a9aeff2ef691",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userComments\": \"{{userComments}}\",\n    \"userEduPg\": \"{{userEduPg}}\",\n    \"userEduUg\": \"{{userEduUg}}\",\n    \"userLastName\": \"{{userLastName}}\",\n    \"userLinkedinUrl\": \"{{userLinkedinUrl}}\",\n    \"userLocation\": \"{{userLocation}}\",\n    \"userMiddleName\": \"\",\n    \"userPhoneNumber\": {{userPhoneNumber}},\n    \"userRoleMaps\": [\n        {\n            \"roleId\": \"{{roleId}}\",\n            \"userRoleStatus\": \"{{userRoleStatus}}\"\n        }\n    ],\n    \"userTimeZone\": \"{{userTimeZone}}\",\n    \"userVisaStatus\": \"{{userVisaStatus}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BaseURL}}/users/users/roleStatus"
+					},
+					"response": []
+				},
+				{
+					"name": "Create new user with blank first name",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Test1 - Validate status code",
+									"pm.test(\"Status code should be 400 Bad Request\", function () {",
+									"    pm.response.to.have.status(400);",
+									"    pm.expect(pm.response.status).to.eql('Bad Request');",
+									"});",
+									"",
+									"// Test2 - Validate Response body type",
+									"pm.test(\"Response body should be JSON\", function () {",
+									"  pm.response.to.be.json;",
+									"});",
+									"",
+									"// Expected schema",
+									"var schema = {",
+									"    \"type\": \"object\",",
+									"    \"required\": [",
+									"        \"message\",",
+									"        \"success\",",
+									"    ],",
+									"    \"properties\": {",
+									"        \"message\": {",
+									"            \"type\": \"string\"",
+									"        },",
+									"        \"success\": {",
+									"            \"type\": \"boolean\"",
+									"        }",
+									"    }",
+									"};",
+									"",
+									"// Test3 - Validate schema of the response",
+									"pm.test('Schema validation', () => {",
+									"    pm.response.to.have.jsonSchema(schema);",
+									"});",
+									"",
+									"// Get json from response",
+									"const responseJson = pm.response.json();",
+									"",
+									"// Test4 - Validate all values",
+									"pm.test(\"Validate values in response\", function () {",
+									"    pm.expect(responseJson.message).to.eql(\"User First Name is cannot be null or empty\");",
+									"    pm.expect(responseJson.success).to.be.false;",
+									"});"
+								],
+								"type": "text/javascript",
+								"id": "c514c230-c0c7-4dd9-8ab4-b00ce177f0dd"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const phoneNumber = Math.floor(Math.random() * 10000000);",
+									"pm.environment.set(\"userPhoneNumber\", phoneNumber);"
+								],
+								"type": "text/javascript",
+								"id": "ee805544-4b3d-4f40-a78f-9e48342aa7db"
+							}
+						}
+					],
+					"_postman_id": "16f389c5-0680-4206-aa50-f9e929055f21",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userComments\": \"{{userComments}}\",\n    \"userEduPg\": \"{{userEduPg}}\",\n    \"userEduUg\": \"{{userEduUg}}\",\n    \"userLastName\": \"{{userLastName}}\",\n    \"userFirstName\": \"{{blankUserFirstName}}\",\n    \"userLinkedinUrl\": \"{{userLinkedinUrl}}\",\n    \"userLocation\": \"{{userLocation}}\",\n    \"userMiddleName\": \"\",\n    \"userPhoneNumber\": {{userPhoneNumber}},\n    \"userRoleMaps\": [\n        {\n            \"roleId\": \"{{roleId}}\",\n            \"userRoleStatus\": \"{{userRoleStatus}}\"\n        }\n    ],\n    \"userTimeZone\": \"{{userTimeZone}}\",\n    \"userVisaStatus\": \"{{userVisaStatus}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BaseURL}}/users/users/roleStatus"
+					},
+					"response": []
+				},
+				{
+					"name": "Create new user with missing last name",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Test1 - Validate status code",
+									"pm.test(\"Status code should be 400 Bad Request\", function () {",
+									"    pm.response.to.have.status(400);",
+									"    pm.expect(pm.response.status).to.eql('Bad Request');",
+									"});",
+									"",
+									"// Test2 - Validate Response body type",
+									"pm.test(\"Response body should be JSON\", function () {",
+									"  pm.response.to.be.json;",
+									"});",
+									"",
+									"// Expected schema",
+									"var schema = {",
+									"    \"type\": \"object\",",
+									"    \"required\": [",
+									"        \"message\",",
+									"        \"success\",",
+									"    ],",
+									"    \"properties\": {",
+									"        \"message\": {",
+									"            \"type\": \"string\"",
+									"        },",
+									"        \"success\": {",
+									"            \"type\": \"boolean\"",
+									"        }",
+									"    }",
+									"};",
+									"",
+									"// Test3 - Validate schema of the response",
+									"pm.test('Schema validation', () => {",
+									"    pm.response.to.have.jsonSchema(schema);",
+									"});",
+									"",
+									"// Get json from response",
+									"const responseJson = pm.response.json();",
+									"",
+									"// Test4 - Validate all values",
+									"pm.test(\"Validate values in response\", function () {",
+									"    pm.expect(responseJson.message).to.eql(\"User Last Name is cannot be null or empty\");",
+									"    pm.expect(responseJson.success).to.be.false;",
+									"});"
+								],
+								"type": "text/javascript",
+								"id": "017fa789-647c-4461-a92e-ddca7a4d2a9a"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const phoneNumber = Math.floor(Math.random() * 10000000);",
+									"pm.environment.set(\"userPhoneNumber\", phoneNumber);"
+								],
+								"type": "text/javascript",
+								"id": "5405004f-8f73-459c-b815-8f4824c6f44f"
+							}
+						}
+					],
+					"_postman_id": "ecf773b5-e66d-4f12-aaca-d45a3a23c884",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userComments\": \"{{userComments}}\",\n    \"userEduPg\": \"{{userEduPg}}\",\n    \"userEduUg\": \"{{userEduUg}}\",\n    \"userFirstName\": \"{{userFirstName}}\",\n    \"userLinkedinUrl\": \"{{userLinkedinUrl}}\",\n    \"userLocation\": \"{{userLocation}}\",\n    \"userMiddleName\": \"\",\n    \"userPhoneNumber\": {{userPhoneNumber}},\n    \"userRoleMaps\": [\n        {\n            \"roleId\": \"{{roleId}}\",\n            \"userRoleStatus\": \"{{userRoleStatus}}\"\n        }\n    ],\n    \"userTimeZone\": \"{{userTimeZone}}\",\n    \"userVisaStatus\": \"{{userVisaStatus}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BaseURL}}/users/users/roleStatus"
+					},
+					"response": []
+				},
+				{
+					"name": "Create new user with blank last name",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Test1 - Validate status code",
+									"pm.test(\"Status code should be 400 Bad Request\", function () {",
+									"    pm.response.to.have.status(400);",
+									"    pm.expect(pm.response.status).to.eql('Bad Request');",
+									"});",
+									"",
+									"// Test2 - Validate Response body type",
+									"pm.test(\"Response body should be JSON\", function () {",
+									"  pm.response.to.be.json;",
+									"});",
+									"",
+									"// Expected schema",
+									"var schema = {",
+									"    \"type\": \"object\",",
+									"    \"required\": [",
+									"        \"message\",",
+									"        \"success\",",
+									"    ],",
+									"    \"properties\": {",
+									"        \"message\": {",
+									"            \"type\": \"string\"",
+									"        },",
+									"        \"success\": {",
+									"            \"type\": \"boolean\"",
+									"        }",
+									"    }",
+									"};",
+									"",
+									"// Test3 - Validate schema of the response",
+									"pm.test('Schema validation', () => {",
+									"    pm.response.to.have.jsonSchema(schema);",
+									"});",
+									"",
+									"// Get json from response",
+									"const responseJson = pm.response.json();",
+									"",
+									"// Test4 - Validate all values",
+									"pm.test(\"Validate values in response\", function () {",
+									"    pm.expect(responseJson.message).to.eql(\"User Last Name is cannot be null or empty\");",
+									"    pm.expect(responseJson.success).to.be.false;",
+									"});"
+								],
+								"type": "text/javascript",
+								"id": "5eaafd1a-fec6-45ee-9b8e-39c5aafeea37"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const phoneNumber = Math.floor(Math.random() * 10000000);",
+									"pm.environment.set(\"userPhoneNumber\", phoneNumber);"
+								],
+								"type": "text/javascript",
+								"id": "038a8715-a669-4bfc-aacd-154076e5b46b"
+							}
+						}
+					],
+					"_postman_id": "f0171510-fe94-4bc1-b9e8-062c2da7aad0",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userComments\": \"{{userComments}}\",\n    \"userEduPg\": \"{{userEduPg}}\",\n    \"userEduUg\": \"{{userEduUg}}\",\n    \"userFirstName\": \"{{userFirstName}}\",\n    \"userLastName\": \"{{blankUserLastName}}\",\n    \"userLinkedinUrl\": \"{{userLinkedinUrl}}\",\n    \"userLocation\": \"{{userLocation}}\",\n    \"userMiddleName\": \"\",\n    \"userPhoneNumber\": {{userPhoneNumber}},\n    \"userRoleMaps\": [\n        {\n            \"roleId\": \"{{roleId}}\",\n            \"userRoleStatus\": \"{{userRoleStatus}}\"\n        }\n    ],\n    \"userTimeZone\": \"{{userTimeZone}}\",\n    \"userVisaStatus\": \"{{userVisaStatus}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BaseURL}}/users/users/roleStatus"
+					},
+					"response": []
+				},
+				{
+					"name": "Create new user with missing time zone",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Test1 - Validate status code",
+									"pm.test(\"Status code should be 400 Bad Request\", function () {",
+									"    pm.response.to.have.status(400);",
+									"    pm.expect(pm.response.status).to.eql('Bad Request');",
+									"});",
+									"",
+									"// Test2 - Validate Response body type",
+									"pm.test(\"Response body should be JSON\", function () {",
+									"  pm.response.to.be.json;",
+									"});",
+									"",
+									"// Expected schema",
+									"var schema = {",
+									"    \"type\": \"object\",",
+									"    \"required\": [",
+									"        \"message\",",
+									"        \"success\",",
+									"    ],",
+									"    \"properties\": {",
+									"        \"message\": {",
+									"            \"type\": \"string\"",
+									"        },",
+									"        \"success\": {",
+									"            \"type\": \"boolean\"",
+									"        }",
+									"    }",
+									"};",
+									"",
+									"// Test3 - Validate schema of the response",
+									"pm.test('Schema validation', () => {",
+									"    pm.response.to.have.jsonSchema(schema);",
+									"});",
+									"",
+									"// Get json from response",
+									"const responseJson = pm.response.json();",
+									"",
+									"// Test4 - Validate all values",
+									"pm.test(\"Validate values in response\", function () {",
+									"    pm.expect(responseJson.message).to.eql(\"Failed to create user, as 'TimeZone' is invalid !! \");",
+									"    pm.expect(responseJson.success).to.be.false;",
+									"});"
+								],
+								"type": "text/javascript",
+								"id": "09fb09ba-2881-48ef-9122-4c68fd5bc5d8"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const phoneNumber = Math.floor(Math.random() * 10000000);",
+									"pm.environment.set(\"userPhoneNumber\", phoneNumber);"
+								],
+								"type": "text/javascript",
+								"id": "860483f4-a90f-478a-9149-9046d23def67"
+							}
+						}
+					],
+					"_postman_id": "4524d875-7459-4278-8f1e-6d31790f32d6",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userComments\": \"{{userComments}}\",\n    \"userEduPg\": \"{{userEduPg}}\",\n    \"userEduUg\": \"{{userEduUg}}\",\n    \"userFirstName\": \"{{userFirstName}}\",\n    \"userLastName\": \"{{userLastName}}\",\n    \"userLinkedinUrl\": \"{{userLinkedinUrl}}\",\n    \"userLocation\": \"{{userLocation}}\",\n    \"userMiddleName\": \"\",\n    \"userPhoneNumber\": {{userPhoneNumber}},\n    \"userRoleMaps\": [\n        {\n            \"roleId\": \"{{roleId}}\",\n            \"userRoleStatus\": \"{{userRoleStatus}}\"\n        }\n    ],\n    \"userVisaStatus\": \"{{userVisaStatus}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BaseURL}}/users/users/roleStatus"
+					},
+					"response": []
+				},
+				{
+					"name": "Create new user with blank time zone",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Test1 - Validate status code",
+									"pm.test(\"Status code should be 400 Bad Request\", function () {",
+									"    pm.response.to.have.status(400);",
+									"    pm.expect(pm.response.status).to.eql('Bad Request');",
+									"});",
+									"",
+									"// Test2 - Validate Response body type",
+									"pm.test(\"Response body should be JSON\", function () {",
+									"  pm.response.to.be.json;",
+									"});",
+									"",
+									"// Expected schema",
+									"var schema = {",
+									"    \"type\": \"object\",",
+									"    \"required\": [",
+									"        \"message\",",
+									"        \"success\",",
+									"    ],",
+									"    \"properties\": {",
+									"        \"message\": {",
+									"            \"type\": \"string\"",
+									"        },",
+									"        \"success\": {",
+									"            \"type\": \"boolean\"",
+									"        }",
+									"    }",
+									"};",
+									"",
+									"// Test3 - Validate schema of the response",
+									"pm.test('Schema validation', () => {",
+									"    pm.response.to.have.jsonSchema(schema);",
+									"});",
+									"",
+									"// Get json from response",
+									"const responseJson = pm.response.json();",
+									"",
+									"// Test4 - Validate all values",
+									"pm.test(\"Validate values in response\", function () {",
+									"    pm.expect(responseJson.message).to.eql(\"Failed to create user, as 'TimeZone' is invalid !! \");",
+									"    pm.expect(responseJson.success).to.be.false;",
+									"});"
+								],
+								"type": "text/javascript",
+								"id": "691c6a77-385a-4158-900d-7e9853314b36"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const phoneNumber = Math.floor(Math.random() * 10000000);",
+									"pm.environment.set(\"userPhoneNumber\", phoneNumber);"
+								],
+								"type": "text/javascript",
+								"id": "23ddf89c-37bc-4e31-bd6c-20bac6b6f17e"
+							}
+						}
+					],
+					"_postman_id": "5b45465e-0565-4670-a108-8502ba531d3a",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userComments\": \"{{userComments}}\",\n    \"userEduPg\": \"{{userEduPg}}\",\n    \"userEduUg\": \"{{userEduUg}}\",\n    \"userFirstName\": \"{{userFirstName}}\",\n    \"userLastName\": \"{{userLastName}}\",\n    \"userLinkedinUrl\": \"{{userLinkedinUrl}}\",\n    \"userLocation\": \"{{userLocation}}\",\n    \"userMiddleName\": \"\",\n    \"userPhoneNumber\": {{userPhoneNumber}},\n    \"userRoleMaps\": [\n        {\n            \"roleId\": \"{{roleId}}\",\n            \"userRoleStatus\": \"{{userRoleStatus}}\"\n        }\n    ],\n    \"userTimeZone\": \"{{blankUserTimeZone}}\",\n    \"userVisaStatus\": \"{{userVisaStatus}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BaseURL}}/users/users/roleStatus"
+					},
+					"response": []
+				},
+				{
+					"name": "Create new user with invalid time zone",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Test1 - Validate status code",
+									"pm.test(\"Status code should be 400 Bad Request\", function () {",
+									"    pm.response.to.have.status(400);",
+									"    pm.expect(pm.response.status).to.eql('Bad Request');",
+									"});",
+									"",
+									"// Test2 - Validate Response body type",
+									"pm.test(\"Response body should be JSON\", function () {",
+									"  pm.response.to.be.json;",
+									"});",
+									"",
+									"// Expected schema",
+									"var schema = {",
+									"    \"type\": \"object\",",
+									"    \"required\": [",
+									"        \"message\",",
+									"        \"success\",",
+									"    ],",
+									"    \"properties\": {",
+									"        \"message\": {",
+									"            \"type\": \"string\"",
+									"        },",
+									"        \"success\": {",
+									"            \"type\": \"boolean\"",
+									"        }",
+									"    }",
+									"};",
+									"",
+									"// Test3 - Validate schema of the response",
+									"pm.test('Schema validation', () => {",
+									"    pm.response.to.have.jsonSchema(schema);",
+									"});",
+									"",
+									"// Get json from response",
+									"const responseJson = pm.response.json();",
+									"",
+									"// Test4 - Validate all values",
+									"pm.test(\"Validate values in response\", function () {",
+									"    pm.expect(responseJson.message).to.eql(\"Failed to create user, as 'TimeZone' is invalid !! \");",
+									"    pm.expect(responseJson.success).to.be.false;",
+									"});"
+								],
+								"type": "text/javascript",
+								"id": "0eb15342-b0db-4fa7-9345-1be3edbcae2e"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const phoneNumber = Math.floor(Math.random() * 10000000);",
+									"pm.environment.set(\"userPhoneNumber\", phoneNumber);"
+								],
+								"type": "text/javascript",
+								"id": "70ad9641-2a76-498e-99cf-c929a0b531ea"
+							}
+						}
+					],
+					"_postman_id": "26728793-fc9b-43bd-bb0e-e460ef50ce55",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userComments\": \"{{userComments}}\",\n    \"userEduPg\": \"{{userEduPg}}\",\n    \"userEduUg\": \"{{userEduUg}}\",\n    \"userFirstName\": \"{{userFirstName}}\",\n    \"userLastName\": \"{{userLastName}}\",\n    \"userLinkedinUrl\": \"{{userLinkedinUrl}}\",\n    \"userLocation\": \"{{userLocation}}\",\n    \"userMiddleName\": \"\",\n    \"userPhoneNumber\": {{userPhoneNumber}},\n    \"userRoleMaps\": [\n        {\n            \"roleId\": \"{{roleId}}\",\n            \"userRoleStatus\": \"{{userRoleStatus}}\"\n        }\n    ],\n    \"userTimeZone\": \"{{invalidUserTimeZone}}\",\n    \"userVisaStatus\": \"{{userVisaStatus}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BaseURL}}/users/users/roleStatus"
+					},
+					"response": []
+				},
+				{
+					"name": "Create new user with integer time zone",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Test1 - Validate status code",
+									"pm.test(\"Status code should be 400 Bad Request\", function () {",
+									"    pm.response.to.have.status(400);",
+									"    pm.expect(pm.response.status).to.eql('Bad Request');",
+									"});",
+									"",
+									"// Test2 - Validate Response body type",
+									"pm.test(\"Response body should be JSON\", function () {",
+									"  pm.response.to.be.json;",
+									"});",
+									"",
+									"// Expected schema",
+									"var schema = {",
+									"    \"type\": \"object\",",
+									"    \"required\": [",
+									"        \"message\",",
+									"        \"success\",",
+									"    ],",
+									"    \"properties\": {",
+									"        \"message\": {",
+									"            \"type\": \"string\"",
+									"        },",
+									"        \"success\": {",
+									"            \"type\": \"boolean\"",
+									"        }",
+									"    }",
+									"};",
+									"",
+									"// Test3 - Validate schema of the response",
+									"pm.test('Schema validation', () => {",
+									"    pm.response.to.have.jsonSchema(schema);",
+									"});",
+									"",
+									"// Get json from response",
+									"const responseJson = pm.response.json();",
+									"",
+									"// Test4 - Validate all values",
+									"pm.test(\"Validate values in response\", function () {",
+									"    pm.expect(responseJson.message).to.eql(\"Failed to create user, as 'TimeZone' is invalid !! \");",
+									"    pm.expect(responseJson.success).to.be.false;",
+									"});"
+								],
+								"type": "text/javascript",
+								"id": "eb256562-219f-42ab-a233-5c68c06f7f17"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const phoneNumber = Math.floor(Math.random() * 10000000);",
+									"pm.environment.set(\"userPhoneNumber\", phoneNumber);",
+									"",
+									"pm.variables.set(\"userTimeZone\", phoneNumber);"
+								],
+								"type": "text/javascript",
+								"id": "4c5aa7a8-1c37-4b29-a8d7-d38f6bbbc67e"
+							}
+						}
+					],
+					"_postman_id": "2817e582-9e80-4a2b-9920-b4d82285b4ea",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userComments\": \"{{userComments}}\",\n    \"userEduPg\": \"{{userEduPg}}\",\n    \"userEduUg\": \"{{userEduUg}}\",\n    \"userFirstName\": \"{{userFirstName}}\",\n    \"userLastName\": \"{{userLastName}}\",\n    \"userLinkedinUrl\": \"{{userLinkedinUrl}}\",\n    \"userLocation\": \"{{userLocation}}\",\n    \"userMiddleName\": \"\",\n    \"userPhoneNumber\": {{userPhoneNumber}},\n    \"userRoleMaps\": [\n        {\n            \"roleId\": \"{{roleId}}\",\n            \"userRoleStatus\": \"{{userRoleStatus}}\"\n        }\n    ],\n    \"userTimeZone\": {{userTimeZone}},\n    \"userVisaStatus\": \"{{userVisaStatus}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BaseURL}}/users/users/roleStatus"
+					},
+					"response": []
+				},
+				{
+					"name": "Create new user with missing visa status",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Test1 - Validate status code",
+									"pm.test(\"Status code should be 400 Bad Request\", function () {",
+									"    pm.response.to.have.status(400);",
+									"    pm.expect(pm.response.status).to.eql('Bad Request');",
+									"});",
+									"",
+									"// Test2 - Validate Response body type",
+									"pm.test(\"Response body should be JSON\", function () {",
+									"  pm.response.to.be.json;",
+									"});",
+									"",
+									"// Expected schema",
+									"var schema = {",
+									"    \"type\": \"object\",",
+									"    \"required\": [",
+									"        \"message\",",
+									"        \"success\",",
+									"    ],",
+									"    \"properties\": {",
+									"        \"message\": {",
+									"            \"type\": \"string\"",
+									"        },",
+									"        \"success\": {",
+									"            \"type\": \"boolean\"",
+									"        }",
+									"    }",
+									"};",
+									"",
+									"// Test3 - Validate schema of the response",
+									"pm.test('Schema validation', () => {",
+									"    pm.response.to.have.jsonSchema(schema);",
+									"});",
+									"",
+									"// Get json from response",
+									"const responseJson = pm.response.json();",
+									"",
+									"// Test4 - Validate all values",
+									"pm.test(\"Validate values in response\", function () {",
+									"    pm.expect(responseJson.message).to.eql(\"Failed to create user, as 'Visa Status' is invalid !! \");",
+									"    pm.expect(responseJson.success).to.be.false;",
+									"});"
+								],
+								"type": "text/javascript",
+								"id": "94cfac05-608a-404f-b0f6-95189c2cfdbe"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const phoneNumber = Math.floor(Math.random() * 10000000);",
+									"pm.environment.set(\"userPhoneNumber\", phoneNumber);"
+								],
+								"type": "text/javascript",
+								"id": "cb95f96a-8476-43cb-ab59-501efd66670b"
+							}
+						}
+					],
+					"_postman_id": "57b6532c-c6fd-4939-a62b-ea01b3b6e5d5",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userComments\": \"{{userComments}}\",\n    \"userEduPg\": \"{{userEduPg}}\",\n    \"userEduUg\": \"{{userEduUg}}\",\n    \"userFirstName\": \"{{userFirstName}}\",\n    \"userLastName\": \"{{userLastName}}\",\n    \"userLinkedinUrl\": \"{{userLinkedinUrl}}\",\n    \"userLocation\": \"{{userLocation}}\",\n    \"userMiddleName\": \"\",\n    \"userPhoneNumber\": {{userPhoneNumber}},\n    \"userRoleMaps\": [\n        {\n            \"roleId\": \"{{roleId}}\",\n            \"userRoleStatus\": \"{{userRoleStatus}}\"\n        }\n    ],\n    \"userTimeZone\": \"{{userTimeZone}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BaseURL}}/users/users/roleStatus"
+					},
+					"response": []
+				},
+				{
+					"name": "Create new user with blank visa status",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Test1 - Validate status code",
+									"pm.test(\"Status code should be 400 Bad Request\", function () {",
+									"    pm.response.to.have.status(400);",
+									"    pm.expect(pm.response.status).to.eql('Bad Request');",
+									"});",
+									"",
+									"// Test2 - Validate Response body type",
+									"pm.test(\"Response body should be JSON\", function () {",
+									"  pm.response.to.be.json;",
+									"});",
+									"",
+									"// Expected schema",
+									"var schema = {",
+									"    \"type\": \"object\",",
+									"    \"required\": [",
+									"        \"message\",",
+									"        \"success\",",
+									"    ],",
+									"    \"properties\": {",
+									"        \"message\": {",
+									"            \"type\": \"string\"",
+									"        },",
+									"        \"success\": {",
+									"            \"type\": \"boolean\"",
+									"        }",
+									"    }",
+									"};",
+									"",
+									"// Test3 - Validate schema of the response",
+									"pm.test('Schema validation', () => {",
+									"    pm.response.to.have.jsonSchema(schema);",
+									"});",
+									"",
+									"// Get json from response",
+									"const responseJson = pm.response.json();",
+									"",
+									"// Test4 - Validate all values",
+									"pm.test(\"Validate values in response\", function () {",
+									"    pm.expect(responseJson.message).to.eql(\"Failed to create user, as 'Visa Status' is invalid !! \");",
+									"    pm.expect(responseJson.success).to.be.false;",
+									"});"
+								],
+								"type": "text/javascript",
+								"id": "9bee44b8-ffbb-418e-b709-11f9cdbc5978"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const phoneNumber = Math.floor(Math.random() * 10000000);",
+									"pm.environment.set(\"userPhoneNumber\", phoneNumber);"
+								],
+								"type": "text/javascript",
+								"id": "ddcf74a6-6b74-4891-bf63-53381d8a7cb6"
+							}
+						}
+					],
+					"_postman_id": "7aee800f-c6b6-4552-9d92-99229d0f50f6",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userComments\": \"{{userComments}}\",\n    \"userEduPg\": \"{{userEduPg}}\",\n    \"userEduUg\": \"{{userEduUg}}\",\n    \"userFirstName\": \"{{userFirstName}}\",\n    \"userLastName\": \"{{userLastName}}\",\n    \"userLinkedinUrl\": \"{{userLinkedinUrl}}\",\n    \"userLocation\": \"{{userLocation}}\",\n    \"userMiddleName\": \"\",\n    \"userPhoneNumber\": {{userPhoneNumber}},\n    \"userRoleMaps\": [\n        {\n            \"roleId\": \"{{roleId}}\",\n            \"userRoleStatus\": \"{{userRoleStatus}}\"\n        }\n    ],\n    \"userTimeZone\": \"{{userTimeZone}}\",\n    \"userVisaStatus\": \"{{blankUserVisaStatus}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BaseURL}}/users/users/roleStatus"
+					},
+					"response": []
+				},
+				{
+					"name": "Create new user with invalid visa status",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Test1 - Validate status code",
+									"pm.test(\"Status code should be 400 Bad Request\", function () {",
+									"    pm.response.to.have.status(400);",
+									"    pm.expect(pm.response.status).to.eql('Bad Request');",
+									"});",
+									"",
+									"// Test2 - Validate Response body type",
+									"pm.test(\"Response body should be JSON\", function () {",
+									"  pm.response.to.be.json;",
+									"});",
+									"",
+									"// Expected schema",
+									"var schema = {",
+									"    \"type\": \"object\",",
+									"    \"required\": [",
+									"        \"message\",",
+									"        \"success\",",
+									"    ],",
+									"    \"properties\": {",
+									"        \"message\": {",
+									"            \"type\": \"string\"",
+									"        },",
+									"        \"success\": {",
+									"            \"type\": \"boolean\"",
+									"        }",
+									"    }",
+									"};",
+									"",
+									"// Test3 - Validate schema of the response",
+									"pm.test('Schema validation', () => {",
+									"    pm.response.to.have.jsonSchema(schema);",
+									"});",
+									"",
+									"// Get json from response",
+									"const responseJson = pm.response.json();",
+									"",
+									"// Test4 - Validate all values",
+									"pm.test(\"Validate values in response\", function () {",
+									"    pm.expect(responseJson.message).to.eql(\"Failed to create user, as 'Visa Status' is invalid !! \");",
+									"    pm.expect(responseJson.success).to.be.false;",
+									"});"
+								],
+								"type": "text/javascript",
+								"id": "f4b81bee-0bb8-433f-b882-33618f56484b"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const phoneNumber = Math.floor(Math.random() * 10000000);",
+									"pm.environment.set(\"userPhoneNumber\", phoneNumber);"
+								],
+								"type": "text/javascript",
+								"id": "1e0debd6-b281-45ab-b907-4c4d5d45f386"
+							}
+						}
+					],
+					"_postman_id": "c545a5db-892a-46eb-8e31-34882c1fc231",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userComments\": \"{{userComments}}\",\n    \"userEduPg\": \"{{userEduPg}}\",\n    \"userEduUg\": \"{{userEduUg}}\",\n    \"userFirstName\": \"{{userFirstName}}\",\n    \"userLastName\": \"{{userLastName}}\",\n    \"userLinkedinUrl\": \"{{userLinkedinUrl}}\",\n    \"userLocation\": \"{{userLocation}}\",\n    \"userMiddleName\": \"\",\n    \"userPhoneNumber\": {{userPhoneNumber}},\n    \"userRoleMaps\": [\n        {\n            \"roleId\": \"{{roleId}}\",\n            \"userRoleStatus\": \"{{userRoleStatus}}\"\n        }\n    ],\n    \"userTimeZone\": \"{{userTimeZone}}\",\n    \"userVisaStatus\": \"{{invalidUserVisaStatus}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BaseURL}}/users/users/roleStatus"
+					},
+					"response": []
+				},
+				{
+					"name": "Create new user with integer visa status",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Test1 - Validate status code",
+									"pm.test(\"Status code should be 400 Bad Request\", function () {",
+									"    pm.response.to.have.status(400);",
+									"    pm.expect(pm.response.status).to.eql('Bad Request');",
+									"});",
+									"",
+									"// Test2 - Validate Response body type",
+									"pm.test(\"Response body should be JSON\", function () {",
+									"  pm.response.to.be.json;",
+									"});",
+									"",
+									"// Expected schema",
+									"var schema = {",
+									"    \"type\": \"object\",",
+									"    \"required\": [",
+									"        \"message\",",
+									"        \"success\",",
+									"    ],",
+									"    \"properties\": {",
+									"        \"message\": {",
+									"            \"type\": \"string\"",
+									"        },",
+									"        \"success\": {",
+									"            \"type\": \"boolean\"",
+									"        }",
+									"    }",
+									"};",
+									"",
+									"// Test3 - Validate schema of the response",
+									"pm.test('Schema validation', () => {",
+									"    pm.response.to.have.jsonSchema(schema);",
+									"});",
+									"",
+									"// Get json from response",
+									"const responseJson = pm.response.json();",
+									"",
+									"// Test4 - Validate all values",
+									"pm.test(\"Validate values in response\", function () {",
+									"    pm.expect(responseJson.message).to.eql(\"Failed to create user, as 'Visa Status' is invalid !! \");",
+									"    pm.expect(responseJson.success).to.be.false;",
+									"});"
+								],
+								"type": "text/javascript",
+								"id": "57ecea6d-3ecd-4257-be87-0938ae24d517"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const phoneNumber = Math.floor(Math.random() * 10000000);",
+									"pm.environment.set(\"userPhoneNumber\", phoneNumber);",
+									"",
+									"pm.variables.set(\"userVisaStatus\", phoneNumber);"
+								],
+								"type": "text/javascript",
+								"id": "ad1af6e9-a587-494c-9595-da3d0a337fda"
+							}
+						}
+					],
+					"_postman_id": "432d812e-f9ca-46a0-bc6e-4b49d1d2c766",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userComments\": \"{{userComments}}\",\n    \"userEduPg\": \"{{userEduPg}}\",\n    \"userEduUg\": \"{{userEduUg}}\",\n    \"userFirstName\": \"{{userFirstName}}\",\n    \"userLastName\": \"{{userLastName}}\",\n    \"userLinkedinUrl\": \"{{userLinkedinUrl}}\",\n    \"userLocation\": \"{{userLocation}}\",\n    \"userMiddleName\": \"\",\n    \"userPhoneNumber\": {{userPhoneNumber}},\n    \"userRoleMaps\": [\n        {\n            \"roleId\": \"{{roleId}}\",\n            \"userRoleStatus\": \"{{userRoleStatus}}\"\n        }\n    ],\n    \"userTimeZone\": \"{{userTimeZone}}\",\n    \"userVisaStatus\": {{userVisaStatus}}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BaseURL}}/users/users/roleStatus"
+					},
+					"response": []
+				}
+			],
+			"_postman_id": "6bb4487e-7a3e-49b0-8d9a-cd054839d7bf"
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"// Load data from file",
+					"if(typeof pm.variables.get('requestData') !== 'object')",
+					"{",
+					"    pm.variables.set('requestData', pm.iterationData.toObject());",
+					"}",
+					"",
+					"const requestData = pm.variables.get('requestData');",
+					"",
+					"if(typeof requestData != 'object' || Object.keys(requestData).length === 0)",
+					"{",
+					"    console.log('No external data provided/data set is empty');",
+					"    return;",
+					"}",
+					"",
+					"// Find current request",
+					"const currentRequest = requestData.requests.filter(({name}) => name === pm.info.requestName)[0];",
+					"",
+					"// If no data",
+					"if(!currentRequest)",
+					"{",
+					"    console.log('Request ${pm.info.requestName} has no data.');",
+					"}",
+					"",
+					"if(currentRequest)",
+					"{",
+					"    // Expose variables",
+					"    const variables = currentRequest.data.shift();",
+					"",
+					"    Object.entries(variables).forEach(([key, value]) => {",
+					"        pm.variables.set(key, value);",
+					"    });",
+					"",
+					"    pm.variables.set('requestData', requestData);",
+					"",
+					"    // Declare next request",
+					"    if(currentRequest.data.length > 0)",
+					"    {",
+					"        postman.setNextRequest(pm.info.requestName);",
+					"    }",
+					"}"
+				],
+				"id": "8760c74c-c134-4d75-9251-ad1af34c4861"
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				],
+				"id": "d4a94182-2c9d-4f59-aab0-b7081f30c9fe"
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "fce22138-024d-4601-b994-67d2469771b5",
+			"key": "BaseURL",
+			"value": "https://lms-api-hackathon-june2023-930a8b0f895d.herokuapp.com/lms",
+			"type": "string"
+		},
+		{
+			"id": "f2636285-7ccf-4e49-ab39-6dcc5c301ed5",
+			"key": "userComments",
+			"value": "creating new user",
+			"type": "string"
+		},
+		{
+			"id": "17547db0-3a95-4719-b99f-536ece947e83",
+			"key": "userEduPg",
+			"value": "MS",
+			"type": "string"
+		},
+		{
+			"id": "0158e926-77ca-447c-bf18-cf5f31ac0d02",
+			"key": "userEduUg",
+			"value": "BE",
+			"type": "string"
+		},
+		{
+			"id": "8bad08eb-259e-4320-82da-4eafd6bcb6fe",
+			"key": "userFirstName",
+			"value": "APICollectors_004",
+			"type": "string"
+		},
+		{
+			"id": "095c4c86-967a-4486-8ccd-32ea3c8f15ee",
+			"key": "adminUserFirstName",
+			"value": "APICollectors_001",
+			"type": "string"
+		},
+		{
+			"id": "f5379e36-45ba-4e77-9a2d-aa8d1022fbca",
+			"key": "staffUserFirstName",
+			"value": "APICollectors_002",
+			"type": "string"
+		},
+		{
+			"id": "b69ad8b4-740d-40f5-bfe1-5a5a354ae2b2",
+			"key": "studentUserFirstName",
+			"value": "APICollectors_003",
+			"type": "string"
+		},
+		{
+			"id": "17476431-d04c-4cb9-a0a5-e0ebf1069794",
+			"key": "userLastName",
+			"value": "User",
+			"type": "string"
+		},
+		{
+			"id": "efc453ed-9e72-4e9b-9aae-b92adf1fd482",
+			"key": "userLinkedinUrl",
+			"value": "www.linkedin.com/Test1234",
+			"type": "string"
+		},
+		{
+			"id": "49734c15-afa8-49d6-8662-7c2e98f3068c",
+			"key": "userLocation",
+			"value": "India",
+			"type": "string"
+		},
+		{
+			"id": "ccfe287a-3c12-4e0a-9efc-cc739ad6e5ef",
+			"key": "userMiddleName",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"id": "11de8d72-52d1-4463-b8f8-af2827faec65",
+			"key": "roleId",
+			"value": "R02",
+			"type": "string"
+		},
+		{
+			"id": "0f9742de-4f4b-4d5b-a0da-e558cb4689a2",
+			"key": "userRoleStatus",
+			"value": "Active",
+			"type": "string"
+		},
+		{
+			"id": "6aaad9a2-b844-44fc-8bc1-fcdcc40f782d",
+			"key": "userTimeZone",
+			"value": "IST",
+			"type": "string"
+		},
+		{
+			"id": "3ce0f0ed-f8b6-4602-a3ce-06d7ebeca8ea",
+			"key": "userVisaStatus",
+			"value": "NA",
+			"type": "string"
+		},
+		{
+			"id": "72962563-b362-4fac-8580-8e9d8be68ac6",
+			"key": "invalidUserRoleId",
+			"value": "invalidRoleID",
+			"type": "string"
+		},
+		{
+			"id": "0c3d224a-7bf0-4351-8529-4bb6d85c6027",
+			"key": "integerUserRoleId",
+			"value": "46546",
+			"type": "string"
+		},
+		{
+			"id": "b6191227-707a-4895-bfd2-a1b25b0143f0",
+			"key": "invalidUserVisaStatus",
+			"value": "invalidVisaStatus",
+			"type": "string"
+		},
+		{
+			"id": "4c36ee42-9ba8-4428-9454-cfa63705ddf8",
+			"key": "invalidUserTimeZone",
+			"value": "invalidTimeZone",
+			"type": "string"
+		},
+		{
+			"id": "90685c98-5de6-4cb8-9d6f-0704634c4a3a",
+			"key": "stringUserPhoneNumber",
+			"value": "strPhone",
+			"type": "string"
+		},
+		{
+			"id": "ae316ae1-0baf-4c72-a6bb-db986786a186",
+			"key": "blankRoleId",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"id": "501e005f-54c7-4bd0-b538-5888f3169099",
+			"key": "blankUserRoleStatus",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"id": "4bd07552-ad3c-4482-b793-181707030042",
+			"key": "blankUserFirstName",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"id": "1eb0fbd7-1f89-4683-839e-13577129bf85",
+			"key": "blankUserLastName",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"id": "4a47024f-d6ed-4808-8be9-e22a98c58b4a",
+			"key": "blankUserTimeZone",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"id": "dad9db1b-5d0b-47e9-ba4e-f626c9f80028",
+			"key": "blankUserVisaStatus",
+			"value": "",
+			"type": "string"
+		}
+	]
+}
