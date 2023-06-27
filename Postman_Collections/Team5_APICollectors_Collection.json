@@ -2957,6 +2957,7 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "10163182-74cc-4436-914f-45f9ad8fd74f",
 								"exec": [
 									"// Test1 - Validate status code",
 									"pm.test(\"Status code should be 404 Not Found\", function () {",
@@ -2996,14 +2997,24 @@
 									"",
 									"// Test4 - Validate all values",
 									"pm.test(\"Validate values in response\", function () {",
-									"    pm.expect(responseJson.message).to.eql(\"User Id \" + pm.environment.get(\"userId\") + \" not found\");",
+									"    pm.expect(responseJson.message).to.eql(\"User Id \" + pm.variables.get(\"userId\") + \" not found\");",
 									"    pm.expect(responseJson.success).to.be.false;",
 									"});",
 									"",
 									"pm.environment.unset(\"userId\");"
 								],
-								"type": "text/javascript",
-								"id": "10163182-74cc-4436-914f-45f9ad8fd74f"
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "eff3e8ca-775a-4be0-a2ff-99d35be64c20",
+								"exec": [
+									"const randomNum = Math.floor(Math.random() * 10000000);",
+									"pm.variables.set(\"userId\", randomNum);"
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -5099,169 +5110,169 @@
 	],
 	"variable": [
 		{
-			"id": "be073bb1-381d-4b00-8326-27de05f65f3b",
+			"id": "8321a973-ccb0-4353-bcfc-34f7abd82f01",
 			"key": "BaseURL",
 			"value": "https://lms-api-hackathon-june2023-930a8b0f895d.herokuapp.com/lms",
 			"type": "string"
 		},
 		{
-			"id": "fa03d050-15f1-4f58-b1e5-252f069f5b1f",
+			"id": "7cb94b56-95d9-4cd6-8954-3101e72b4a39",
 			"key": "userComments",
 			"value": "creating new user",
 			"type": "string"
 		},
 		{
-			"id": "13503d37-3a0a-4573-9ac1-96feebb8d336",
+			"id": "bc416698-1366-4deb-85d5-e18fc95e96c8",
 			"key": "userEduPg",
 			"value": "MS",
 			"type": "string"
 		},
 		{
-			"id": "040c31d0-f212-4075-b061-c77296f86b76",
+			"id": "7e994605-baa6-47b9-aef2-46a9fcd8c690",
 			"key": "userEduUg",
 			"value": "BE",
 			"type": "string"
 		},
 		{
-			"id": "f594e4e0-8257-43ae-b115-58365333857c",
+			"id": "e52858e4-3d95-4627-931b-09f6f9d368a9",
 			"key": "userFirstName",
 			"value": "APICollectors_",
 			"type": "string"
 		},
 		{
-			"id": "dec94082-fee3-42be-bfac-ce1357743179",
+			"id": "69babdd6-eb99-4ae5-9fa8-4091693dd31f",
 			"key": "adminUserFirstName",
 			"value": "APICollectors_",
 			"type": "string"
 		},
 		{
-			"id": "083caeff-22af-42c7-827e-6ca888e875f9",
+			"id": "74c5e0c0-7ff8-4fca-938f-124fb64e5998",
 			"key": "staffUserFirstName",
 			"value": "APICollectors_",
 			"type": "string"
 		},
 		{
-			"id": "792f45a6-3070-421b-ade6-aac4864e3e84",
+			"id": "c7e2d2f5-c893-4b73-9355-3a7d650545bd",
 			"key": "studentUserFirstName",
 			"value": "APICollectors_",
 			"type": "string"
 		},
 		{
-			"id": "d52e02cf-36b9-4050-a1c0-5fdaafb935ce",
+			"id": "35388628-e0a1-417a-bf57-5c6b33d22199",
 			"key": "userLastName",
 			"value": "User",
 			"type": "string"
 		},
 		{
-			"id": "4b68af75-bc5f-4fda-aba3-da9cf24af453",
+			"id": "74085372-c879-422c-9310-a3986df5240c",
 			"key": "userLinkedinUrl",
 			"value": "www.linkedin.com/Test1234",
 			"type": "string"
 		},
 		{
-			"id": "4fd3447c-4ab7-4208-8740-66fba8f7090f",
+			"id": "8e15984b-4895-489c-9196-260ac8adf568",
 			"key": "userLocation",
 			"value": "India",
 			"type": "string"
 		},
 		{
-			"id": "06c764ce-f01a-4856-a405-2e890185277b",
+			"id": "7d89ef03-df6b-4906-8ad2-d58a3bfa6d01",
 			"key": "userMiddleName",
 			"value": "",
 			"type": "string"
 		},
 		{
-			"id": "56da15f6-0e66-4013-92a5-182a91d867c3",
+			"id": "ef15b0fa-2006-49fd-9154-d8ee76ab84a4",
 			"key": "roleId",
 			"value": "R02",
 			"type": "string"
 		},
 		{
-			"id": "a6d9c0e8-9679-4950-bd63-72bdc78d32a4",
+			"id": "324eac15-5f02-4c15-9b5a-d4cf2ee06661",
 			"key": "userRoleStatus",
 			"value": "Active",
 			"type": "string"
 		},
 		{
-			"id": "c01a6157-727d-4993-848e-fd195cecdfd2",
+			"id": "aff9bea7-6ff0-4c2a-8818-979c5052df66",
 			"key": "userTimeZone",
 			"value": "IST",
 			"type": "string"
 		},
 		{
-			"id": "1a2d6598-6025-44e7-919b-4f7e2367521d",
+			"id": "8cf64514-e8fd-4980-80d3-1c2fda20c5b3",
 			"key": "userVisaStatus",
 			"value": "NA",
 			"type": "string"
 		},
 		{
-			"id": "16750c43-70de-4c94-aec8-36709a000397",
+			"id": "a3f0f249-9d60-4c2a-87fb-ffa4d69226d2",
 			"key": "invalidUserRoleId",
 			"value": "invalidRoleID",
 			"type": "string"
 		},
 		{
-			"id": "39065bc5-e195-4d3b-9966-35a88196ce19",
+			"id": "bc99545f-1b4c-4608-ba65-7a19ed6933d5",
 			"key": "integerUserRoleId",
 			"value": "46546",
 			"type": "string"
 		},
 		{
-			"id": "9d1511d0-22e0-40a2-96dc-e187347b2c6a",
+			"id": "f8baf333-6652-4386-bd1b-28c4cba5ce00",
 			"key": "invalidUserVisaStatus",
 			"value": "invalidVisaStatus",
 			"type": "string"
 		},
 		{
-			"id": "42545c8c-48c3-460f-afe3-6592b1ddf12a",
+			"id": "66b025eb-af17-4df6-afcb-bff117f03103",
 			"key": "invalidUserTimeZone",
 			"value": "invalidTimeZone",
 			"type": "string"
 		},
 		{
-			"id": "70ba4376-773e-479f-9b67-65e56f705917",
+			"id": "b484fdc6-181b-4f99-9063-d233b228e462",
 			"key": "stringUserPhoneNumber",
 			"value": "strPhone",
 			"type": "string"
 		},
 		{
-			"id": "1de4f490-5d4a-4574-9416-95694a55a3e4",
+			"id": "0d7614fe-0d96-4bb1-b635-bbb8d950a401",
 			"key": "blankRoleId",
 			"value": "",
 			"type": "string"
 		},
 		{
-			"id": "f7147b5d-9dd5-4c55-9511-f73c2ab8aaf6",
+			"id": "f6edf441-c475-4ebb-a9de-62c7f65ae7fe",
 			"key": "blankUserRoleStatus",
 			"value": "",
 			"type": "string"
 		},
 		{
-			"id": "25dff454-0d5d-483e-9460-38b963ca56be",
+			"id": "df81ba47-0710-4d76-b840-8f22fb65a663",
 			"key": "blankUserFirstName",
 			"value": "",
 			"type": "string"
 		},
 		{
-			"id": "0f8ae196-b981-42a8-8a20-eae88437bf79",
+			"id": "bac5a5fa-6b50-4a49-bd46-bf1c4d4a3d4d",
 			"key": "blankUserLastName",
 			"value": "",
 			"type": "string"
 		},
 		{
-			"id": "5d8739f0-fdca-472c-835b-fddf12d1016e",
+			"id": "0e8bdfd5-409b-4f22-af79-d428cdd7df65",
 			"key": "blankUserTimeZone",
 			"value": "",
 			"type": "string"
 		},
 		{
-			"id": "a437be42-5ed0-4ecd-8d55-d7329b083943",
+			"id": "0b56a17f-f7b6-46be-ad82-d684c71037a0",
 			"key": "blankUserVisaStatus",
 			"value": "",
 			"type": "string"
 		},
 		{
-			"id": "7c347853-3ae6-4462-8231-a83349370d43",
+			"id": "b252a0df-e9ee-4bb7-9588-603d4e398c2d",
 			"key": "userNameCounter",
 			"value": "0",
 			"type": "string"
