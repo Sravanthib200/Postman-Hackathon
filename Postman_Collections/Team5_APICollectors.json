@@ -9204,6 +9204,3865 @@
 			"id": "b05b5c62-3370-4704-a7e6-ee0452b448a6"
 		},
 		{
+			"name": "Assignment",
+			"item": [
+				{
+					"name": "Precondition: Create new program",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201 : Program successfully created \", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"//Setting environment variable",
+									"var responseObject = pm.response.json();",
+									"pm.environment.set(\"programId\",responseObject.programId);",
+									"console.log(responseObject.programId);",
+									""
+								],
+								"type": "text/javascript",
+								"id": "03cf60e4-08aa-4a6c-a9d3-0d465c58e613"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var CrprogramNameAssign = \"Jun23-APICollectors-SDET\" + pm.variables.replaceIn('{{$randomInt}}');\r",
+									"pm.environment.set(\"programNameAssign\",CrprogramNameAssign);"
+								],
+								"type": "text/javascript",
+								"id": "d89c2750-6f63-4072-8388-a14e66e947d5"
+							}
+						}
+					],
+					"id": "d00c682c-99ff-4069-ba59-820a174784b2",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"programDescription\": \"{{programDescriptionAssign}}\",\n  \"programName\": \"{{programNameAssign}}\",\n  \"programStatus\": \"{{programStatusAssign}}\"\n}\n\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BaseURL}}/saveprogram"
+					},
+					"response": []
+				},
+				{
+					"name": "Precondition: Create new batch",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201 : Batch successfully created \", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"//Setting environment variable",
+									"//pm.environment.set( \"batchId\", response.batchId);",
+									"",
+									"var responseObject = pm.response.json();",
+									"pm.environment.set( \"batchId\", responseObject.batchId);",
+									"console.log(responseObject.batchId);",
+									"",
+									""
+								],
+								"type": "text/javascript",
+								"id": "ee86fbc9-d95f-4f75-b0d8-f030944cda31"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var CrbatchNameAssign = pm.variables.get(\"programNameAssign\")+\"-SDET-\" + pm.variables.replaceIn('{{$randomInt}}');\r",
+									"pm.environment.set(\"batchNameAssign\",CrbatchNameAssign);"
+								],
+								"type": "text/javascript",
+								"id": "f9787d3f-1e62-4626-9ee0-f7aff3e11bbf"
+							}
+						}
+					],
+					"id": "d766a8ac-27ea-4464-b02a-a6123d90d987",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"batchDescription\": \"{{batchDescriptionAssign}}\",\n  \"batchName\": \"{{batchNameAssign}}\",\n  \"batchNoOfClasses\": {{batchNoOfClassesAssign}},\n  \"batchStatus\": \"{{batchStatusAssign}}\",\n  \"programId\": {{programId}}\n }\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BaseURL}}/batches"
+					},
+					"response": []
+				},
+				{
+					"name": "Precondition: Create new user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201 : User successfully created \", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"//Setting environment variable",
+									"//Setting environment variable",
+									"var responseObject = pm.response.json();",
+									"pm.environment.set( \"userId\", responseObject.userId);",
+									"console.log(responseObject.userId);"
+								],
+								"type": "text/javascript",
+								"id": "ebf483b8-e9a9-4fb8-aab9-120b6ba0a185"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"\r",
+									"var firstName = \"Numpy \"+ pm.variables.replaceIn('{{$randomInt}}');\r",
+									"pm.environment.set(\"userFirstName\",firstName);\r",
+									"\r",
+									"//Phone number\r",
+									"const phoneNumber = Math.floor((Math.random()*1000000000 +1));\r",
+									"pm.globals.set(\"phoneNumber\", phoneNumber);"
+								],
+								"type": "text/javascript",
+								"id": "870bc54a-5b9a-47c5-a5fa-23f0c2bc3afa"
+							}
+						}
+					],
+					"id": "0fe47486-0053-4d9c-986d-6f6ad1b77698",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\"userComments\": \"{{userComments}}\",\n\"userEduPg\": \"{{userEduPg}}\",\n\"userEduUg\": \"{{userEduUg}}\",\n\"userFirstName\": \"{{userFirstName}}\",\n\"userLastName\": \"{{userLastName}}\",\n\"userLinkedinUrl\": \"{{userLinkedinUrl}}\",\n\"userLocation\": \"{{userLocation}}\",\n\"userMiddleName\": \"{{userMiddleName}}\",\n\"userPhoneNumber\": {{phoneNumber}},\n\"userRoleMaps\": [\n{\n\"roleId\": \"{{roleId}}\",\n\"userRoleStatus\": \"{{userRoleStatus}}\"\n}\n],\n\"userTimeZone\": \"{{userTimeZone}}\",\n\"userVisaStatus\": \"{{userVisaStatus}}\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BaseURL}}/users/users/roleStatus"
+					},
+					"response": []
+				},
+				{
+					"name": "Precondition: Create inactive user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201 : User successfully created \", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"//Setting environment variable",
+									"var responseObject = pm.response.json();",
+									"pm.environment.set( \"InactiveuserId\", responseObject.userId);",
+									"console.log(responseObject.InactiveuserId);"
+								],
+								"type": "text/javascript",
+								"id": "9c3e91fb-e962-4886-9c0f-50b59776938a"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"//Phone number\r",
+									"const phoneNumber = Math.floor((Math.random()*1000000000 +1));\r",
+									"pm.globals.set(\"phoneNumber\", phoneNumber);\r",
+									"\r",
+									"var firstName = \"Numpy \"+ pm.variables.replaceIn('{{$randomInt}}');\r",
+									"pm.environment.set(\"userFirstName\",firstName);"
+								],
+								"type": "text/javascript",
+								"id": "34ec603e-2134-4cb8-8f96-e01526eb1103"
+							}
+						}
+					],
+					"id": "b5a2447b-6d71-49cd-8d43-647ccbd114de",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\"userComments\": \"{{userComments}}\",\n\"userEduPg\": \"{{userEduPg}}\",\n\"userEduUg\": \"{{userEduUg}}\",\n\"userFirstName\": \"{{userFirstName}}\",\n\"userLastName\": \"{{userLastName}}\",\n\"userLinkedinUrl\": \"{{userLinkedinUrl}}\",\n\"userLocation\": \"{{userLocation}}\",\n\"userMiddleName\": \"{{userMiddleName}}\",\n\"userPhoneNumber\": {{phoneNumber}},\n\"userRoleMaps\": [\n{\n\"roleId\": \"{{roleId}}\",\n\"userRoleStatus\": \"{{userRoleStatusInactive}}\"\n}\n],\n\"userTimeZone\": \"{{userTimeZone}}\",\n\"userVisaStatus\": \"{{userVisaStatus}}\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BaseURL}}/users/users/roleStatus"
+					},
+					"response": []
+				},
+				{
+					"name": "Create New Assignment",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"//Setting environment variable",
+									"var responseObject = pm.response.json();",
+									"pm.environment.set( \"assignmentId\", responseObject.assignmentId);",
+									"console.log(responseObject.assignmentId);",
+									"",
+									"",
+									"//validate Status",
+									"pm.test(\"Status code is 201 : Assignment created successfully\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"//Validate content header",
+									"pm.test(\"Content-Type is present\", function () {",
+									"    pm.response.to.have.header(\"Content-Type\");",
+									"});",
+									"",
+									"//Validate Schema",
+									"const schema = {",
+									"\"type\": \"object\",",
+									"",
+									"",
+									"",
+									"",
+									"   //\"$schema\": \"https://json-schema.org/draft/2019-09/schema\",",
+									"   // \"$id\": \"http://example.com/example.json\",",
+									"    \"type\": \"object\",",
+									"    //\"default\": {},",
+									"    \"title\": \"Root Schema\",",
+									"    \"required\": [",
+									"        \"assignmentId\",",
+									"        \"assignmentName\",",
+									"        \"assignmentDescription\",",
+									"        \"comments\",",
+									"        \"dueDate\",",
+									"        \"pathAttachment1\",",
+									"        \"pathAttachment2\",",
+									"        \"pathAttachment3\",",
+									"        \"pathAttachment4\",",
+									"        \"pathAttachment5\",",
+									"        \"batchId\",",
+									"        \"createdBy\",",
+									"        \"graderId\"",
+									"    ], ",
+									"    \"properties\": {",
+									"        \"assignmentId\": {",
+									"            \"type\": \"integer\",",
+									"            \"default\": 0,",
+									"            \"title\": \"The assignmentId Schema\",",
+									"            \"examples\": [",
+									"                870",
+									"            ]",
+									"        },",
+									"        \"assignmentName\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The assignmentName Schema\",",
+									"            \"examples\": [",
+									"                \"Postman intro part : 4\"",
+									"            ]",
+									"        },",
+									"        \"assignmentDescription\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The assignmentDescription Schema\",",
+									"            \"examples\": [",
+									"                \"API basics - phase1\"",
+									"            ]",
+									"        },",
+									"        \"comments\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The comments Schema\",",
+									"            \"examples\": [",
+									"                \"Practive this assignment\"",
+									"            ]",
+									"        },",
+									"        \"dueDate\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The dueDate Schema\",",
+									"            \"examples\": [",
+									"                \"2023-06-29T23:44:31.377+00:00\"",
+									"            ]",
+									"        },",
+									"        \"pathAttachment1\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The pathAttachment1 Schema\",",
+									"            \"examples\": [",
+									"                \"pathfile1.json\"",
+									"            ]",
+									"        },",
+									"        \"pathAttachment2\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The pathAttachment2 Schema\",",
+									"            \"examples\": [",
+									"                \"pathfile2.json\"",
+									"            ]",
+									"        },",
+									"        \"pathAttachment3\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The pathAttachment3 Schema\",",
+									"            \"examples\": [",
+									"                \"pathfile3.json\"",
+									"            ]",
+									"        },",
+									"        \"pathAttachment4\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The pathAttachment4 Schema\",",
+									"            \"examples\": [",
+									"                \"pathfile4.json\"",
+									"            ]",
+									"        },",
+									"        \"pathAttachment5\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The pathAttachment5 Schema\",",
+									"            \"examples\": [",
+									"                \"pathfile5.json\"",
+									"            ]",
+									"        },",
+									"        \"batchId\": {",
+									"            \"type\": \"integer\",",
+									"            \"default\": 0,",
+									"            \"title\": \"The batchId Schema\",",
+									"            \"examples\": [",
+									"                463",
+									"            ]",
+									"        },",
+									"        \"createdBy\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The createdBy Schema\",",
+									"            \"examples\": [",
+									"                \"U696\"",
+									"            ]",
+									"        },",
+									"        \"graderId\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The graderId Schema\",",
+									"            \"examples\": [",
+									"                \"U696\"",
+									"            ]",
+									"        }",
+									"    },",
+									"    ",
+									"}",
+									";",
+									"",
+									"pm.test(\"Schema is valid\", () => {",
+									"pm.response.to.have.jsonSchema(schema);",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"id": "ed09fe6e-c6c4-4b6b-9f47-0bb2b4cacb6d"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var CrassignmentName = pm.variables.get(\"programNameAssign\")+\"-SQL-\" + pm.variables.replaceIn('{{$randomInt}}');\r",
+									"pm.environment.set(\"assignmentName\",CrassignmentName);"
+								],
+								"type": "text/javascript",
+								"id": "f18d10ca-1c04-4ddb-b354-a14a1ef4dcdc"
+							}
+						}
+					],
+					"id": "6402c3d1-b8a8-43eb-a19a-ca727575cfc2",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": " {\n     \"assignmentDescription\": \"{{assignmentDescription}}\",\n  \n  \"assignmentName\": \"{{assignmentName}}\",\n  \"batchId\": \"{{batchId}}\",\n  \"comments\": \"{{comments}}\",\n  \"createdBy\": \"{{createdBy}}\",\n  \"dueDate\": \"{{dueDate}}\",\n  \"graderId\": \"{{graderId}}\",\n  \"pathAttachment1\": \"{{pathAttachment1}}\",\n  \"pathAttachment2\": \"{{pathAttachment2}}\",\n  \"pathAttachment3\": \"{{pathAttachment3}}\",\n  \"pathAttachment4\": \"{{pathAttachment4}}\",\n  \"pathAttachment5\": \"{{pathAttachment5}}\"\n }\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BaseURL}}/assignments"
+					},
+					"response": []
+				},
+				{
+					"name": "Create without mandatory field : created by",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400: Missing created by\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Body matches string\", function () {",
+									"    pm.expect(pm.response.json().message).to.eql(\"Created By is mandatory\");",
+									"",
+									"});"
+								],
+								"type": "text/javascript",
+								"id": "8093f019-d00e-4036-9ca5-8acb671997f1"
+							}
+						}
+					],
+					"id": "6a6e6819-fe1e-4264-8533-dfd90b1d6e6f",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": " {\n     \"assignmentDescription\": \"{{assignmentDescription}}\",\n  \n  \"assignmentName\": \"{{assignmentName}}\",\n  \"batchId\": \"{{batchId}}\",\n  \"comments\": \"{{comments}}\",\n  \"createdBy\": \"\",\n  \"dueDate\": \"{{dueDate}}\",\n  \"graderId\": \"{{graderId}}\",\n  \"pathAttachment1\": \"{{pathAttachment1}}\",\n  \"pathAttachment2\": \"{{pathAttachment2}}\",\n  \"pathAttachment3\": \"{{pathAttachment3}}\",\n  \"pathAttachment4\": \"{{pathAttachment4}}\",\n  \"pathAttachment5\": \"{{pathAttachment5}}\"\n }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BaseURL}}/assignments"
+					},
+					"response": []
+				},
+				{
+					"name": "Create without mandatory field : Assignment Name",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400: Missing Assignment Name\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Body matches string\", function () {",
+									"    pm.expect(pm.response.json().message).to.eql(\"Assignment Name is mandatory\");",
+									"",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript",
+								"id": "5777ceae-d1ff-4e46-bbf5-4b632cdab5dc"
+							}
+						}
+					],
+					"id": "e1511f5b-0380-4618-ad73-3e83e0833610",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": " {\n     \"assignmentDescription\": \"{{assignmentDescription}}\",\n  \n  \"assignmentName\": \"\",\n  \"batchId\": \"{{batchId}}\",\n  \"comments\": \"{{comments}}\",\n  \"createdBy\": \"{{createdBy}}\",\n  \"dueDate\": \"{{dueDate}}\",\n  \"graderId\": \"{{graderId}}\",\n  \"pathAttachment1\": \"{{pathAttachment1}}\",\n  \"pathAttachment2\": \"{{pathAttachment2}}\",\n  \"pathAttachment3\": \"{{pathAttachment3}}\",\n  \"pathAttachment4\": \"{{pathAttachment4}}\",\n  \"pathAttachment5\": \"{{pathAttachment5}}\"\n }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BaseURL}}/assignments"
+					},
+					"response": []
+				},
+				{
+					"name": "Create without mandatory field : Batch ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400: Missing batch ID\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Body matches string\", function () {",
+									"    pm.expect(pm.response.json().message).to.eql(\"Batch ID is mandatory\");",
+									"",
+									"});"
+								],
+								"type": "text/javascript",
+								"id": "37f75c3b-f93d-4514-b2e9-87673fac00aa"
+							}
+						}
+					],
+					"id": "09263a24-718c-459c-9701-a68df4c44bd0",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": " {\n     \"assignmentDescription\": \"{{assignmentDescription}}\",\n  \n  \"assignmentName\": \"{{assignmentName}}\",\n  \"batchId\": \"\",\n  \"comments\": \"{{comments}}\",\n  \"createdBy\": \"{{createdBy}}\",\n  \"dueDate\": \"{{dueDate}}\",\n  \"graderId\": \"{{graderId}}\",\n  \"pathAttachment1\": \"{{pathAttachment1}}\",\n  \"pathAttachment2\": \"{{pathAttachment2}}\",\n  \"pathAttachment3\": \"{{pathAttachment3}}\",\n  \"pathAttachment4\": \"{{pathAttachment4}}\",\n  \"pathAttachment5\": \"{{pathAttachment5}}\"\n }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BaseURL}}/assignments"
+					},
+					"response": []
+				},
+				{
+					"name": "Create without mandatory field : Due date",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400: Missing Due Date\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Body matches string\", function () {",
+									"    pm.expect(pm.response.json().message).to.eql(\"Due Date is mandatory\");",
+									"",
+									"});"
+								],
+								"type": "text/javascript",
+								"id": "f938f644-4a79-4c49-9cb9-c321242d2387"
+							}
+						}
+					],
+					"id": "de99a2be-2091-4ccd-8fca-152a996733bc",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": " {\n     \"assignmentDescription\": \"{{assignmentDescription}}\",\n  \n  \"assignmentName\": \"{{assignmentName}}\",\n  \"batchId\": \"{{batchId}}\",\n  \"comments\": \"{{comments}}\",\n  \"createdBy\": \"{{createdBy}}\",\n  \"dueDate\": \"\",\n  \"graderId\": \"{{graderId}}\",\n  \"pathAttachment1\": \"{{pathAttachment1}}\",\n  \"pathAttachment2\": \"{{pathAttachment2}}\",\n  \"pathAttachment3\": \"{{pathAttachment3}}\",\n  \"pathAttachment4\": \"{{pathAttachment4}}\",\n  \"pathAttachment5\": \"{{pathAttachment5}}\"\n }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BaseURL}}/assignments"
+					},
+					"response": []
+				},
+				{
+					"name": "Create without mandatory field : Assignment description",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400: Missing Assignment Description\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"",
+									"",
+									"",
+									"pm.test(\"Body matches string\", function () {",
+									"    pm.expect(pm.response.json().message).to.eql(\"Assignment Description is mandatory\");",
+									"",
+									"});"
+								],
+								"type": "text/javascript",
+								"id": "bcf64ee0-37fa-4344-bdef-546d5dd88de4"
+							}
+						}
+					],
+					"id": "86a28c94-0d83-447f-b9f1-55b10516adf5",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": " {\n     \"assignmentDescription\": \"\",\n  \n  \"assignmentName\": \"{{assignmentName}}\",\n  \"batchId\": \"{{batchId}}\",\n  \"comments\": \"{{comments}}\",\n  \"createdBy\": \"{{createdBy}}\",\n  \"dueDate\": \"{{dueDate}}\",\n  \"graderId\": \"{{graderId}}\",\n  \"pathAttachment1\": \"{{pathAttachment1}}\",\n  \"pathAttachment2\": \"{{pathAttachment2}}\",\n  \"pathAttachment3\": \"{{pathAttachment3}}\",\n  \"pathAttachment4\": \"{{pathAttachment4}}\",\n  \"pathAttachment5\": \"{{pathAttachment5}}\"\n }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BaseURL}}/assignments"
+					},
+					"response": []
+				},
+				{
+					"name": "Create without mandatory field : GraderID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400: Missing Assignment Description\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"",
+									"",
+									"",
+									"pm.test(\"Body matches string\", function () {",
+									"    pm.expect(pm.response.json().message).to.eql(\"Grader ID is mandatory\");",
+									"",
+									"});"
+								],
+								"type": "text/javascript",
+								"id": "ee75f5f1-a672-4bfc-8146-6149d8793a44"
+							}
+						}
+					],
+					"id": "4f144c8e-cb52-439f-aee4-62d37f70beeb",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": " {\n     \"assignmentDescription\": \"{{assignmentDescription}}\",\n  \n  \"assignmentName\": \"{{assignmentName}}\",\n  \"batchId\": \"{{batchId}}\",\n  \"comments\": \"{{comments}}\",\n  \"createdBy\": \"{{createdBy}}\",\n  \"dueDate\": \"{{dueDate}}\",\n  \"graderId\": \"\",\n  \"pathAttachment1\": \"{{pathAttachment1}}\",\n  \"pathAttachment2\": \"{{pathAttachment2}}\",\n  \"pathAttachment3\": \"{{pathAttachment3}}\",\n  \"pathAttachment4\": \"{{pathAttachment4}}\",\n  \"pathAttachment5\": \"{{pathAttachment5}}\"\n }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BaseURL}}/assignments"
+					},
+					"response": []
+				},
+				{
+					"name": "Create with invalid due date format",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400: Invalid date format\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"",
+									"",
+									"",
+									"pm.test(\"Body matches string\", function () {",
+									"    pm.expect(pm.response.json().message).to.eql(\"Invalid date format\");",
+									"",
+									"});"
+								],
+								"type": "text/javascript",
+								"id": "5533d75d-5562-4fe8-8c2a-bb99db0e56e0"
+							}
+						}
+					],
+					"id": "77efad90-64b8-434a-9208-a564ae5a8899",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": " {\n     \"assignmentDescription\": \"{{assignmentDescription}}\",\n  \n  \"assignmentName\": \"{{assignmentName}}\",\n  \"batchId\": \"{{batchId}}\",\n  \"comments\": \"{{comments}}\",\n  \"createdBy\": \"{{createdBy}}\",\n  \"dueDate\": \"{{invalidDate}}\",\n  \"graderId\": \"{{graderId}}\",\n  \"pathAttachment1\": \"{{pathAttachment1}}\",\n  \"pathAttachment2\": \"{{pathAttachment2}}\",\n  \"pathAttachment3\": \"{{pathAttachment3}}\",\n  \"pathAttachment4\": \"{{pathAttachment4}}\",\n  \"pathAttachment5\": \"{{pathAttachment5}}\"\n }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BaseURL}}/assignments"
+					},
+					"response": []
+				},
+				{
+					"name": "Create with inactive user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400: Created by is inactive user\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"",
+									"",
+									"/*",
+									"pm.test(\"Body matches string\", function () {",
+									"    pm.expect(pm.response.json().message).to.eql(\"Assignment Description is mandatory\");",
+									"",
+									"}); */"
+								],
+								"type": "text/javascript",
+								"id": "a94d49f5-6b1c-418e-a721-8e1d09e595d1"
+							}
+						}
+					],
+					"id": "bd0250f0-ea7d-4a4b-8248-320a3007ee10",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": " {\n     \"assignmentDescription\": \"{{assignmentDescription}}\",\n  \n  \"assignmentName\": \"{{assignmentName}}\",\n  \"batchId\": \"{{batchId}}\",\n  \"comments\": \"{{comments}}\",\n  \"createdBy\": \"{{InactiveuserId}}\",\n  \"dueDate\": \"{{dueDate}}\",\n  \"graderId\": \"{{graderId}}\",\n  \"pathAttachment1\": \"{{pathAttachment1}}\",\n  \"pathAttachment2\": \"{{pathAttachment2}}\",\n  \"pathAttachment3\": \"{{pathAttachment3}}\",\n  \"pathAttachment4\": \"{{pathAttachment4}}\",\n  \"pathAttachment5\": \"{{pathAttachment5}}\"\n }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BaseURL}}/assignments"
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Assignments",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Content-Type is present\", function () {",
+									"    pm.response.to.have.header(\"Content-Type\");",
+									"});",
+									"",
+									"",
+									"const schema = {",
+									"\"type\": \"array\",",
+									"",
+									"    \"title\": \"Root Schema\",",
+									"    \"required\": [",
+									"        \"assignmentId\",",
+									"        \"assignmentName\",",
+									"        \"assignmentDescription\",",
+									"        \"comments\",",
+									"        \"dueDate\",",
+									"        \"pathAttachment1\",",
+									"        \"pathAttachment2\",",
+									"        \"pathAttachment3\",",
+									"        \"pathAttachment4\",",
+									"        \"pathAttachment5\",",
+									"        \"batchId\",",
+									"        \"createdBy\",",
+									"        \"graderId\"",
+									"    ], ",
+									"    \"properties\": {",
+									"        \"assignmentId\": {",
+									"            \"type\": \"integer\",",
+									"            \"default\": 0,",
+									"            \"title\": \"The assignmentId Schema\",",
+									"            \"examples\": [",
+									"                870",
+									"            ]",
+									"        },",
+									"        \"assignmentName\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The assignmentName Schema\",",
+									"            \"examples\": [",
+									"                \"Postman intro part : 4\"",
+									"            ]",
+									"        },",
+									"        \"assignmentDescription\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The assignmentDescription Schema\",",
+									"            \"examples\": [",
+									"                \"API basics - phase1\"",
+									"            ]",
+									"        },",
+									"        \"comments\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The comments Schema\",",
+									"            \"examples\": [",
+									"                \"Practive this assignment\"",
+									"            ]",
+									"        },",
+									"        \"dueDate\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The dueDate Schema\",",
+									"            \"examples\": [",
+									"                \"2023-06-29T23:44:31.377+00:00\"",
+									"            ]",
+									"        },",
+									"        \"pathAttachment1\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The pathAttachment1 Schema\",",
+									"            \"examples\": [",
+									"                \"pathfile1.json\"",
+									"            ]",
+									"        },",
+									"        \"pathAttachment2\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The pathAttachment2 Schema\",",
+									"            \"examples\": [",
+									"                \"pathfile2.json\"",
+									"            ]",
+									"        },",
+									"        \"pathAttachment3\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The pathAttachment3 Schema\",",
+									"            \"examples\": [",
+									"                \"pathfile3.json\"",
+									"            ]",
+									"        },",
+									"        \"pathAttachment4\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The pathAttachment4 Schema\",",
+									"            \"examples\": [",
+									"                \"pathfile4.json\"",
+									"            ]",
+									"        },",
+									"        \"pathAttachment5\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The pathAttachment5 Schema\",",
+									"            \"examples\": [",
+									"                \"pathfile5.json\"",
+									"            ]",
+									"        },",
+									"        \"batchId\": {",
+									"            \"type\": \"integer\",",
+									"            \"default\": 0,",
+									"            \"title\": \"The batchId Schema\",",
+									"            \"examples\": [",
+									"                463",
+									"            ]",
+									"        },",
+									"        \"createdBy\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The createdBy Schema\",",
+									"            \"examples\": [",
+									"                \"U696\"",
+									"            ]",
+									"        },",
+									"        \"graderId\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The graderId Schema\",",
+									"            \"examples\": [",
+									"                \"U696\"",
+									"            ]",
+									"        }",
+									"    },",
+									"    ",
+									"}",
+									";",
+									"",
+									"pm.test(\"Schema is valid\", () => {",
+									"pm.response.to.have.jsonSchema(schema);",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"id": "b508810b-5b0c-405d-99e5-d27bd175a5c0"
+							}
+						}
+					],
+					"id": "73804529-baba-4271-b640-7d88a2e13fac",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{BaseURL}}/assignments/"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Assignment by batch ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Content-Type is present\", function () {",
+									"    pm.response.to.have.header(\"Content-Type\");",
+									"});",
+									"",
+									"",
+									"const schema = {",
+									"\"type\": \"array\",",
+									"",
+									"    \"title\": \"Root Schema\",",
+									"    \"required\": [",
+									"        \"assignmentId\",",
+									"        \"assignmentName\",",
+									"        \"assignmentDescription\",",
+									"        \"comments\",",
+									"        \"dueDate\",",
+									"        \"pathAttachment1\",",
+									"        \"pathAttachment2\",",
+									"        \"pathAttachment3\",",
+									"        \"pathAttachment4\",",
+									"        \"pathAttachment5\",",
+									"        \"batchId\",",
+									"        \"createdBy\",",
+									"        \"graderId\"",
+									"    ], ",
+									"    \"properties\": {",
+									"        \"assignmentId\": {",
+									"            \"type\": \"integer\",",
+									"            \"default\": 0,",
+									"            \"title\": \"The assignmentId Schema\",",
+									"            \"examples\": [",
+									"                870",
+									"            ]",
+									"        },",
+									"        \"assignmentName\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The assignmentName Schema\",",
+									"            \"examples\": [",
+									"                \"Postman intro part : 4\"",
+									"            ]",
+									"        },",
+									"        \"assignmentDescription\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The assignmentDescription Schema\",",
+									"            \"examples\": [",
+									"                \"API basics - phase1\"",
+									"            ]",
+									"        },",
+									"        \"comments\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The comments Schema\",",
+									"            \"examples\": [",
+									"                \"Practive this assignment\"",
+									"            ]",
+									"        },",
+									"        \"dueDate\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The dueDate Schema\",",
+									"            \"examples\": [",
+									"                \"2023-06-29T23:44:31.377+00:00\"",
+									"            ]",
+									"        },",
+									"        \"pathAttachment1\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The pathAttachment1 Schema\",",
+									"            \"examples\": [",
+									"                \"pathfile1.json\"",
+									"            ]",
+									"        },",
+									"        \"pathAttachment2\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The pathAttachment2 Schema\",",
+									"            \"examples\": [",
+									"                \"pathfile2.json\"",
+									"            ]",
+									"        },",
+									"        \"pathAttachment3\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The pathAttachment3 Schema\",",
+									"            \"examples\": [",
+									"                \"pathfile3.json\"",
+									"            ]",
+									"        },",
+									"        \"pathAttachment4\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The pathAttachment4 Schema\",",
+									"            \"examples\": [",
+									"                \"pathfile4.json\"",
+									"            ]",
+									"        },",
+									"        \"pathAttachment5\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The pathAttachment5 Schema\",",
+									"            \"examples\": [",
+									"                \"pathfile5.json\"",
+									"            ]",
+									"        },",
+									"        \"batchId\": {",
+									"            \"type\": \"integer\",",
+									"            \"default\": 0,",
+									"            \"title\": \"The batchId Schema\",",
+									"            \"examples\": [",
+									"                463",
+									"            ]",
+									"        },",
+									"        \"createdBy\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The createdBy Schema\",",
+									"            \"examples\": [",
+									"                \"U696\"",
+									"            ]",
+									"        },",
+									"        \"graderId\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The graderId Schema\",",
+									"            \"examples\": [",
+									"                \"U696\"",
+									"            ]",
+									"        }",
+									"    },",
+									"    ",
+									"}",
+									";",
+									"",
+									"pm.test(\"Schema is valid\", () => {",
+									"pm.response.to.have.jsonSchema(schema);",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"id": "a7f354ab-e6cb-4914-a1b6-52e2ab4eacbf"
+							}
+						}
+					],
+					"id": "31221ccb-0d66-4158-b184-3831a0b40233",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{BaseURL}}/assignments/batch/{{batchId}}"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Assignment By Assignment ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Content-Type is present\", function () {",
+									"    pm.response.to.have.header(\"Content-Type\");",
+									"});",
+									"",
+									"",
+									"const schema = {",
+									"\"type\": \"object\",",
+									"",
+									"    \"title\": \"Root Schema\",",
+									"    \"required\": [",
+									"        \"assignmentId\",",
+									"        \"assignmentName\",",
+									"        \"assignmentDescription\",",
+									"        \"comments\",",
+									"        \"dueDate\",",
+									"        \"pathAttachment1\",",
+									"        \"pathAttachment2\",",
+									"        \"pathAttachment3\",",
+									"        \"pathAttachment4\",",
+									"        \"pathAttachment5\",",
+									"        \"batchId\",",
+									"        \"createdBy\",",
+									"        \"graderId\"",
+									"    ], ",
+									"    \"properties\": {",
+									"        \"assignmentId\": {",
+									"            \"type\": \"integer\",",
+									"            \"default\": 0,",
+									"            \"title\": \"The assignmentId Schema\",",
+									"            \"examples\": [",
+									"                870",
+									"            ]",
+									"        },",
+									"        \"assignmentName\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The assignmentName Schema\",",
+									"            \"examples\": [",
+									"                \"Postman intro part : 4\"",
+									"            ]",
+									"        },",
+									"        \"assignmentDescription\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The assignmentDescription Schema\",",
+									"            \"examples\": [",
+									"                \"API basics - phase1\"",
+									"            ]",
+									"        },",
+									"        \"comments\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The comments Schema\",",
+									"            \"examples\": [",
+									"                \"Practive this assignment\"",
+									"            ]",
+									"        },",
+									"        \"dueDate\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The dueDate Schema\",",
+									"            \"examples\": [",
+									"                \"2023-06-29T23:44:31.377+00:00\"",
+									"            ]",
+									"        },",
+									"        \"pathAttachment1\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The pathAttachment1 Schema\",",
+									"            \"examples\": [",
+									"                \"pathfile1.json\"",
+									"            ]",
+									"        },",
+									"        \"pathAttachment2\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The pathAttachment2 Schema\",",
+									"            \"examples\": [",
+									"                \"pathfile2.json\"",
+									"            ]",
+									"        },",
+									"        \"pathAttachment3\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The pathAttachment3 Schema\",",
+									"            \"examples\": [",
+									"                \"pathfile3.json\"",
+									"            ]",
+									"        },",
+									"        \"pathAttachment4\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The pathAttachment4 Schema\",",
+									"            \"examples\": [",
+									"                \"pathfile4.json\"",
+									"            ]",
+									"        },",
+									"        \"pathAttachment5\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The pathAttachment5 Schema\",",
+									"            \"examples\": [",
+									"                \"pathfile5.json\"",
+									"            ]",
+									"        },",
+									"        \"batchId\": {",
+									"            \"type\": \"integer\",",
+									"            \"default\": 0,",
+									"            \"title\": \"The batchId Schema\",",
+									"            \"examples\": [",
+									"                463",
+									"            ]",
+									"        },",
+									"        \"createdBy\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The createdBy Schema\",",
+									"            \"examples\": [",
+									"                \"U696\"",
+									"            ]",
+									"        },",
+									"        \"graderId\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The graderId Schema\",",
+									"            \"examples\": [",
+									"                \"U696\"",
+									"            ]",
+									"        }",
+									"    },",
+									"    ",
+									"}",
+									";",
+									"",
+									"pm.test(\"Schema is valid\", () => {",
+									"pm.response.to.have.jsonSchema(schema);",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"id": "f6fc5c2a-95d1-4374-a500-5999e2a936eb"
+							}
+						}
+					],
+					"id": "8bf58a57-c7fe-490b-a6ca-e5af389f87ab",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{BaseURL}}/assignments/{{assignmentId}}"
+					},
+					"response": []
+				},
+				{
+					"name": "Get assignment by non existant ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404: Assignement does not exist\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});",
+									"",
+									"pm.test(\"Body matches string\", function () {",
+									"    pm.expect(pm.response.json().message).to.eql(\"Assignment not found with Id : \" +pm.collectionVariables.get(\"nonexistantassignmentId\") + \" \" );",
+									"",
+									"});",
+									"",
+									"",
+									"pm.test(\"Content-Type is present\", function () {",
+									"    pm.response.to.have.header(\"Content-Type\");",
+									"});",
+									"",
+									"",
+									"const schema = {",
+									"\"type\": \"object\",",
+									"",
+									"    \"title\": \"Root Schema\",",
+									"    ",
+									"    \"properties\": {",
+									"        \"assignmentId\": {",
+									"            \"type\": \"integer\",",
+									"            \"default\": 0,",
+									"            \"title\": \"The assignmentId Schema\",",
+									"            \"examples\": [",
+									"                870",
+									"            ]",
+									"        },",
+									"        \"assignmentName\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The assignmentName Schema\",",
+									"            \"examples\": [",
+									"                \"Postman intro part : 4\"",
+									"            ]",
+									"        },",
+									"        \"assignmentDescription\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The assignmentDescription Schema\",",
+									"            \"examples\": [",
+									"                \"API basics - phase1\"",
+									"            ]",
+									"        },",
+									"        \"comments\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The comments Schema\",",
+									"            \"examples\": [",
+									"                \"Practive this assignment\"",
+									"            ]",
+									"        },",
+									"        \"dueDate\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The dueDate Schema\",",
+									"            \"examples\": [",
+									"                \"2023-06-29T23:44:31.377+00:00\"",
+									"            ]",
+									"        },",
+									"        \"pathAttachment1\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The pathAttachment1 Schema\",",
+									"            \"examples\": [",
+									"                \"pathfile1.json\"",
+									"            ]",
+									"        },",
+									"        \"pathAttachment2\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The pathAttachment2 Schema\",",
+									"            \"examples\": [",
+									"                \"pathfile2.json\"",
+									"            ]",
+									"        },",
+									"        \"pathAttachment3\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The pathAttachment3 Schema\",",
+									"            \"examples\": [",
+									"                \"pathfile3.json\"",
+									"            ]",
+									"        },",
+									"        \"pathAttachment4\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The pathAttachment4 Schema\",",
+									"            \"examples\": [",
+									"                \"pathfile4.json\"",
+									"            ]",
+									"        },",
+									"        \"pathAttachment5\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The pathAttachment5 Schema\",",
+									"            \"examples\": [",
+									"                \"pathfile5.json\"",
+									"            ]",
+									"        },",
+									"        \"batchId\": {",
+									"            \"type\": \"integer\",",
+									"            \"default\": 0,",
+									"            \"title\": \"The batchId Schema\",",
+									"            \"examples\": [",
+									"                463",
+									"            ]",
+									"        },",
+									"        \"createdBy\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The createdBy Schema\",",
+									"            \"examples\": [",
+									"                \"U696\"",
+									"            ]",
+									"        },",
+									"        \"graderId\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The graderId Schema\",",
+									"            \"examples\": [",
+									"                \"U696\"",
+									"            ]",
+									"        }",
+									"    },",
+									"    ",
+									"}",
+									";",
+									"",
+									"pm.test(\"Schema is valid\", () => {",
+									"pm.response.to.have.jsonSchema(schema);",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript",
+								"id": "b4a74581-9972-4f43-a83b-eb49323e4b8f"
+							}
+						}
+					],
+					"id": "a444edeb-4bb3-4699-97a9-7929e9d388a1",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{BaseURL}}/assignments/{{nonexistantassignmentId}}"
+					},
+					"response": []
+				},
+				{
+					"name": "Get assignment by invalid non integer assignment ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400: Invalid Assignment ID\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"",
+									"pm.test(\"Body matches string\", function () {",
+									"    pm.expect(pm.response.json().error).to.eql(\"Bad Request\");",
+									"",
+									"});",
+									"",
+									"",
+									"pm.test(\"Content-Type is present\", function () {",
+									"    pm.response.to.have.header(\"Content-Type\");",
+									"});",
+									"",
+									"",
+									"const schema = {",
+									"\"type\": \"object\",",
+									"",
+									"    \"title\": \"Root Schema\",",
+									"    ",
+									"    \"properties\": {",
+									"        \"assignmentId\": {",
+									"            \"type\": \"integer\",",
+									"            \"default\": 0,",
+									"            \"title\": \"The assignmentId Schema\",",
+									"            \"examples\": [",
+									"                870",
+									"            ]",
+									"        },",
+									"        \"assignmentName\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The assignmentName Schema\",",
+									"            \"examples\": [",
+									"                \"Postman intro part : 4\"",
+									"            ]",
+									"        },",
+									"        \"assignmentDescription\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The assignmentDescription Schema\",",
+									"            \"examples\": [",
+									"                \"API basics - phase1\"",
+									"            ]",
+									"        },",
+									"        \"comments\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The comments Schema\",",
+									"            \"examples\": [",
+									"                \"Practive this assignment\"",
+									"            ]",
+									"        },",
+									"        \"dueDate\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The dueDate Schema\",",
+									"            \"examples\": [",
+									"                \"2023-06-29T23:44:31.377+00:00\"",
+									"            ]",
+									"        },",
+									"        \"pathAttachment1\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The pathAttachment1 Schema\",",
+									"            \"examples\": [",
+									"                \"pathfile1.json\"",
+									"            ]",
+									"        },",
+									"        \"pathAttachment2\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The pathAttachment2 Schema\",",
+									"            \"examples\": [",
+									"                \"pathfile2.json\"",
+									"            ]",
+									"        },",
+									"        \"pathAttachment3\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The pathAttachment3 Schema\",",
+									"            \"examples\": [",
+									"                \"pathfile3.json\"",
+									"            ]",
+									"        },",
+									"        \"pathAttachment4\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The pathAttachment4 Schema\",",
+									"            \"examples\": [",
+									"                \"pathfile4.json\"",
+									"            ]",
+									"        },",
+									"        \"pathAttachment5\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The pathAttachment5 Schema\",",
+									"            \"examples\": [",
+									"                \"pathfile5.json\"",
+									"            ]",
+									"        },",
+									"        \"batchId\": {",
+									"            \"type\": \"integer\",",
+									"            \"default\": 0,",
+									"            \"title\": \"The batchId Schema\",",
+									"            \"examples\": [",
+									"                463",
+									"            ]",
+									"        },",
+									"        \"createdBy\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The createdBy Schema\",",
+									"            \"examples\": [",
+									"                \"U696\"",
+									"            ]",
+									"        },",
+									"        \"graderId\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The graderId Schema\",",
+									"            \"examples\": [",
+									"                \"U696\"",
+									"            ]",
+									"        }",
+									"    },",
+									"    ",
+									"}",
+									";",
+									"",
+									"pm.test(\"Schema is valid\", () => {",
+									"pm.response.to.have.jsonSchema(schema);",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript",
+								"id": "0e2af3c6-024f-4122-8fa2-fff3b7b5e4e7"
+							}
+						}
+					],
+					"id": "daa06e60-ed98-4994-89a1-180b4a421150",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{BaseURL}}/assignments/{{invalidId}}"
+					},
+					"response": []
+				},
+				{
+					"name": "Get assignment by non existant batch ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404: Batch does not exist\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});",
+									"",
+									"pm.sendRequest(\"https://postman-echo.com/get\", function (err, response) {",
+									"    console.log(response.json());",
+									"});",
+									"",
+									"pm.test(\"Body matches string\", function () {",
+									"    pm.expect(pm.response.json().message).to.eql(\"Batch not found with Id : \" +pm.collectionVariables.get(\"batchNA\") + \" \" );",
+									"",
+									"});",
+									"",
+									"const schema = {",
+									"\"type\": \"object\",",
+									"",
+									"    \"title\": \"Root Schema\",",
+									"   ",
+									"    \"properties\": {",
+									"        \"assignmentId\": {",
+									"            \"type\": \"integer\",",
+									"            \"default\": 0,",
+									"            \"title\": \"The assignmentId Schema\",",
+									"            \"examples\": [",
+									"                870",
+									"            ]",
+									"        },",
+									"        \"assignmentName\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The assignmentName Schema\",",
+									"            \"examples\": [",
+									"                \"Postman intro part : 4\"",
+									"            ]",
+									"        },",
+									"        \"assignmentDescription\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The assignmentDescription Schema\",",
+									"            \"examples\": [",
+									"                \"API basics - phase1\"",
+									"            ]",
+									"        },",
+									"        \"comments\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The comments Schema\",",
+									"            \"examples\": [",
+									"                \"Practive this assignment\"",
+									"            ]",
+									"        },",
+									"        \"dueDate\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The dueDate Schema\",",
+									"            \"examples\": [",
+									"                \"2023-06-29T23:44:31.377+00:00\"",
+									"            ]",
+									"        },",
+									"        \"pathAttachment1\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The pathAttachment1 Schema\",",
+									"            \"examples\": [",
+									"                \"pathfile1.json\"",
+									"            ]",
+									"        },",
+									"        \"pathAttachment2\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The pathAttachment2 Schema\",",
+									"            \"examples\": [",
+									"                \"pathfile2.json\"",
+									"            ]",
+									"        },",
+									"        \"pathAttachment3\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The pathAttachment3 Schema\",",
+									"            \"examples\": [",
+									"                \"pathfile3.json\"",
+									"            ]",
+									"        },",
+									"        \"pathAttachment4\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The pathAttachment4 Schema\",",
+									"            \"examples\": [",
+									"                \"pathfile4.json\"",
+									"            ]",
+									"        },",
+									"        \"pathAttachment5\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The pathAttachment5 Schema\",",
+									"            \"examples\": [",
+									"                \"pathfile5.json\"",
+									"            ]",
+									"        },",
+									"        \"batchId\": {",
+									"            \"type\": \"integer\",",
+									"            \"default\": 0,",
+									"            \"title\": \"The batchId Schema\",",
+									"            \"examples\": [",
+									"                463",
+									"            ]",
+									"        },",
+									"        \"createdBy\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The createdBy Schema\",",
+									"            \"examples\": [",
+									"                \"U696\"",
+									"            ]",
+									"        },",
+									"        \"graderId\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The graderId Schema\",",
+									"            \"examples\": [",
+									"                \"U696\"",
+									"            ]",
+									"        }",
+									"    },",
+									"    ",
+									"}",
+									";",
+									"",
+									"pm.test(\"Schema is valid\", () => {",
+									"pm.response.to.have.jsonSchema(schema);",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"id": "d83d7a61-f88b-4642-8ddf-1656960604c1"
+							}
+						}
+					],
+					"id": "4ef9b8e3-05bc-4d6d-be94-66d0ae79e54b",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{BaseURL}}/assignments/batch/{{batchNA}}"
+					},
+					"response": []
+				},
+				{
+					"name": "Get assignment by invalid batch ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400: Invalid batch ID\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"",
+									"pm.sendRequest(\"https://postman-echo.com/get\", function (err, response) {",
+									"    console.log(response.json());",
+									"});",
+									"",
+									"pm.test(\"Body matches string\", function () {",
+									"    pm.expect(pm.response.json().error).to.eql(\"Bad Request\");",
+									"",
+									"});",
+									"",
+									"const schema = {",
+									"\"type\": \"object\",",
+									"",
+									"    \"title\": \"Root Schema\",",
+									"   ",
+									"    \"properties\": {",
+									"        \"assignmentId\": {",
+									"            \"type\": \"integer\",",
+									"            \"default\": 0,",
+									"            \"title\": \"The assignmentId Schema\",",
+									"            \"examples\": [",
+									"                870",
+									"            ]",
+									"        },",
+									"        \"assignmentName\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The assignmentName Schema\",",
+									"            \"examples\": [",
+									"                \"Postman intro part : 4\"",
+									"            ]",
+									"        },",
+									"        \"assignmentDescription\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The assignmentDescription Schema\",",
+									"            \"examples\": [",
+									"                \"API basics - phase1\"",
+									"            ]",
+									"        },",
+									"        \"comments\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The comments Schema\",",
+									"            \"examples\": [",
+									"                \"Practive this assignment\"",
+									"            ]",
+									"        },",
+									"        \"dueDate\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The dueDate Schema\",",
+									"            \"examples\": [",
+									"                \"2023-06-29T23:44:31.377+00:00\"",
+									"            ]",
+									"        },",
+									"        \"pathAttachment1\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The pathAttachment1 Schema\",",
+									"            \"examples\": [",
+									"                \"pathfile1.json\"",
+									"            ]",
+									"        },",
+									"        \"pathAttachment2\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The pathAttachment2 Schema\",",
+									"            \"examples\": [",
+									"                \"pathfile2.json\"",
+									"            ]",
+									"        },",
+									"        \"pathAttachment3\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The pathAttachment3 Schema\",",
+									"            \"examples\": [",
+									"                \"pathfile3.json\"",
+									"            ]",
+									"        },",
+									"        \"pathAttachment4\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The pathAttachment4 Schema\",",
+									"            \"examples\": [",
+									"                \"pathfile4.json\"",
+									"            ]",
+									"        },",
+									"        \"pathAttachment5\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The pathAttachment5 Schema\",",
+									"            \"examples\": [",
+									"                \"pathfile5.json\"",
+									"            ]",
+									"        },",
+									"        \"batchId\": {",
+									"            \"type\": \"integer\",",
+									"            \"default\": 0,",
+									"            \"title\": \"The batchId Schema\",",
+									"            \"examples\": [",
+									"                463",
+									"            ]",
+									"        },",
+									"        \"createdBy\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The createdBy Schema\",",
+									"            \"examples\": [",
+									"                \"U696\"",
+									"            ]",
+									"        },",
+									"        \"graderId\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The graderId Schema\",",
+									"            \"examples\": [",
+									"                \"U696\"",
+									"            ]",
+									"        }",
+									"    },",
+									"    ",
+									"}",
+									";",
+									"",
+									"pm.test(\"Schema is valid\", () => {",
+									"pm.response.to.have.jsonSchema(schema);",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"id": "bad483e2-2895-4675-bd7b-3c13bd5f270f"
+							}
+						}
+					],
+					"id": "1b5c3287-341a-474d-b98a-f03b98256e71",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{BaseURL}}/assignments/batch/{{batchInvalid}}"
+					},
+					"response": []
+				},
+				{
+					"name": "Get assignment If batch id present and no assignment",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Body matches string\", function () {",
+									"    pm.expect(pm.response.json().message).to.eql(\"Batch not found with Id : \" +pm.collectionVariables.get(\"batchwithnoassignment\") + \" \" );",
+									"",
+									"});",
+									"pm.test(\"Status code is 404 : Batch with no assignment\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});"
+								],
+								"type": "text/javascript",
+								"id": "47205121-68ff-4508-b7d7-62997370c25a"
+							}
+						}
+					],
+					"id": "66770f0a-d626-42c6-ab64-e6042585ae21",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{BaseURL}}/assignments/batch/{{batchwithnoassignment}}"
+					},
+					"response": []
+				},
+				{
+					"name": "Update existing assignment",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"var responseObject = pm.response.json();",
+									"pm.environment.set( \"NewassignmentId\", responseObject.assignmentId);",
+									"",
+									"const schema = {",
+									"\"type\": \"object\",",
+									"",
+									"",
+									"",
+									"",
+									"   //\"$schema\": \"https://json-schema.org/draft/2019-09/schema\",",
+									"   // \"$id\": \"http://example.com/example.json\",",
+									"    \"type\": \"object\",",
+									"    //\"default\": {},",
+									"    \"title\": \"Root Schema\",",
+									"    \"required\": [",
+									"        \"assignmentId\",",
+									"        \"assignmentName\",",
+									"        \"assignmentDescription\",",
+									"        \"comments\",",
+									"        \"dueDate\",",
+									"        \"pathAttachment1\",",
+									"        \"pathAttachment2\",",
+									"        \"pathAttachment3\",",
+									"        \"pathAttachment4\",",
+									"        \"pathAttachment5\",",
+									"        \"batchId\",",
+									"        \"createdBy\",",
+									"        \"graderId\"",
+									"    ], ",
+									"    \"properties\": {",
+									"        \"assignmentId\": {",
+									"            \"type\": \"integer\",",
+									"            \"default\": 0,",
+									"            \"title\": \"The assignmentId Schema\",",
+									"            \"examples\": [",
+									"                870",
+									"            ]",
+									"        },",
+									"        \"assignmentName\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The assignmentName Schema\",",
+									"            \"examples\": [",
+									"                \"Postman intro part : 4\"",
+									"            ]",
+									"        },",
+									"        \"assignmentDescription\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The assignmentDescription Schema\",",
+									"            \"examples\": [",
+									"                \"API basics - phase1\"",
+									"            ]",
+									"        },",
+									"        \"comments\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The comments Schema\",",
+									"            \"examples\": [",
+									"                \"Practive this assignment\"",
+									"            ]",
+									"        },",
+									"        \"dueDate\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The dueDate Schema\",",
+									"            \"examples\": [",
+									"                \"2023-06-29T23:44:31.377+00:00\"",
+									"            ]",
+									"        },",
+									"        \"pathAttachment1\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The pathAttachment1 Schema\",",
+									"            \"examples\": [",
+									"                \"pathfile1.json\"",
+									"            ]",
+									"        },",
+									"        \"pathAttachment2\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The pathAttachment2 Schema\",",
+									"            \"examples\": [",
+									"                \"pathfile2.json\"",
+									"            ]",
+									"        },",
+									"        \"pathAttachment3\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The pathAttachment3 Schema\",",
+									"            \"examples\": [",
+									"                \"pathfile3.json\"",
+									"            ]",
+									"        },",
+									"        \"pathAttachment4\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The pathAttachment4 Schema\",",
+									"            \"examples\": [",
+									"                \"pathfile4.json\"",
+									"            ]",
+									"        },",
+									"        \"pathAttachment5\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The pathAttachment5 Schema\",",
+									"            \"examples\": [",
+									"                \"pathfile5.json\"",
+									"            ]",
+									"        },",
+									"        \"batchId\": {",
+									"            \"type\": \"integer\",",
+									"            \"default\": 0,",
+									"            \"title\": \"The batchId Schema\",",
+									"            \"examples\": [",
+									"                463",
+									"            ]",
+									"        },",
+									"        \"createdBy\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The createdBy Schema\",",
+									"            \"examples\": [",
+									"                \"U696\"",
+									"            ]",
+									"        },",
+									"        \"graderId\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The graderId Schema\",",
+									"            \"examples\": [",
+									"                \"U696\"",
+									"            ]",
+									"        }",
+									"    },",
+									"    ",
+									"}",
+									";",
+									"",
+									"pm.test(\"Schema is valid\", () => {",
+									"pm.response.to.have.jsonSchema(schema);",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"id": "2f37704e-eeef-421c-8231-f604d1b422eb"
+							}
+						}
+					],
+					"id": "1b3724cb-c71e-453e-a2d3-0d840efa522e",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n     \"assignmentDescription\": \"{{assignmentDescription}}\",\n  \"assignmentId\": \"{{assignmentId}}\",\n  \"assignmentName\": \"{{assignmentName}}\",\n  \"batchId\": \"{{batchId}}\",\n  \"comments\": \"{{updatecomments}}\",\n  \"createdBy\": \"{{createdBy}}\",\n  \"dueDate\": \"{{dueDate}}\",\n  \"graderId\": \"{{graderId}}\",\n  \"pathAttachment1\": \"{{pathAttachment1}}\",\n  \"pathAttachment2\": \"{{pathAttachment2}}\",\n  \"pathAttachment3\": \"{{pathAttachment3}}\",\n  \"pathAttachment4\": \"{{pathAttachment4}}\",\n  \"pathAttachment5\": \"{{pathAttachment5}}\"\n }\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BaseURL}}/assignments/{{assignmentId}}"
+					},
+					"response": []
+				},
+				{
+					"name": "Update non existing assignment",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"",
+									"const schema = {",
+									"\"type\": \"object\",",
+									"",
+									"",
+									"",
+									"",
+									"   //\"$schema\": \"https://json-schema.org/draft/2019-09/schema\",",
+									"   // \"$id\": \"http://example.com/example.json\",",
+									"    \"type\": \"object\",",
+									"    //\"default\": {},",
+									"    \"title\": \"Root Schema\",",
+									"   ",
+									"    \"properties\": {",
+									"        \"assignmentId\": {",
+									"            \"type\": \"integer\",",
+									"            \"default\": 0,",
+									"            \"title\": \"The assignmentId Schema\",",
+									"            \"examples\": [",
+									"                870",
+									"            ]",
+									"        },",
+									"        \"assignmentName\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The assignmentName Schema\",",
+									"            \"examples\": [",
+									"                \"Postman intro part : 4\"",
+									"            ]",
+									"        },",
+									"        \"assignmentDescription\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The assignmentDescription Schema\",",
+									"            \"examples\": [",
+									"                \"API basics - phase1\"",
+									"            ]",
+									"        },",
+									"        \"comments\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The comments Schema\",",
+									"            \"examples\": [",
+									"                \"Practive this assignment\"",
+									"            ]",
+									"        },",
+									"        \"dueDate\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The dueDate Schema\",",
+									"            \"examples\": [",
+									"                \"2023-06-29T23:44:31.377+00:00\"",
+									"            ]",
+									"        },",
+									"        \"pathAttachment1\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The pathAttachment1 Schema\",",
+									"            \"examples\": [",
+									"                \"pathfile1.json\"",
+									"            ]",
+									"        },",
+									"        \"pathAttachment2\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The pathAttachment2 Schema\",",
+									"            \"examples\": [",
+									"                \"pathfile2.json\"",
+									"            ]",
+									"        },",
+									"        \"pathAttachment3\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The pathAttachment3 Schema\",",
+									"            \"examples\": [",
+									"                \"pathfile3.json\"",
+									"            ]",
+									"        },",
+									"        \"pathAttachment4\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The pathAttachment4 Schema\",",
+									"            \"examples\": [",
+									"                \"pathfile4.json\"",
+									"            ]",
+									"        },",
+									"        \"pathAttachment5\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The pathAttachment5 Schema\",",
+									"            \"examples\": [",
+									"                \"pathfile5.json\"",
+									"            ]",
+									"        },",
+									"        \"batchId\": {",
+									"            \"type\": \"integer\",",
+									"            \"default\": 0,",
+									"            \"title\": \"The batchId Schema\",",
+									"            \"examples\": [",
+									"                463",
+									"            ]",
+									"        },",
+									"        \"createdBy\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The createdBy Schema\",",
+									"            \"examples\": [",
+									"                \"U696\"",
+									"            ]",
+									"        },",
+									"        \"graderId\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The graderId Schema\",",
+									"            \"examples\": [",
+									"                \"U696\"",
+									"            ]",
+									"        }",
+									"    },",
+									"    ",
+									"}",
+									";",
+									"",
+									"pm.test(\"Schema is valid\", () => {",
+									"pm.response.to.have.jsonSchema(schema);",
+									"});",
+									"pm.test(\"Status code is 404\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});"
+								],
+								"type": "text/javascript",
+								"id": "59fa05a7-e789-4e44-8dde-0dc8930030d7"
+							}
+						}
+					],
+					"id": "badf9549-505b-4204-bef1-66015a13ae9e",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n     \"assignmentDescription\": \"{{assignmentDescription}}\",\n  \"assignmentId\": \"{{nonexistantassignmentId}}\",\n  \"assignmentName\": \"{{assignmentName}}\",\n  \"batchId\": \"{{batchId}}\",\n  \"comments\": \"{{comments}}\",\n  \"createdBy\": \"{{createdBy}}\",\n  \"dueDate\": \"{{dueDate}}\",\n  \"graderId\": \"{{graderId}}\",\n  \"pathAttachment1\": \"{{pathAttachment1}}\",\n  \"pathAttachment2\": \"{{pathAttachment2}}\",\n  \"pathAttachment3\": \"{{pathAttachment3}}\",\n  \"pathAttachment4\": \"{{pathAttachment4}}\",\n  \"pathAttachment5\": \"{{pathAttachment5}}\"\n }\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BaseURL}}/assignments/{{nonexistantassignmentId}}"
+					},
+					"response": []
+				},
+				{
+					"name": "Update without mandatory field : Assignment Name",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"",
+									"});",
+									"",
+									"pm.test(\"Body matches string : Assignment Name is mandatory\", function () {",
+									"    pm.expect(pm.response.json().message).to.eql(\"Assignment Name is mandatory\");",
+									"",
+									"});",
+									"",
+									"const schema = {",
+									"\"type\": \"object\",",
+									"",
+									"",
+									"",
+									"",
+									"   //\"$schema\": \"https://json-schema.org/draft/2019-09/schema\",",
+									"   // \"$id\": \"http://example.com/example.json\",",
+									"    \"type\": \"object\",",
+									"    //\"default\": {},",
+									"    \"title\": \"Root Schema\",",
+									"    ",
+									"    \"properties\": {",
+									"        \"assignmentId\": {",
+									"            \"type\": \"integer\",",
+									"            \"default\": 0,",
+									"            \"title\": \"The assignmentId Schema\",",
+									"            \"examples\": [",
+									"                870",
+									"            ]",
+									"        },",
+									"        \"assignmentName\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The assignmentName Schema\",",
+									"            \"examples\": [",
+									"                \"Postman intro part : 4\"",
+									"            ]",
+									"        },",
+									"        \"assignmentDescription\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The assignmentDescription Schema\",",
+									"            \"examples\": [",
+									"                \"API basics - phase1\"",
+									"            ]",
+									"        },",
+									"        \"comments\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The comments Schema\",",
+									"            \"examples\": [",
+									"                \"Practive this assignment\"",
+									"            ]",
+									"        },",
+									"        \"dueDate\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The dueDate Schema\",",
+									"            \"examples\": [",
+									"                \"2023-06-29T23:44:31.377+00:00\"",
+									"            ]",
+									"        },",
+									"        \"pathAttachment1\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The pathAttachment1 Schema\",",
+									"            \"examples\": [",
+									"                \"pathfile1.json\"",
+									"            ]",
+									"        },",
+									"        \"pathAttachment2\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The pathAttachment2 Schema\",",
+									"            \"examples\": [",
+									"                \"pathfile2.json\"",
+									"            ]",
+									"        },",
+									"        \"pathAttachment3\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The pathAttachment3 Schema\",",
+									"            \"examples\": [",
+									"                \"pathfile3.json\"",
+									"            ]",
+									"        },",
+									"        \"pathAttachment4\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The pathAttachment4 Schema\",",
+									"            \"examples\": [",
+									"                \"pathfile4.json\"",
+									"            ]",
+									"        },",
+									"        \"pathAttachment5\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The pathAttachment5 Schema\",",
+									"            \"examples\": [",
+									"                \"pathfile5.json\"",
+									"            ]",
+									"        },",
+									"        \"batchId\": {",
+									"            \"type\": \"integer\",",
+									"            \"default\": 0,",
+									"            \"title\": \"The batchId Schema\",",
+									"            \"examples\": [",
+									"                463",
+									"            ]",
+									"        },",
+									"        \"createdBy\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The createdBy Schema\",",
+									"            \"examples\": [",
+									"                \"U696\"",
+									"            ]",
+									"        },",
+									"        \"graderId\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The graderId Schema\",",
+									"            \"examples\": [",
+									"                \"U696\"",
+									"            ]",
+									"        }",
+									"    },",
+									"    ",
+									"}",
+									";",
+									"",
+									"pm.test(\"Schema is valid\", () => {",
+									"pm.response.to.have.jsonSchema(schema);",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"id": "6f087d0a-02fb-4512-889b-04483424a581"
+							}
+						}
+					],
+					"id": "d2f8ae75-bec8-42e0-a610-39bf12a10bf4",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n     \"assignmentDescription\": \"{{assignmentDescription}}\",\n  \"assignmentId\": \"{{updateId}}\",\n  \"assignmentName\": \"\",\n  \"batchId\": \"{{batchId}}\",\n  \"comments\": \"{{comments}}\",\n  \"createdBy\": \"{{createdBy}}\",\n  \"dueDate\": \"{{dueDate}}\",\n  \"graderId\": \"{{graderId}}\",\n  \"pathAttachment1\": \"{{pathAttachment1}}\",\n  \"pathAttachment2\": \"{{pathAttachment2}}\",\n  \"pathAttachment3\": \"{{pathAttachment3}}\",\n  \"pathAttachment4\": \"{{pathAttachment4}}\",\n  \"pathAttachment5\": \"{{pathAttachment5}}\"\n }\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BaseURL}}/assignments/{{updateId}}"
+					},
+					"response": []
+				},
+				{
+					"name": "Update without mandatory field : Created By",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"",
+									"});",
+									"",
+									"",
+									"pm.test(\"Body matches string : Created By is mandatory\", function () {",
+									"    pm.expect(pm.response.json().message).to.eql(\"Created By is mandatory\");",
+									"",
+									"});",
+									"",
+									"const schema = {",
+									"\"type\": \"object\",",
+									"",
+									"",
+									"",
+									"",
+									"   //\"$schema\": \"https://json-schema.org/draft/2019-09/schema\",",
+									"   // \"$id\": \"http://example.com/example.json\",",
+									"    \"type\": \"object\",",
+									"    //\"default\": {},",
+									"    \"title\": \"Root Schema\",",
+									"    ",
+									"    \"properties\": {",
+									"        \"assignmentId\": {",
+									"            \"type\": \"integer\",",
+									"            \"default\": 0,",
+									"            \"title\": \"The assignmentId Schema\",",
+									"            \"examples\": [",
+									"                870",
+									"            ]",
+									"        },",
+									"        \"assignmentName\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The assignmentName Schema\",",
+									"            \"examples\": [",
+									"                \"Postman intro part : 4\"",
+									"            ]",
+									"        },",
+									"        \"assignmentDescription\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The assignmentDescription Schema\",",
+									"            \"examples\": [",
+									"                \"API basics - phase1\"",
+									"            ]",
+									"        },",
+									"        \"comments\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The comments Schema\",",
+									"            \"examples\": [",
+									"                \"Practive this assignment\"",
+									"            ]",
+									"        },",
+									"        \"dueDate\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The dueDate Schema\",",
+									"            \"examples\": [",
+									"                \"2023-06-29T23:44:31.377+00:00\"",
+									"            ]",
+									"        },",
+									"        \"pathAttachment1\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The pathAttachment1 Schema\",",
+									"            \"examples\": [",
+									"                \"pathfile1.json\"",
+									"            ]",
+									"        },",
+									"        \"pathAttachment2\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The pathAttachment2 Schema\",",
+									"            \"examples\": [",
+									"                \"pathfile2.json\"",
+									"            ]",
+									"        },",
+									"        \"pathAttachment3\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The pathAttachment3 Schema\",",
+									"            \"examples\": [",
+									"                \"pathfile3.json\"",
+									"            ]",
+									"        },",
+									"        \"pathAttachment4\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The pathAttachment4 Schema\",",
+									"            \"examples\": [",
+									"                \"pathfile4.json\"",
+									"            ]",
+									"        },",
+									"        \"pathAttachment5\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The pathAttachment5 Schema\",",
+									"            \"examples\": [",
+									"                \"pathfile5.json\"",
+									"            ]",
+									"        },",
+									"        \"batchId\": {",
+									"            \"type\": \"integer\",",
+									"            \"default\": 0,",
+									"            \"title\": \"The batchId Schema\",",
+									"            \"examples\": [",
+									"                463",
+									"            ]",
+									"        },",
+									"        \"createdBy\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The createdBy Schema\",",
+									"            \"examples\": [",
+									"                \"U696\"",
+									"            ]",
+									"        },",
+									"        \"graderId\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The graderId Schema\",",
+									"            \"examples\": [",
+									"                \"U696\"",
+									"            ]",
+									"        }",
+									"    },",
+									"    ",
+									"}",
+									";",
+									"",
+									"pm.test(\"Schema is valid\", () => {",
+									"pm.response.to.have.jsonSchema(schema);",
+									"});"
+								],
+								"type": "text/javascript",
+								"id": "ebaae021-6b38-4c90-adad-9097edd83f89"
+							}
+						}
+					],
+					"id": "bac9085f-37d9-4e44-84d9-85062f9676ca",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n     \"assignmentDescription\": \"Updated postman Intro part-1\",\n  \"assignmentId\": \"621\",\n  \"assignmentName\": \"{{assignmentName}}\",\n  \"batchId\": \"{{batchId}}\",\n  \"comments\": \"{{comments}}\",\n  \"createdBy\": \"\",\n  \"dueDate\": \"{{dueDate}}\",\n  \"graderId\": \"{{graderId}}\",\n  \"pathAttachment1\": \"{{pathAttachment1}}\",\n  \"pathAttachment2\": \"{{pathAttachment2}}\",\n  \"pathAttachment3\": \"{{pathAttachment3}}\",\n  \"pathAttachment4\": \"{{pathAttachment4}}\",\n  \"pathAttachment5\": \"{{pathAttachment5}}\"\n }\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BaseURL}}/assignments/{{updateId}}"
+					},
+					"response": []
+				},
+				{
+					"name": "Update without mandatory field : Grader ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"",
+									"});",
+									"",
+									"",
+									"pm.test(\"Body matches string : Grader ID is mandatory\", function () {",
+									"    pm.expect(pm.response.json().message).to.eql(\"Grader ID is mandatory\");",
+									"",
+									"});",
+									"",
+									"const schema = {",
+									"\"type\": \"object\",",
+									"",
+									"",
+									"",
+									"",
+									"   //\"$schema\": \"https://json-schema.org/draft/2019-09/schema\",",
+									"   // \"$id\": \"http://example.com/example.json\",",
+									"    \"type\": \"object\",",
+									"    //\"default\": {},",
+									"    \"title\": \"Root Schema\",",
+									"    ",
+									"    \"properties\": {",
+									"        \"assignmentId\": {",
+									"            \"type\": \"integer\",",
+									"            \"default\": 0,",
+									"            \"title\": \"The assignmentId Schema\",",
+									"            \"examples\": [",
+									"                870",
+									"            ]",
+									"        },",
+									"        \"assignmentName\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The assignmentName Schema\",",
+									"            \"examples\": [",
+									"                \"Postman intro part : 4\"",
+									"            ]",
+									"        },",
+									"        \"assignmentDescription\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The assignmentDescription Schema\",",
+									"            \"examples\": [",
+									"                \"API basics - phase1\"",
+									"            ]",
+									"        },",
+									"        \"comments\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The comments Schema\",",
+									"            \"examples\": [",
+									"                \"Practive this assignment\"",
+									"            ]",
+									"        },",
+									"        \"dueDate\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The dueDate Schema\",",
+									"            \"examples\": [",
+									"                \"2023-06-29T23:44:31.377+00:00\"",
+									"            ]",
+									"        },",
+									"        \"pathAttachment1\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The pathAttachment1 Schema\",",
+									"            \"examples\": [",
+									"                \"pathfile1.json\"",
+									"            ]",
+									"        },",
+									"        \"pathAttachment2\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The pathAttachment2 Schema\",",
+									"            \"examples\": [",
+									"                \"pathfile2.json\"",
+									"            ]",
+									"        },",
+									"        \"pathAttachment3\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The pathAttachment3 Schema\",",
+									"            \"examples\": [",
+									"                \"pathfile3.json\"",
+									"            ]",
+									"        },",
+									"        \"pathAttachment4\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The pathAttachment4 Schema\",",
+									"            \"examples\": [",
+									"                \"pathfile4.json\"",
+									"            ]",
+									"        },",
+									"        \"pathAttachment5\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The pathAttachment5 Schema\",",
+									"            \"examples\": [",
+									"                \"pathfile5.json\"",
+									"            ]",
+									"        },",
+									"        \"batchId\": {",
+									"            \"type\": \"integer\",",
+									"            \"default\": 0,",
+									"            \"title\": \"The batchId Schema\",",
+									"            \"examples\": [",
+									"                463",
+									"            ]",
+									"        },",
+									"        \"createdBy\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The createdBy Schema\",",
+									"            \"examples\": [",
+									"                \"U696\"",
+									"            ]",
+									"        },",
+									"        \"graderId\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The graderId Schema\",",
+									"            \"examples\": [",
+									"                \"U696\"",
+									"            ]",
+									"        }",
+									"    },",
+									"    ",
+									"}",
+									";",
+									"",
+									"pm.test(\"Schema is valid\", () => {",
+									"pm.response.to.have.jsonSchema(schema);",
+									"});"
+								],
+								"type": "text/javascript",
+								"id": "f3d5a631-2a2e-46de-acfd-b1cc5f1675bf"
+							}
+						}
+					],
+					"id": "b5fab0cb-0b00-489b-9a4a-8ecc28e325e2",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n     \"assignmentDescription\": \"Updated postman Intro part-1\",\n  \"assignmentId\": \"621\",\n  \"assignmentName\": \"{{assignmentName}}\",\n  \"batchId\": \"{{batchId}}\",\n  \"comments\": \"{{comments}}\",\n  \"createdBy\": \"{{createdBy}}\",\n  \"dueDate\": \"{{dueDate}}\",\n  \"graderId\": \"\",\n  \"pathAttachment1\": \"{{pathAttachment1}}\",\n  \"pathAttachment2\": \"{{pathAttachment2}}\",\n  \"pathAttachment3\": \"{{pathAttachment3}}\",\n  \"pathAttachment4\": \"{{pathAttachment4}}\",\n  \"pathAttachment5\": \"{{pathAttachment5}}\"\n }\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BaseURL}}/assignments/{{updateId}}"
+					},
+					"response": []
+				},
+				{
+					"name": "Update without mandatory field : Batch ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"",
+									"});",
+									"",
+									"",
+									"pm.test(\"Body matches string : Batch ID is mandatory\", function () {",
+									"    pm.expect(pm.response.json().message).to.eql(\"Batch ID is mandatory\");",
+									"",
+									"});",
+									"",
+									"const schema = {",
+									"\"type\": \"object\",",
+									"",
+									"",
+									"",
+									"",
+									"   //\"$schema\": \"https://json-schema.org/draft/2019-09/schema\",",
+									"   // \"$id\": \"http://example.com/example.json\",",
+									"    \"type\": \"object\",",
+									"    //\"default\": {},",
+									"    \"title\": \"Root Schema\",",
+									"    ",
+									"    \"properties\": {",
+									"        \"assignmentId\": {",
+									"            \"type\": \"integer\",",
+									"            \"default\": 0,",
+									"            \"title\": \"The assignmentId Schema\",",
+									"            \"examples\": [",
+									"                870",
+									"            ]",
+									"        },",
+									"        \"assignmentName\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The assignmentName Schema\",",
+									"            \"examples\": [",
+									"                \"Postman intro part : 4\"",
+									"            ]",
+									"        },",
+									"        \"assignmentDescription\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The assignmentDescription Schema\",",
+									"            \"examples\": [",
+									"                \"API basics - phase1\"",
+									"            ]",
+									"        },",
+									"        \"comments\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The comments Schema\",",
+									"            \"examples\": [",
+									"                \"Practive this assignment\"",
+									"            ]",
+									"        },",
+									"        \"dueDate\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The dueDate Schema\",",
+									"            \"examples\": [",
+									"                \"2023-06-29T23:44:31.377+00:00\"",
+									"            ]",
+									"        },",
+									"        \"pathAttachment1\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The pathAttachment1 Schema\",",
+									"            \"examples\": [",
+									"                \"pathfile1.json\"",
+									"            ]",
+									"        },",
+									"        \"pathAttachment2\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The pathAttachment2 Schema\",",
+									"            \"examples\": [",
+									"                \"pathfile2.json\"",
+									"            ]",
+									"        },",
+									"        \"pathAttachment3\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The pathAttachment3 Schema\",",
+									"            \"examples\": [",
+									"                \"pathfile3.json\"",
+									"            ]",
+									"        },",
+									"        \"pathAttachment4\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The pathAttachment4 Schema\",",
+									"            \"examples\": [",
+									"                \"pathfile4.json\"",
+									"            ]",
+									"        },",
+									"        \"pathAttachment5\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The pathAttachment5 Schema\",",
+									"            \"examples\": [",
+									"                \"pathfile5.json\"",
+									"            ]",
+									"        },",
+									"        \"batchId\": {",
+									"            \"type\": \"integer\",",
+									"            \"default\": 0,",
+									"            \"title\": \"The batchId Schema\",",
+									"            \"examples\": [",
+									"                463",
+									"            ]",
+									"        },",
+									"        \"createdBy\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The createdBy Schema\",",
+									"            \"examples\": [",
+									"                \"U696\"",
+									"            ]",
+									"        },",
+									"        \"graderId\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The graderId Schema\",",
+									"            \"examples\": [",
+									"                \"U696\"",
+									"            ]",
+									"        }",
+									"    },",
+									"    ",
+									"}",
+									";",
+									"",
+									"pm.test(\"Schema is valid\", () => {",
+									"pm.response.to.have.jsonSchema(schema);",
+									"});"
+								],
+								"type": "text/javascript",
+								"id": "1af868f1-b239-42ea-bad8-96ac0f0e8dcc"
+							}
+						}
+					],
+					"id": "609ca58a-b999-4153-92dc-893844345b78",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n     \"assignmentDescription\": \"Updated postman Intro part-1\",\n  \"assignmentId\": \"621\",\n  \"assignmentName\": \"{{assignmentName}}\",\n  \"batchId\": \"\",\n  \"comments\": \"{{comments}}\",\n  \"createdBy\": \"{{createdBy}}\",\n  \"dueDate\": \"{{dueDate}}\",\n  \"graderId\": \"{{graderId}}\",\n  \"pathAttachment1\": \"{{pathAttachment1}}\",\n  \"pathAttachment2\": \"{{pathAttachment2}}\",\n  \"pathAttachment3\": \"{{pathAttachment3}}\",\n  \"pathAttachment4\": \"{{pathAttachment4}}\",\n  \"pathAttachment5\": \"{{pathAttachment5}}\"\n }\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BaseURL}}/assignments/{{updateId}}"
+					},
+					"response": []
+				},
+				{
+					"name": "Update without mandatory field : Due Date",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"",
+									"});",
+									"",
+									"",
+									"pm.test(\"Body matches string : Due Date is mandatory\", function () {",
+									"    pm.expect(pm.response.json().message).to.eql(\"Due Date is mandatory\");",
+									"",
+									"});",
+									"",
+									"const schema = {",
+									"\"type\": \"object\",",
+									"",
+									"",
+									"",
+									"",
+									"   //\"$schema\": \"https://json-schema.org/draft/2019-09/schema\",",
+									"   // \"$id\": \"http://example.com/example.json\",",
+									"    \"type\": \"object\",",
+									"    //\"default\": {},",
+									"    \"title\": \"Root Schema\",",
+									"    ",
+									"    \"properties\": {",
+									"        \"assignmentId\": {",
+									"            \"type\": \"integer\",",
+									"            \"default\": 0,",
+									"            \"title\": \"The assignmentId Schema\",",
+									"            \"examples\": [",
+									"                870",
+									"            ]",
+									"        },",
+									"        \"assignmentName\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The assignmentName Schema\",",
+									"            \"examples\": [",
+									"                \"Postman intro part : 4\"",
+									"            ]",
+									"        },",
+									"        \"assignmentDescription\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The assignmentDescription Schema\",",
+									"            \"examples\": [",
+									"                \"API basics - phase1\"",
+									"            ]",
+									"        },",
+									"        \"comments\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The comments Schema\",",
+									"            \"examples\": [",
+									"                \"Practive this assignment\"",
+									"            ]",
+									"        },",
+									"        \"dueDate\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The dueDate Schema\",",
+									"            \"examples\": [",
+									"                \"2023-06-29T23:44:31.377+00:00\"",
+									"            ]",
+									"        },",
+									"        \"pathAttachment1\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The pathAttachment1 Schema\",",
+									"            \"examples\": [",
+									"                \"pathfile1.json\"",
+									"            ]",
+									"        },",
+									"        \"pathAttachment2\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The pathAttachment2 Schema\",",
+									"            \"examples\": [",
+									"                \"pathfile2.json\"",
+									"            ]",
+									"        },",
+									"        \"pathAttachment3\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The pathAttachment3 Schema\",",
+									"            \"examples\": [",
+									"                \"pathfile3.json\"",
+									"            ]",
+									"        },",
+									"        \"pathAttachment4\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The pathAttachment4 Schema\",",
+									"            \"examples\": [",
+									"                \"pathfile4.json\"",
+									"            ]",
+									"        },",
+									"        \"pathAttachment5\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The pathAttachment5 Schema\",",
+									"            \"examples\": [",
+									"                \"pathfile5.json\"",
+									"            ]",
+									"        },",
+									"        \"batchId\": {",
+									"            \"type\": \"integer\",",
+									"            \"default\": 0,",
+									"            \"title\": \"The batchId Schema\",",
+									"            \"examples\": [",
+									"                463",
+									"            ]",
+									"        },",
+									"        \"createdBy\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The createdBy Schema\",",
+									"            \"examples\": [",
+									"                \"U696\"",
+									"            ]",
+									"        },",
+									"        \"graderId\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The graderId Schema\",",
+									"            \"examples\": [",
+									"                \"U696\"",
+									"            ]",
+									"        }",
+									"    },",
+									"    ",
+									"}",
+									";",
+									"",
+									"pm.test(\"Schema is valid\", () => {",
+									"pm.response.to.have.jsonSchema(schema);",
+									"});"
+								],
+								"type": "text/javascript",
+								"id": "674cfab6-4c6c-4377-af13-145a323b0d7e"
+							}
+						}
+					],
+					"id": "90e9f82c-0921-4795-931e-be22fb3cf295",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n     \"assignmentDescription\": \"Updated postman Intro part-1\",\n  \"assignmentId\": \"{{updateId}}\",\n  \"assignmentName\": \"{{assignmentName}}\",\n  \"batchId\": \"{{batchId}}\",\n  \"comments\": \"{{comments}}\",\n  \"createdBy\": \"{{createdBy}}\",\n  \"dueDate\": \"\",\n  \"graderId\": \"{{graderId}}\",\n  \"pathAttachment1\": \"{{pathAttachment1}}\",\n  \"pathAttachment2\": \"{{pathAttachment2}}\",\n  \"pathAttachment3\": \"{{pathAttachment3}}\",\n  \"pathAttachment4\": \"{{pathAttachment4}}\",\n  \"pathAttachment5\": \"{{pathAttachment5}}\"\n }\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BaseURL}}/assignments/{{updateId}}"
+					},
+					"response": []
+				},
+				{
+					"name": "Update without mandatory field : Assignment Description",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"",
+									"});",
+									"",
+									"",
+									"pm.test(\"Body matches string : Assignment Description is mandatory\", function () {",
+									"    pm.expect(pm.response.json().message).to.eql(\"Assignment Description is mandatory\");",
+									"",
+									"});",
+									"",
+									"const schema = {",
+									"\"type\": \"object\",",
+									"",
+									"",
+									"",
+									"",
+									"   //\"$schema\": \"https://json-schema.org/draft/2019-09/schema\",",
+									"   // \"$id\": \"http://example.com/example.json\",",
+									"    \"type\": \"object\",",
+									"    //\"default\": {},",
+									"    \"title\": \"Root Schema\",",
+									"    ",
+									"    \"properties\": {",
+									"        \"assignmentId\": {",
+									"            \"type\": \"integer\",",
+									"            \"default\": 0,",
+									"            \"title\": \"The assignmentId Schema\",",
+									"            \"examples\": [",
+									"                870",
+									"            ]",
+									"        },",
+									"        \"assignmentName\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The assignmentName Schema\",",
+									"            \"examples\": [",
+									"                \"Postman intro part : 4\"",
+									"            ]",
+									"        },",
+									"        \"assignmentDescription\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The assignmentDescription Schema\",",
+									"            \"examples\": [",
+									"                \"API basics - phase1\"",
+									"            ]",
+									"        },",
+									"        \"comments\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The comments Schema\",",
+									"            \"examples\": [",
+									"                \"Practive this assignment\"",
+									"            ]",
+									"        },",
+									"        \"dueDate\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The dueDate Schema\",",
+									"            \"examples\": [",
+									"                \"2023-06-29T23:44:31.377+00:00\"",
+									"            ]",
+									"        },",
+									"        \"pathAttachment1\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The pathAttachment1 Schema\",",
+									"            \"examples\": [",
+									"                \"pathfile1.json\"",
+									"            ]",
+									"        },",
+									"        \"pathAttachment2\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The pathAttachment2 Schema\",",
+									"            \"examples\": [",
+									"                \"pathfile2.json\"",
+									"            ]",
+									"        },",
+									"        \"pathAttachment3\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The pathAttachment3 Schema\",",
+									"            \"examples\": [",
+									"                \"pathfile3.json\"",
+									"            ]",
+									"        },",
+									"        \"pathAttachment4\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The pathAttachment4 Schema\",",
+									"            \"examples\": [",
+									"                \"pathfile4.json\"",
+									"            ]",
+									"        },",
+									"        \"pathAttachment5\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The pathAttachment5 Schema\",",
+									"            \"examples\": [",
+									"                \"pathfile5.json\"",
+									"            ]",
+									"        },",
+									"        \"batchId\": {",
+									"            \"type\": \"integer\",",
+									"            \"default\": 0,",
+									"            \"title\": \"The batchId Schema\",",
+									"            \"examples\": [",
+									"                463",
+									"            ]",
+									"        },",
+									"        \"createdBy\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The createdBy Schema\",",
+									"            \"examples\": [",
+									"                \"U696\"",
+									"            ]",
+									"        },",
+									"        \"graderId\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The graderId Schema\",",
+									"            \"examples\": [",
+									"                \"U696\"",
+									"            ]",
+									"        }",
+									"    },",
+									"    ",
+									"}",
+									";",
+									"",
+									"pm.test(\"Schema is valid\", () => {",
+									"pm.response.to.have.jsonSchema(schema);",
+									"});"
+								],
+								"type": "text/javascript",
+								"id": "3d2840cb-f0ec-4ebb-930b-7264b5804636"
+							}
+						}
+					],
+					"id": "f298575b-2680-4da7-b64e-989dd7ae60f0",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n     \"assignmentDescription\": \"\",\n  \"assignmentId\": \"{{updateId}}\",\n  \"assignmentName\": \"{{assignmentName}}\",\n  \"batchId\": \"{{batchId}}\",\n  \"comments\": \"{{comments}}\",\n  \"createdBy\": \"{{createdBy}}\",\n  \"dueDate\": \"{{dueDate}}\",\n  \"graderId\": \"{{graderId}}\",\n  \"pathAttachment1\": \"{{pathAttachment1}}\",\n  \"pathAttachment2\": \"{{pathAttachment2}}\",\n  \"pathAttachment3\": \"{{pathAttachment3}}\",\n  \"pathAttachment4\": \"{{pathAttachment4}}\",\n  \"pathAttachment5\": \"{{pathAttachment5}}\"\n }\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BaseURL}}/assignments/{{updateId}}"
+					},
+					"response": []
+				},
+				{
+					"name": "Update with invalid GraderID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {",
+									"    pm.response.to.have.status(404);",
+									"",
+									"});",
+									"",
+									"",
+									"pm.test(\"Body matches string : User not found with ID\", function () {",
+									"    pm.expect(pm.response.json().message).to.eql(\"User not found with ID : \"+pm.collectionVariables.get(\"invalidGrader\")+\" \");",
+									"",
+									"});",
+									"",
+									"const schema = {",
+									"\"type\": \"object\",",
+									"",
+									"",
+									"",
+									"",
+									"   //\"$schema\": \"https://json-schema.org/draft/2019-09/schema\",",
+									"   // \"$id\": \"http://example.com/example.json\",",
+									"    \"type\": \"object\",",
+									"    //\"default\": {},",
+									"    \"title\": \"Root Schema\",",
+									"    ",
+									"    \"properties\": {",
+									"        \"assignmentId\": {",
+									"            \"type\": \"integer\",",
+									"            \"default\": 0,",
+									"            \"title\": \"The assignmentId Schema\",",
+									"            \"examples\": [",
+									"                870",
+									"            ]",
+									"        },",
+									"        \"assignmentName\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The assignmentName Schema\",",
+									"            \"examples\": [",
+									"                \"Postman intro part : 4\"",
+									"            ]",
+									"        },",
+									"        \"assignmentDescription\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The assignmentDescription Schema\",",
+									"            \"examples\": [",
+									"                \"API basics - phase1\"",
+									"            ]",
+									"        },",
+									"        \"comments\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The comments Schema\",",
+									"            \"examples\": [",
+									"                \"Practive this assignment\"",
+									"            ]",
+									"        },",
+									"        \"dueDate\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The dueDate Schema\",",
+									"            \"examples\": [",
+									"                \"2023-06-29T23:44:31.377+00:00\"",
+									"            ]",
+									"        },",
+									"        \"pathAttachment1\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The pathAttachment1 Schema\",",
+									"            \"examples\": [",
+									"                \"pathfile1.json\"",
+									"            ]",
+									"        },",
+									"        \"pathAttachment2\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The pathAttachment2 Schema\",",
+									"            \"examples\": [",
+									"                \"pathfile2.json\"",
+									"            ]",
+									"        },",
+									"        \"pathAttachment3\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The pathAttachment3 Schema\",",
+									"            \"examples\": [",
+									"                \"pathfile3.json\"",
+									"            ]",
+									"        },",
+									"        \"pathAttachment4\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The pathAttachment4 Schema\",",
+									"            \"examples\": [",
+									"                \"pathfile4.json\"",
+									"            ]",
+									"        },",
+									"        \"pathAttachment5\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The pathAttachment5 Schema\",",
+									"            \"examples\": [",
+									"                \"pathfile5.json\"",
+									"            ]",
+									"        },",
+									"        \"batchId\": {",
+									"            \"type\": \"integer\",",
+									"            \"default\": 0,",
+									"            \"title\": \"The batchId Schema\",",
+									"            \"examples\": [",
+									"                463",
+									"            ]",
+									"        },",
+									"        \"createdBy\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The createdBy Schema\",",
+									"            \"examples\": [",
+									"                \"U696\"",
+									"            ]",
+									"        },",
+									"        \"graderId\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The graderId Schema\",",
+									"            \"examples\": [",
+									"                \"U696\"",
+									"            ]",
+									"        }",
+									"    },",
+									"    ",
+									"}",
+									";",
+									"",
+									"pm.test(\"Schema is valid\", () => {",
+									"pm.response.to.have.jsonSchema(schema);",
+									"});"
+								],
+								"type": "text/javascript",
+								"id": "47076fa2-6f5d-46b9-9359-696c53eb33a4"
+							}
+						}
+					],
+					"id": "f0f8d287-eb7e-4fb5-bdd0-2cebd814fb99",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n     \"assignmentDescription\": \"{{assignmentDescription}}\",\n  \"assignmentId\": \"{{updateId}}\",\n  \"assignmentName\": \"{{assignmentName}}\",\n  \"batchId\": \"{{batchId}}\",\n  \"comments\": \"{{comments}}\",\n  \"createdBy\": \"{{createdBy}}\",\n  \"dueDate\": \"{{dueDate}}\",\n  \"graderId\": \"{{invalidGrader}}\",\n  \"pathAttachment1\": \"{{pathAttachment1}}\",\n  \"pathAttachment2\": \"{{pathAttachment2}}\",\n  \"pathAttachment3\": \"{{pathAttachment3}}\",\n  \"pathAttachment4\": \"{{pathAttachment4}}\",\n  \"pathAttachment5\": \"{{pathAttachment5}}\"\n }\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BaseURL}}/assignments/{{assignmentId}}"
+					},
+					"response": []
+				},
+				{
+					"name": "Update with invalid date format",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"",
+									"});",
+									"",
+									"",
+									"pm.test(\"Body matches string : Bad Request\", function () {",
+									"    pm.expect(pm.response.json().error).to.eql(\"Bad Request\");",
+									"",
+									"});",
+									"",
+									"const schema = {",
+									"\"type\": \"object\",",
+									"",
+									"",
+									"",
+									"",
+									"   //\"$schema\": \"https://json-schema.org/draft/2019-09/schema\",",
+									"   // \"$id\": \"http://example.com/example.json\",",
+									"    \"type\": \"object\",",
+									"    //\"default\": {},",
+									"    \"title\": \"Root Schema\",",
+									"    ",
+									"    \"properties\": {",
+									"        \"assignmentId\": {",
+									"            \"type\": \"integer\",",
+									"            \"default\": 0,",
+									"            \"title\": \"The assignmentId Schema\",",
+									"            \"examples\": [",
+									"                870",
+									"            ]",
+									"        },",
+									"        \"assignmentName\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The assignmentName Schema\",",
+									"            \"examples\": [",
+									"                \"Postman intro part : 4\"",
+									"            ]",
+									"        },",
+									"        \"assignmentDescription\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The assignmentDescription Schema\",",
+									"            \"examples\": [",
+									"                \"API basics - phase1\"",
+									"            ]",
+									"        },",
+									"        \"comments\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The comments Schema\",",
+									"            \"examples\": [",
+									"                \"Practive this assignment\"",
+									"            ]",
+									"        },",
+									"        \"dueDate\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The dueDate Schema\",",
+									"            \"examples\": [",
+									"                \"2023-06-29T23:44:31.377+00:00\"",
+									"            ]",
+									"        },",
+									"        \"pathAttachment1\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The pathAttachment1 Schema\",",
+									"            \"examples\": [",
+									"                \"pathfile1.json\"",
+									"            ]",
+									"        },",
+									"        \"pathAttachment2\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The pathAttachment2 Schema\",",
+									"            \"examples\": [",
+									"                \"pathfile2.json\"",
+									"            ]",
+									"        },",
+									"        \"pathAttachment3\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The pathAttachment3 Schema\",",
+									"            \"examples\": [",
+									"                \"pathfile3.json\"",
+									"            ]",
+									"        },",
+									"        \"pathAttachment4\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The pathAttachment4 Schema\",",
+									"            \"examples\": [",
+									"                \"pathfile4.json\"",
+									"            ]",
+									"        },",
+									"        \"pathAttachment5\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The pathAttachment5 Schema\",",
+									"            \"examples\": [",
+									"                \"pathfile5.json\"",
+									"            ]",
+									"        },",
+									"        \"batchId\": {",
+									"            \"type\": \"integer\",",
+									"            \"default\": 0,",
+									"            \"title\": \"The batchId Schema\",",
+									"            \"examples\": [",
+									"                463",
+									"            ]",
+									"        },",
+									"        \"createdBy\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The createdBy Schema\",",
+									"            \"examples\": [",
+									"                \"U696\"",
+									"            ]",
+									"        },",
+									"        \"graderId\": {",
+									"            \"type\": \"string\",",
+									"            \"default\": \"\",",
+									"            \"title\": \"The graderId Schema\",",
+									"            \"examples\": [",
+									"                \"U696\"",
+									"            ]",
+									"        }",
+									"    },",
+									"    ",
+									"}",
+									";",
+									"",
+									"pm.test(\"Schema is valid\", () => {",
+									"pm.response.to.have.jsonSchema(schema);",
+									"});"
+								],
+								"type": "text/javascript",
+								"id": "c7e198a9-fab8-42af-a8fe-605dfaa1c5b1"
+							}
+						}
+					],
+					"id": "0fa4c1bd-4ff7-46dd-b4e6-640fb9c0468d",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n     \"assignmentDescription\": \"{{assignmentDescription}}\",\n  \"assignmentId\": \"{{updateId}}\",\n  \"assignmentName\": \"{{assignmentName}}\",\n  \"batchId\": \"{{batchId}}\",\n  \"comments\": \"{{comments}}\",\n  \"createdBy\": \"{{createdBy}}\",\n  \"dueDate\": \"{{invalidDate}}\",\n  \"graderId\": \"{{graderId}}\",\n  \"pathAttachment1\": \"{{pathAttachment1}}\",\n  \"pathAttachment2\": \"{{pathAttachment2}}\",\n  \"pathAttachment3\": \"{{pathAttachment3}}\",\n  \"pathAttachment4\": \"{{pathAttachment4}}\",\n  \"pathAttachment5\": \"{{pathAttachment5}}\"\n }\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BaseURL}}/assignments/{{updateId}}"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Assignment",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"",
+									"",
+									"",
+									"pm.test(\"Status code is 200 : Assignment deleted successfully\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Body matches string\", function () {",
+									"    pm.expect(pm.response.json().message).to.eql(\"Assignment deleted successfully\");",
+									"",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"id": "c84e3ff0-4434-4c08-b330-b3727e3e1813"
+							}
+						}
+					],
+					"id": "a137f9fb-9412-42c0-a135-9b0b998d709a",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "{{BaseURL}}/assignments/{{assignmentId}}"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete same Assignment",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404 : Deleted assignment can not be deleted again \", function () {",
+									"    pm.response.to.have.status(404);",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript",
+								"id": "f79b95dd-c571-4fcb-a2fa-f097f394f313"
+							}
+						}
+					],
+					"id": "3e61a125-c5a7-4701-a83d-c46c7f9d16fc",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "{{BaseURL}}/assignments/{{assignmentId}}"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"",
+									"",
+									"pm.test(\"Status code is 200 : User deleted successfully\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"",
+									"/*",
+									"pm.test(\"Body matches string\", function () {",
+									"    pm.expect(pm.response.json().error).to.eql(\"Assignment deleted successfully\");",
+									"",
+									"}); */",
+									"",
+									"//UnSet environment variable",
+									"pm.environment.unset(\"userId\");",
+									"pm.globals.unset(\"phoneNumber\");"
+								],
+								"type": "text/javascript",
+								"id": "46976a71-726f-4015-9bfd-b52e96eac63d"
+							}
+						}
+					],
+					"id": "8564ceea-0f8f-4199-85ce-ee17d1731d45",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "{{BaseURL}}/users/users/{{userId}}"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Inactive user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"",
+									"",
+									"",
+									"pm.test(\"Status code is 200 : User deleted successfully\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"/*",
+									"pm.test(\"Body matches string\", function () {",
+									"    pm.expect(pm.response.json().error).to.eql(\"Assignment deleted successfully\");",
+									"",
+									"}); */",
+									"",
+									"//UnSet environment variable",
+									"pm.environment.unset(\"InactiveuserId\");"
+								],
+								"type": "text/javascript",
+								"id": "dcb0a6f3-5b62-47cc-9862-2cf158a1129a"
+							}
+						}
+					],
+					"id": "6488b9ab-dd95-4d69-b5e9-69c748871e48",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "{{BaseURL}}/users/users/{{InactiveuserId}}"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete batch",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"",
+									"pm.test(\"Status code is 200 : Batch deleted successfully\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"//UnSet environment variable",
+									"pm.environment.unset( \"batchId\");"
+								],
+								"type": "text/javascript",
+								"id": "2d117292-debe-4687-b461-1bcdf697f9a2"
+							}
+						}
+					],
+					"id": "6501d968-3f3f-492a-9545-0d277f088d6b",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "{{BaseURL}}/batches/{{batchId}}"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete program",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"",
+									"pm.test(\"Status code is 200 : Program deleted successfully\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"//UnSet environment variable",
+									"pm.environment.unset(\"programId\");",
+									"pm.environment.unset(\"programnumber\");",
+									"",
+									"//UnSet environment variable",
+									"pm.environment.unset( \"NewassignmentId\");",
+									"//UnSet environment variable",
+									"pm.environment.unset( \"assignmentId\");",
+									"pm.environment.unset( \"assignmentname\");"
+								],
+								"type": "text/javascript",
+								"id": "ad540007-b388-4f38-8963-f41b6391904c"
+							}
+						}
+					],
+					"id": "ac72ee1c-88b0-4939-a6e7-b682f9e42b24",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "{{BaseURL}}/deletebyprogid/{{programId}}"
+					},
+					"response": []
+				}
+			],
+			"id": "fd246cdf-b1d0-4700-ac1d-6998c8fa0f47",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						],
+						"id": "3d67dda7-90bc-4f02-be6c-b531d1f510e2"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						],
+						"id": "bb8d8654-5d8d-4c08-a0dc-067e56e97b9d"
+					}
+				}
+			]
+		},
+		{
 			"name": "Assignment Submit",
 			"item": [
 				{
@@ -10237,13 +14096,14 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "b33f8799-dc4f-4eab-b8a5-e22c242bd850",
 								"exec": [
 									"//Parse the json response",
 									"const response=pm.response.json();",
 									"console.log(response);",
 									"",
 									"//Set Environment variable",
-									"pm.environment.set(\"submissionIdStudent\", response.submissionId);",
+									"pm.environment.set(\"submissionId\", response.submissionId);",
 									"",
 									"console.log(response.submissionIdStudent);",
 									"",
@@ -10351,20 +14211,19 @@
 									"    pm.response.to.have.status(\"Created\");",
 									"});"
 								],
-								"type": "text/javascript",
-								"id": "b33f8799-dc4f-4eab-b8a5-e22c242bd850"
+								"type": "text/javascript"
 							}
 						},
 						{
 							"listen": "prerequest",
 							"script": {
+								"id": "ae673c9c-1023-4c67-89a4-efd6668a3d8c",
 								"exec": [
 									"var moment=require('moment');",
 									"pm.globals.set (\"subDateTime\",moment().format(\"MM-DD-YYYY HH:mm:ss\"));",
 									""
 								],
-								"type": "text/javascript",
-								"id": "ae673c9c-1023-4c67-89a4-efd6668a3d8c"
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -11124,7 +14983,7 @@
 					"request": {
 						"method": "DELETE",
 						"header": [],
-						"url": "{{BaseURL}}/assignmentsubmission/{{submissionIdUser}}"
+						"url": "{{BaseURL}}/assignmentsubmission/{{submissionId}}"
 					},
 					"response": []
 				},
@@ -11600,800 +15459,800 @@
 	],
 	"variable": [
 		{
-			"id": "7c96ebc4-27a6-4978-99a5-5db388e2dd25",
+			"id": "25fd1bf2-fdab-49a7-8e31-25163584483b",
 			"key": "BaseURL",
 			"value": "https://lms-api-hackathon-june2023-930a8b0f895d.herokuapp.com/lms",
 			"type": "string"
 		},
 		{
-			"id": "395df853-c471-47ff-94f8-3da98cdb1d99",
+			"id": "bb94cc19-3471-46ad-bd56-8a267b4e98f2",
 			"key": "userComments",
 			"value": "creating new user",
 			"type": "string"
 		},
 		{
-			"id": "b238814c-0f19-489c-920d-dc4511dd17d5",
+			"id": "91d15678-286f-4a35-9ccf-52ec1170f898",
 			"key": "userEduPg",
 			"value": "MS",
 			"type": "string"
 		},
 		{
-			"id": "bf691014-db29-4a46-812a-7006f97e3a22",
+			"id": "e16c4024-22f6-4a22-bcf1-b7003c846c0c",
 			"key": "userEduUg",
 			"value": "BE",
 			"type": "string"
 		},
 		{
-			"id": "33289a5e-c7b2-4d6e-8141-90b4e8cf077c",
+			"id": "ed1d4924-149b-478a-aa55-f93a2d28be48",
 			"key": "userFirstName",
 			"value": "APICollectors_",
 			"type": "string"
 		},
 		{
-			"id": "4c9baf98-a0f1-4e24-9a56-134218320516",
+			"id": "5e732c98-0223-4f27-9e04-367b9a5091c4",
 			"key": "adminUserFirstName",
 			"value": "APICollectors_",
 			"type": "string"
 		},
 		{
-			"id": "86d92574-b9f7-4aa7-9930-7687fe9243dd",
+			"id": "265445a4-c6bc-4935-bd12-c1d84184fc60",
 			"key": "staffUserFirstName",
 			"value": "APICollectors_",
 			"type": "string"
 		},
 		{
-			"id": "b86eee86-1fa2-43d9-9bb3-02e7e0690544",
+			"id": "db871cb7-57f0-41ca-914a-7939fb775bad",
 			"key": "studentUserFirstName",
 			"value": "APICollectors_",
 			"type": "string"
 		},
 		{
-			"id": "0a18013a-8fa3-4767-9ec6-cccc0bd07a71",
+			"id": "b7216b75-4581-4138-a45a-8b649ed09d05",
 			"key": "userLastName",
 			"value": "User",
 			"type": "string"
 		},
 		{
-			"id": "2ab522ca-f7c1-4acf-b987-5e3739f82d19",
+			"id": "27e20619-d05f-4128-8d07-0ae5cf49130f",
 			"key": "userLinkedinUrl",
 			"value": "www.linkedin.com/Test1234",
 			"type": "string"
 		},
 		{
-			"id": "5babca9a-55d0-4764-830c-41f3d191823e",
+			"id": "bdd99df2-9d90-4fb8-b28b-1e35d8ee99b9",
 			"key": "userLocation",
 			"value": "India",
 			"type": "string"
 		},
 		{
-			"id": "c9c5fe41-5985-4c4b-8651-82e688c717dc",
+			"id": "f817de76-3461-41c7-95d3-be1153534b29",
 			"key": "userMiddleName",
 			"value": "",
 			"type": "string"
 		},
 		{
-			"id": "21220022-372a-4d5b-8bff-f0e6071bf967",
+			"id": "2f60e426-2ae6-434d-989d-97bd5bb02372",
 			"key": "roleId",
 			"value": "R02",
 			"type": "string"
 		},
 		{
-			"id": "54c26167-2dbf-4693-a70a-7bdb13dfad67",
+			"id": "21da4199-2d71-44d5-9cf7-736a065fd372",
 			"key": "userRoleStatus",
 			"value": "Active",
 			"type": "string"
 		},
 		{
-			"id": "c789c7dc-10ad-48e5-a346-525b4345ad77",
+			"id": "47ac1def-d722-4a83-8825-bc25e70cbce8",
 			"key": "userTimeZone",
 			"value": "IST",
 			"type": "string"
 		},
 		{
-			"id": "de335b76-51a6-48ee-890c-d881e5d35b51",
+			"id": "9ab6bbc1-6af0-4153-81dd-502c39a8cd2c",
 			"key": "userVisaStatus",
 			"value": "NA",
 			"type": "string"
 		},
 		{
-			"id": "3f0cb1ff-7be1-4dcf-bde8-b52f80428fc8",
+			"id": "73364e8f-34ae-4d7e-a357-c9ed161a25bc",
 			"key": "invalidUserRoleId",
 			"value": "invalidRoleID",
 			"type": "string"
 		},
 		{
-			"id": "45c3a9de-a582-4399-b380-29bfb5472684",
+			"id": "171a9420-4fe4-4152-8342-5b1809161797",
 			"key": "integerUserRoleId",
 			"value": "46546",
 			"type": "string"
 		},
 		{
-			"id": "2241a767-1ade-4920-8f33-bd4cce7de6c1",
+			"id": "a503c23f-d512-4fe2-9e94-ef35bbcac95d",
 			"key": "invalidUserVisaStatus",
 			"value": "invalidVisaStatus",
 			"type": "string"
 		},
 		{
-			"id": "f046ff73-240b-46fb-a41b-c89781a89577",
+			"id": "da07f58d-ba56-4e45-b854-103fbaf0241b",
 			"key": "invalidUserTimeZone",
 			"value": "invalidTimeZone",
 			"type": "string"
 		},
 		{
-			"id": "6aff9698-6b75-4f1b-a9ef-f06e5eebffd1",
+			"id": "3bce6f49-7be0-4097-adb0-a44bc893db7c",
 			"key": "stringUserPhoneNumber",
 			"value": "strPhone",
 			"type": "string"
 		},
 		{
-			"id": "f7670f8d-6281-4109-bb07-5684cae343e3",
+			"id": "3ab0a88b-b3ed-4569-ada9-59db114412b4",
 			"key": "blankRoleId",
 			"value": "",
 			"type": "string"
 		},
 		{
-			"id": "fa9e8d88-d6c3-4d3b-a2a5-a8ccafbb38d7",
+			"id": "5472dc16-cb34-40ef-9313-58a71b95e286",
 			"key": "blankUserRoleStatus",
 			"value": "",
 			"type": "string"
 		},
 		{
-			"id": "ae17bb64-7262-4b97-a8d9-b6d1e594271b",
+			"id": "e3705ad0-10f3-4d6c-b29e-51c11937f3f7",
 			"key": "blankUserFirstName",
 			"value": "",
 			"type": "string"
 		},
 		{
-			"id": "3cbbfbb8-4f92-4fe1-ad4d-392f9b8859d1",
+			"id": "cd8d1a17-9fa1-42f0-ba15-e65be2b6c4f1",
 			"key": "blankUserLastName",
 			"value": "",
 			"type": "string"
 		},
 		{
-			"id": "ec2c26c4-eaa0-4910-8be5-7bac7e077b9b",
+			"id": "f42e6c43-d5f9-49b9-be8b-c591f834654b",
 			"key": "blankUserTimeZone",
 			"value": "",
 			"type": "string"
 		},
 		{
-			"id": "24a90dd4-0974-4bed-bfcf-c85deab4a4ff",
+			"id": "d05aa7d2-c9fe-4999-ab7c-c13a8fa1786b",
 			"key": "blankUserVisaStatus",
 			"value": "",
 			"type": "string"
 		},
 		{
-			"id": "9f8b99de-f210-4053-a53f-51024e080cf2",
+			"id": "945a0bab-f87f-4122-a11d-dd0cac7013bf",
 			"key": "userNameCounter",
 			"value": "0",
 			"type": "string"
 		},
 		{
-			"id": "ccf3dbb0-e50e-4a45-a247-f2ef7e9fef27",
+			"id": "fdc9c1db-96c8-4ea6-b0f4-0821dd016646",
 			"key": "messageUpdateStatusSuccess",
 			"value": "UserStatus Updated for User: ",
 			"type": "string"
 		},
 		{
-			"id": "93317f7f-03ad-41c5-9f1c-07bc3d329549",
+			"id": "d1b5eaf3-2f28-4328-9c71-3b749e8d92d4",
 			"key": "message1UpdateStatusRoleid",
 			"value": "RoleID: ",
 			"type": "string"
 		},
 		{
-			"id": "df86ad9e-9d35-40ce-bfe2-a8582d6733e3",
+			"id": "d9b1fa61-7545-4555-b27b-74b79956cac9",
 			"key": "message2UpdateStatusRoleid",
 			"value": " not found for the UserID: ",
 			"type": "string"
 		},
 		{
-			"id": "f0e6e042-2299-48b4-9d0f-4d2e1ba68ecb",
+			"id": "35dc236a-7ffe-470c-b706-618c1cb0c077",
 			"key": "messageMandatoryRoleStatus",
 			"value": "Role Status is Mandatory",
 			"type": "string"
 		},
 		{
-			"id": "eb1490c8-0afc-45fc-ac0f-712c5c62fc5a",
+			"id": "e44077e8-c838-4aa5-a1fc-ad1e23454959",
 			"key": "messageMandatoryRoleid",
 			"value": "Role Id is mandatory",
 			"type": "string"
 		},
 		{
-			"id": "fe3e3ddf-7380-4ee6-b9d2-40d3846653c5",
+			"id": "88cc9251-dd49-43fa-a181-20fc1610680a",
 			"key": "messageUpdateRoleStatusInvalidroleid",
 			"value": "RoleID: invalidRoleID not found for the UserID: ",
 			"type": "string"
 		},
 		{
-			"id": "aee3ff4f-4584-42f5-a2b3-d0a1f1620ebd",
+			"id": "5ca6944b-75b9-4b61-9ce8-01f645c013e8",
 			"key": "messageMissingPhone",
 			"value": "Phone Number is required",
 			"type": "string"
 		},
 		{
-			"id": "b21094f7-e8d8-4485-a1e8-b2317272ea0a",
+			"id": "37388d65-6aa2-45c3-91a3-463317b0bbc4",
 			"key": "messageStringPhone",
 			"value": "Phone Number cannot be string",
 			"type": "string"
 		},
 		{
-			"id": "cd3939ce-d5ce-4d2e-8004-3f0f9c58d487",
+			"id": "058ff50b-d63f-477a-9786-47741942cd87",
 			"key": "messageInvalidRoleid",
 			"value": "Invalid Role id",
 			"type": "string"
 		},
 		{
-			"id": "049a56b0-1986-4dab-94e9-dfe4091eb33c",
+			"id": "500354a2-527b-4d00-a211-2db628d9a202",
 			"key": "messageMandatoryFirstName",
 			"value": "User First Name cannot be null or empty",
 			"type": "string"
 		},
 		{
-			"id": "317a0ed8-5320-4210-985b-e6991ec26f22",
+			"id": "929d0460-da71-44ea-9792-6fe5f844da85",
 			"key": "messageMandatoryLastName",
 			"value": "User Last Name cannot be null or empty",
 			"type": "string"
 		},
 		{
-			"id": "33f327f4-1902-461d-bb2a-ecca5df37bae",
+			"id": "e8d4c84b-b1ee-4081-8053-d6a0868577f1",
 			"key": "messageMandatoryTimeZone",
 			"value": "Failed to create user, as 'TimeZone' is invalid !! ",
 			"type": "string"
 		},
 		{
-			"id": "d954ae89-2c05-4a54-888d-f6e19744eafb",
+			"id": "ec070ae8-6459-4d83-a247-ace8aff6f749",
 			"key": "messageMandatoryVisaStatus",
 			"value": "Failed to create user, as 'Visa Status' is invalid !! ",
 			"type": "string"
 		},
 		{
-			"id": "cde8e4c7-ad35-447f-8457-a7d1a5b0617a",
+			"id": "944ca6bf-2ee4-4212-b1d5-adc60fdf1e1a",
 			"key": "integerRoleStatus",
 			"value": "1234",
 			"type": "string"
 		},
 		{
-			"id": "562e150d-3a32-4e6e-abf0-a3746732993b",
+			"id": "2f7d052e-cd05-4bc4-9c2e-f19701f6175e",
 			"key": "putUserComments",
 			"value": "Updating user",
 			"type": "string"
 		},
 		{
-			"id": "81fe23de-e5b9-466c-8f86-af34c651372b",
+			"id": "314f4cb8-08af-44af-814a-f15da4e983a5",
 			"key": "putUserEduPg",
 			"value": "MSc",
 			"type": "string"
 		},
 		{
-			"id": "125e2c57-f1c4-4a3e-8cdc-aceef8848ed1",
+			"id": "4d078a2e-f853-4215-8961-58776befe6a0",
 			"key": "putUserEduUg",
 			"value": "BSc",
 			"type": "string"
 		},
 		{
-			"id": "0cb48bf0-1c48-43f5-b454-92585bd62a8f",
+			"id": "e008d59d-33cc-449e-9b06-65e561b2695e",
 			"key": "putUserFirstName",
 			"value": "APICollectors_",
 			"type": "string"
 		},
 		{
-			"id": "2eb1dcf4-1683-46a4-ac1b-46718b3e0701",
+			"id": "16647a7e-19c2-4961-8c61-28764c1506f9",
 			"key": "putUserLastName",
 			"value": "TestUser",
 			"type": "string"
 		},
 		{
-			"id": "f2c49a5a-6538-4bf1-9981-ac3ea24bde9a",
+			"id": "02ee8fb5-31c7-4f22-8d0a-71c0e55fd8fd",
 			"key": "putUserLinkedinUrl",
 			"value": "www.linkedin.com/TestUser",
 			"type": "string"
 		},
 		{
-			"id": "f993a1b6-52ad-4cfb-a49f-fe6a0dc412fc",
+			"id": "9cb41f05-8435-4098-bab1-c6f5b2e28586",
 			"key": "putUserLocation",
 			"value": "Canada",
 			"type": "string"
 		},
 		{
-			"id": "c3f0e922-0736-4cca-8f18-df9d19bfbfea",
+			"id": "3a95c3ba-20ab-4d95-b9f3-da7ea7302a76",
 			"key": "putUserTimeZone",
 			"value": "EST",
 			"type": "string"
 		},
 		{
-			"id": "cbc9f605-d5f6-40ed-93cc-190e33abfd6f",
+			"id": "e4ba7369-ac3c-448a-9bd4-a3ae04be3fc9",
 			"key": "putUserVisaStatus",
 			"value": "Canada-EAD",
 			"type": "string"
 		},
 		{
-			"id": "547289a2-e5ce-4171-8966-4996e312c7a8",
+			"id": "3cd6171e-62aa-4240-ba03-48be5c10b672",
 			"key": "userProgramDescription",
 			"value": "Creating program for user",
 			"type": "string"
 		},
 		{
-			"id": "cdc3d638-b22c-46db-b7cf-5435986b4cf9",
+			"id": "6d13e6c1-ac94-4e88-b613-03126f38db07",
 			"key": "userProgramStatus",
 			"value": "Active",
 			"type": "string"
 		},
 		{
-			"id": "3e7b00ea-ee4d-4fb4-8c01-796e2544d86c",
+			"id": "c77d4e07-c8fd-42c9-8ad2-2520dbb24243",
 			"key": "userProgramName",
 			"value": "Jun23-APICollectors-SDET-",
 			"type": "string"
 		},
 		{
-			"id": "40c46a9c-9bad-4ac8-87a9-60a0feb2cf46",
+			"id": "d6a4f81b-7b5e-4edf-9ab2-d72a0074430c",
 			"key": "userBatchDescription",
 			"value": "Creating batch for user",
 			"type": "string"
 		},
 		{
-			"id": "740a0d21-b356-48fa-9e4a-0cdd578a30ca",
+			"id": "86079ce8-7a4d-4d82-82bb-f51ce745ed76",
 			"key": "userBatchName",
 			"value": "Jun23-APICollectors-SDET-SDET01-",
 			"type": "string"
 		},
 		{
-			"id": "b3dc096c-c2d4-4557-a1eb-6e9e677c80f5",
+			"id": "638519f6-4a3f-4e99-bb74-a8c372a2a704",
 			"key": "userBatchNoOfClasses",
 			"value": "1",
 			"type": "string"
 		},
 		{
-			"id": "0f68e92c-8faa-49a1-954e-7b76454673a2",
+			"id": "a78575a3-c134-42e8-9942-c39cb0a95ebe",
 			"key": "userBatchStatus",
 			"value": "Active",
 			"type": "string"
 		},
 		{
-			"id": "0e086163-6e08-47df-a5de-5effc7f26cd8",
+			"id": "5ad9c9a5-fa2f-4c60-94a1-b56baa2e7732",
 			"key": "invalidRoleId",
 			"value": "Invalid role",
 			"type": "string"
 		},
 		{
-			"id": "66ee82b5-ee05-401a-b41e-7c4e76b7853b",
+			"id": "66883055-e3d5-4137-a63d-9385095390ec",
 			"key": "messagePutMandatoryFirstName",
 			"value": "User First Name is mandatory",
 			"type": "string"
 		},
 		{
-			"id": "1dcf021c-37ff-4ba2-898c-1cc97476cd8d",
+			"id": "c3f84ff8-ea68-4b1a-ad59-5799017d4277",
 			"key": "messagePutMandatoryLastName",
 			"value": "User Last Name is mandatory",
 			"type": "string"
 		},
 		{
-			"id": "c62735ed-226b-46ba-9dff-bdc0e8189454",
+			"id": "b3ad4704-c47b-46bd-939f-f2d2479e5d4b",
 			"key": "messagePutMandatoryTimeZone",
 			"value": "Failed to update user, as 'TimeZone' is invalid !! ",
 			"type": "string"
 		},
 		{
-			"id": "2026685d-cfbf-4e6c-8daa-fb83562b8a90",
+			"id": "eaf39caa-d4a2-4144-9fb4-7dffeefea2b2",
 			"key": "messagePutMandatoryVisaStatus",
 			"value": "Failed to update user, as 'Visa Status' is invalid !! ",
 			"type": "string"
 		},
 		{
-			"id": "6300019a-bc52-450b-b1b4-d8b13ef71754",
+			"id": "a1c17da6-41b4-41b6-9b88-22745cd11331",
 			"key": "batchDescription",
 			"value": "Postman",
 			"type": "string"
 		},
 		{
-			"id": "c537c165-107e-4202-9c07-c717da764aa8",
+			"id": "072d7cce-9302-4502-9921-e67913f14aeb",
 			"key": "batchNoOfClasses",
 			"value": "2",
 			"type": "string"
 		},
 		{
-			"id": "c5d835f0-5c55-43b8-88c6-bc2d6bdb8ee7",
+			"id": "b057d9e0-c97a-4aa9-b33a-e3f4dc273ae0",
 			"key": "batchStatus",
 			"value": "Active",
 			"type": "string"
 		},
 		{
-			"id": "5f45375c-b0fd-4604-83a3-36b9267e3f39",
+			"id": "5b3875ed-0807-4548-81b5-b1b567ed8b08",
 			"key": "programDescriptionbatch",
 			"value": "Postman",
 			"type": "string"
 		},
 		{
-			"id": "ee432a83-4332-49a1-8584-e030ce4a5322",
+			"id": "573d145e-5c95-49d1-bce2-6ee0419a8749",
 			"key": "programStatusbatch",
 			"value": "Active",
 			"type": "string"
 		},
 		{
-			"id": "fe7a089a-e03e-4626-bf69-608f5fb4a2b8",
+			"id": "1c722255-df14-4c33-bbfe-1ce7fd834dd6",
 			"key": "UpdtbatchNoOfClasses",
 			"value": "4",
 			"type": "string"
 		},
 		{
-			"id": "b911de79-e666-4de0-ba60-5f698c71e1fb",
+			"id": "aa8c1dcf-a941-47b2-927d-679e79ab6ff0",
 			"key": "UpdtbatchStatus",
 			"value": "InActive",
 			"type": "string"
 		},
 		{
-			"id": "90eec850-a50b-473d-96db-977a27976920",
+			"id": "0a5364cf-0b30-4c5c-b0cd-72f68e9ab7e2",
 			"key": "UpdtbatchDescription",
 			"value": "Rest Assure",
 			"type": "string"
 		},
 		{
-			"id": "1d59b4ca-c2ca-466b-904a-dfe12203af61",
+			"id": "a5263788-764b-4a40-8289-a1b4367dab26",
 			"key": "programDescription",
 			"value": "DA",
 			"type": "string"
 		},
 		{
-			"id": "7c489cab-5675-4cd2-9b53-11c5abf15d20",
+			"id": "7a9f4a51-db28-48df-8acd-595cbf0a4686",
 			"key": "programStatus",
 			"value": "Active",
 			"type": "string"
 		},
 		{
-			"id": "9575f512-e53f-4872-be76-61f97cdeb97c",
+			"id": "84a03046-77bc-4e5a-a07b-6208195e489b",
 			"key": "UpdtprogramDescription",
 			"value": "Postman",
 			"type": "string"
 		},
 		{
-			"id": "d24f82f3-ade0-4a99-86c8-0edee3d12f62",
+			"id": "b9a5a8e8-bdc8-44d1-b07f-61801864f021",
 			"key": "UpdtprogramDescription2",
 			"value": "Rest Assure",
 			"type": "string"
 		},
 		{
-			"id": "53d42e49-a9c6-461f-be15-1cdd88764f5c",
+			"id": "32efbe05-7cb7-45ea-b42e-6bbf20cfa2e3",
 			"key": "programStatus1",
 			"value": "WIP",
 			"type": "string"
 		},
 		{
-			"id": "dfcdc17d-e5cb-47f3-9c00-26940fd6da43",
+			"id": "42b611d1-8f9e-4931-af61-3a2de60f215b",
 			"key": "programDescription2",
 			"value": "TestData",
 			"type": "string"
 		},
 		{
-			"id": "e749ab84-d715-4791-ad39-61eb6d0dbdc4",
+			"id": "27ae3968-e2e8-4204-9816-00ad022d1fc8",
 			"key": "programName2",
 			"value": "June23-API_Collectors-Hackathon-05",
 			"type": "string"
 		},
 		{
-			"id": "878deb3f-5d85-440e-bd7a-96c14f12c09a",
+			"id": "17dffd15-e903-4dc8-b299-45f29dd0e9bd",
 			"key": "programStatus2",
 			"value": "Active",
 			"type": "string"
 		},
 		{
-			"id": "032ada09-7b9e-40bf-a695-d1c071a2905a",
+			"id": "f964cb4a-48c5-4ec7-8bc7-ab1c9336d91f",
 			"key": "programDescription3",
 			"value": "MissingData",
 			"type": "string"
 		},
 		{
-			"id": "6bc293e4-7fb3-4982-b0cb-d15d6f330291",
+			"id": "4683e341-3f75-44ff-b4ab-71950b8e42db",
 			"key": "programDescription1",
 			"value": "Tests",
 			"type": "string"
 		},
 		{
-			"id": "58304484-9114-4f96-b8ea-abb5e7bd3918",
+			"id": "a2f697d7-5eab-4e00-887c-30185a382c60",
 			"key": "programName1",
 			"value": "June23-API_Collectors-Hackathon-01",
 			"type": "string"
 		},
 		{
-			"id": "35a6e6b9-c689-4745-84f7-6b8f849a10ba",
+			"id": "5e678a08-be92-4d15-8c9c-1abc28e4fe97",
 			"key": "programName3",
 			"value": "June23-API_Collectors-Hackathon-10",
 			"type": "string"
 		},
 		{
-			"id": "85223ba0-fbb6-475c-a9f4-c6f00f9d6289",
+			"id": "73299c8e-fb3b-4791-8579-8e61a917a021",
 			"key": "programStatus3",
 			"value": "Active",
 			"type": "string"
 		},
 		{
-			"id": "914cc60c-dd6e-441f-bdca-80156643fcea",
+			"id": "4837ddec-a737-44bc-bcdb-75abaa0e7651",
 			"key": "programDescription4",
 			"value": "Testing",
 			"type": "string"
 		},
 		{
-			"id": "a1eb6df5-7344-4390-8f56-ba5648f755e2",
+			"id": "7593ed0c-51c3-47f0-9eea-0384ceb58fe2",
 			"key": "programName4",
 			"value": "June23-API_Collectors-Hackathon-15",
 			"type": "string"
 		},
 		{
-			"id": "0d882802-fb1b-4476-a9fe-0de79d936eb3",
+			"id": "d3583574-e5a5-4201-8b8f-39f2d1a980c3",
 			"key": "programStatus4",
 			"value": "active",
 			"type": "string"
 		},
 		{
-			"id": "c0d2480b-99b2-4c21-a976-b8c53feeeba1",
+			"id": "970e41f0-1166-4b27-94ad-92e3b2fcf626",
 			"key": "UpdatepgmDesc",
 			"value": "APITesting",
 			"type": "string"
 		},
 		{
-			"id": "2d9898d4-bf5b-4660-968a-e03ea1fa1f05",
+			"id": "89f39b1b-dffd-4d61-abef-e350584d8d24",
 			"key": "assignmentId",
 			"value": "643"
 		},
 		{
-			"id": "35b71f2e-6c7b-45ec-8126-ad3779af6830",
+			"id": "30a315db-0882-4838-8f7b-0f1b0d07e249",
 			"key": "invalidID",
 			"value": "12",
 			"type": "string"
 		},
 		{
-			"id": "821367cb-8297-40f6-a716-9ba83aa6651b",
+			"id": "b70112f7-f47c-43bf-af1c-02402857468c",
 			"key": "Admin",
 			"value": "R01",
 			"type": "string"
 		},
 		{
-			"id": "d1002710-1b97-4101-acc6-4ca1eab787e5",
+			"id": "be26d6ee-b031-4f72-aceb-3a7d8cba1bcd",
 			"key": "Staff",
 			"value": "R02",
 			"type": "string"
 		},
 		{
-			"id": "48b9667c-7a5e-48c8-b171-614b4d24bb1e",
+			"id": "163c129c-ef5a-49e0-9559-add35f6e00a6",
 			"key": "Student",
 			"value": "R03",
 			"type": "string"
 		},
 		{
-			"id": "be16fb6b-4996-4aab-9549-9bad712a4c52",
+			"id": "89653203-3410-4c49-8218-ce79b5bfaf0a",
 			"key": "Status1",
 			"value": "Active",
 			"type": "string"
 		},
 		{
-			"id": "4ba8011a-ce96-41b1-a25d-64c17df0e1ed",
+			"id": "4e6d15cf-4244-4c61-831a-e531e77a6b06",
 			"key": "Status2",
 			"value": "Inactive",
 			"type": "string"
 		},
 		{
-			"id": "77846a78-66a4-4410-9b92-dfaab3f8fe4d",
+			"id": "edddc992-7992-431e-a255-fc5091bef2bf",
 			"key": "programName",
 			"value": "Jun23-APICollectors-SDET-"
 		},
 		{
-			"id": "53f5c280-09a6-4eca-a178-d712aa6636f1",
+			"id": "d97f10cd-dcf6-46da-ae9e-8d20ecb02738",
 			"key": "programDesc",
 			"value": "Test Data for Hackathon",
 			"type": "string"
 		},
 		{
-			"id": "d8140119-7fa9-45f1-8792-f0f5df6c6f9d",
+			"id": "dfb990bd-2eaa-4eda-991e-1fcc62ebbb31",
 			"key": "resPgmName",
 			"value": "Jun23-APICollectors-SDET-106"
 		},
 		{
-			"id": "3ce82ee7-e5a2-4bf5-8998-9a9292a26182",
+			"id": "6e4c061f-dd0c-4a25-8b37-8b8e73e55fb3",
 			"key": "programId",
 			"value": "7514"
 		},
 		{
-			"id": "6484dc50-22af-4715-9f61-2d318db816d2",
+			"id": "49936e4e-d74a-40a4-9006-36b3385c59f8",
 			"key": "pgmStatus1",
 			"value": "In Progress",
 			"type": "string"
 		},
 		{
-			"id": "bcd9cea9-7a13-46a0-9a1d-82a917f5a403",
+			"id": "501bbc11-d09a-4389-82c0-fdb47ae6b34e",
 			"key": "pgmStatus2",
 			"value": "Completed",
 			"type": "string"
 		},
 		{
-			"id": "cf148498-2c94-4b7d-8974-22f71435de76",
+			"id": "29ca1abd-fe5a-4687-8841-a6c7dac04ebc",
 			"key": "batchNameAssignment",
 			"value": "Jun23-APICollectors-SDET-SDET01-",
 			"type": "string"
 		},
 		{
-			"id": "425fa81d-cd54-4d35-a76e-5a7f5b6a9fb8",
+			"id": "ef58f0a5-0f00-440d-98cc-238ea4cb572a",
 			"key": "timeZone1",
 			"value": "EST",
 			"type": "string"
 		},
 		{
-			"id": "6b682802-a1aa-4015-9b17-253669021d7d",
+			"id": "3661ec91-7e6c-461f-ad6b-6459942c7a30",
 			"key": "timeZone2",
 			"value": "CST",
 			"type": "string"
 		},
 		{
-			"id": "58959ebf-db5d-4661-94b9-af9045e1f419",
+			"id": "14736de9-0498-4d66-b5fa-268f2f908864",
 			"key": "visaStatus1",
 			"value": "H4-EAD",
 			"type": "string"
 		},
 		{
-			"id": "b2229ac1-0dd0-4465-9218-ebac7174335a",
+			"id": "670a9df8-52b2-4005-9414-5022bbc5b20d",
 			"key": "visaStatus2",
 			"value": "GC-EAD",
 			"type": "string"
 		},
 		{
-			"id": "1a2c6fde-320b-45f2-9be2-fe2c619d1bd0",
+			"id": "ffc9780f-ed40-4a0f-89cc-004e249b9b27",
 			"key": "visaStatus3",
 			"value": "US-Citizen",
 			"type": "string"
 		},
 		{
-			"id": "d8454d9c-02f1-40b3-a420-48eb42caf160",
+			"id": "5e4228cd-90c9-4aff-966c-32c4d3826ac8",
 			"key": "userComment",
 			"value": "Creating User",
 			"type": "string"
 		},
 		{
-			"id": "d496ca34-38be-4f86-a74d-0777f53fbbd9",
+			"id": "12ff79fb-27d0-43b3-b375-a6ec133ad361",
 			"key": "batchDesc",
 			"value": "Postman Hackathon batch",
 			"type": "string"
 		},
 		{
-			"id": "26f53920-9100-41f7-a214-d1f87200688b",
+			"id": "7ceaac4e-ddc2-43e5-8c39-3f7191b7f5f5",
 			"key": "assignmentName",
 			"value": "Jun23-APICollectors-SDET-JAVA-",
 			"type": "string"
 		},
 		{
-			"id": "b59794b3-86e3-484c-ae4f-94bf916f065d",
+			"id": "a4021aab-9e79-40c3-82fa-31ca4e2636b3",
 			"key": "firstName",
 			"value": "APICollectors_",
 			"type": "string"
 		},
 		{
-			"id": "1f06353e-7dee-49a6-a2c4-b530db1052e6",
+			"id": "6c1f635e-0665-4daa-89d7-af60a894bab7",
 			"key": "userId",
 			"value": "U4413",
 			"type": "string"
 		},
 		{
-			"id": "ceffe954-7363-4406-8c4c-88515141c5f9",
+			"id": "d667642a-b458-41c0-9482-52c2140261e9",
 			"key": "assignmentDesc1",
 			"value": "Hackathon Testing ",
 			"type": "string"
 		},
 		{
-			"id": "091cb0c4-21c5-4c3c-a23b-e789f7645612",
+			"id": "c4dfc19d-60cc-4fad-bdf2-257ab2f21c49",
 			"key": "assignmentDesc2",
 			"value": "SQL Bootcamp Assignment",
 			"type": "string"
 		},
 		{
-			"id": "f5d417a0-7d2c-401a-8003-61a9331878de",
+			"id": "bab993bc-1525-4610-b5f4-04dc53ced56f",
 			"key": "assignmentDesc3",
 			"value": "Cucumber BDD Assignment",
 			"type": "string"
 		},
 		{
-			"id": "32ec2fa5-d649-4a13-8a88-a98f6bdaf93d",
+			"id": "09cf7f1b-93d7-4a48-8d35-03a536cd191f",
 			"key": "comments",
 			"value": "Test Data",
 			"type": "string"
 		},
 		{
-			"id": "5c243ded-a222-4d17-9ae7-a4df631571f0",
+			"id": "9704cc03-ca11-41bd-b52d-434916a69072",
 			"key": "postDueDate",
 			"value": "06-26-2023 17:20:00",
 			"type": "string"
 		},
 		{
-			"id": "4653bb87-89ba-4c3c-8188-465713758112",
+			"id": "7e4ab22c-4df5-4064-8c57-a32766f8c721",
 			"key": "filepath1",
 			"value": "file1.json",
 			"type": "string"
 		},
 		{
-			"id": "4179bab0-c4c8-4d5b-9629-c0eca134ea75",
+			"id": "cc712a2f-e86b-493b-8cbb-7ca2529d998b",
 			"key": "filepath2",
 			"value": "file2.json",
 			"type": "string"
 		},
 		{
-			"id": "4d7fbf95-bd30-4343-a5e0-8279ac051ccd",
+			"id": "55dfb906-f85a-428e-8120-bcfe4338d94a",
 			"key": "filepath3",
 			"value": "file3.json",
 			"type": "string"
 		},
 		{
-			"id": "9091cd4f-22e9-4d14-a5ca-21f2ac26df04",
+			"id": "582eab6a-457d-473c-9e3d-c59aa6948a78",
 			"key": "filepath4",
 			"value": "file4.json",
 			"type": "string"
 		},
 		{
-			"id": "853cef77-99a2-455e-aff5-7d7aa39114dd",
+			"id": "25e103f2-40e2-454c-8fad-4f7e823d55ca",
 			"key": "filepath5",
 			"value": "file5.json",
 			"type": "string"
 		},
 		{
-			"id": "6d1968c4-b511-4d7d-bcac-5f0b5aab376d",
+			"id": "a5729a34-2f64-40ca-835a-c64afcb6bd19",
 			"key": "linkedinUrl",
 			"value": "team@linkedin.com",
 			"type": "string"
 		},
 		{
-			"id": "80ce7a92-d55c-411d-a94e-e41b7cece11f",
+			"id": "94b40bee-ed2e-420f-a98c-7ec1c6ab7224",
 			"key": "serial",
 			"value": "106",
 			"type": "string"
 		},
 		{
-			"id": "6ff46a2d-41a0-4efe-b85b-e6a92adc0f5f",
+			"id": "2a5e47c8-b14c-4a8f-b0a0-8c29cdfa9703",
 			"key": "subComments",
 			"value": "Submitted successfully",
 			"type": "string"
 		},
 		{
-			"id": "b95a1791-f9e9-464d-9c0c-fc6cb21b7baa",
+			"id": "3ad5f99b-850d-49a7-9b73-b161cb360f84",
 			"key": "resubmitComments",
 			"value": "Resubmitted successfully",
 			"type": "string"
 		},
 		{
-			"id": "590d17e7-dfa9-419f-8e64-7d9793e3126c",
+			"id": "e7448e6e-f1dc-4989-8c04-55ae5bc25aae",
 			"key": "invalidBatchId",
 			"value": "31012",
 			"type": "string"
 		},
 		{
-			"id": "918eac28-69ad-494e-86ed-f2298184902d",
+			"id": "2ee92080-0c35-4456-a394-c36a4074eeb6",
 			"key": "postDueId",
 			"value": "1074",
 			"type": "string"
 		},
 		{
-			"id": "54a1fa3b-fe7c-4e10-a306-6dde13aa2ca8",
+			"id": "e551bbfd-c813-49a2-bf15-28a1a8101320",
 			"key": "lastName",
 			"value": "Test",
 			"type": "string"
 		},
 		{
-			"id": "35fa3d8f-9c7d-4b7d-811b-95a254c9ad53",
+			"id": "318f62a0-e971-4112-b951-2bb71eecba52",
 			"key": "UG",
 			"value": "ug",
 			"type": "string"
 		},
 		{
-			"id": "f7848715-6718-41b4-9c58-2f42f4dce6f2",
+			"id": "8416f834-d455-488f-aaeb-5a5a42b74143",
 			"key": "PG",
 			"value": "pg",
 			"type": "string"
 		},
 		{
-			"id": "2dbff642-0a28-4e11-acfd-e6b7f091a88c",
+			"id": "dc9de922-1bc5-4612-8a3f-e45ee3960197",
 			"key": "phoneNumber",
 			"value": "{{randomNumber}}",
 			"type": "string"
 		},
 		{
-			"id": "a3643c42-60fc-4196-81e5-b7ce40fe52f7",
+			"id": "15af2eb0-4593-4ddc-bcd4-27f8b386bdf1",
 			"key": "studentId",
 			"value": ""
 		},
 		{
-			"id": "e7f63111-e94f-47bd-9b0b-07db56ecca2f",
+			"id": "d12b8bb4-0d21-46aa-98c3-95d89d5cb818",
 			"key": "studentPhoneNumber",
 			"value": "{{randomNumber}}",
 			"type": "string"
