@@ -9202,13 +9202,2317 @@
 				}
 			],
 			"id": "b05b5c62-3370-4704-a7e6-ee0452b448a6"
+		},
+		{
+			"name": "Assignment Submit",
+			"item": [
+				{
+					"name": "Create Program",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "3ff0204d-ac32-4469-a159-1c7d089bdd0e",
+								"exec": [
+									"pm.environment.set(\"counter\",216);",
+									"let counter = pm.environment.get(\"counter\");",
+									"counter ++ // increment by 1",
+									"pm.collectionVariables.set(\"serial\", counter);"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "3e104ae1-8464-4cf4-a103-f23e72a0a262",
+								"exec": [
+									"",
+									"",
+									"const response=pm.response.json();",
+									"console.log(response);",
+									"pm.collectionVariables.set(\"programId\",response.programId);",
+									"pm.collectionVariables.set(\"resPgmName\",response.programName);",
+									"",
+									"pm.test(\"Successful POST request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);",
+									"});",
+									"",
+									"//Validating values on Response Body",
+									"pm.test(\"Validate Response Body values\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"programId\");",
+									"    pm.expect(pm.response.text()).to.include(\"programName\");",
+									"    pm.expect(pm.response.text()).to.include(\"programDescription\");",
+									"    pm.expect(pm.response.text()).to.include(\"programStatus\");",
+									"});",
+									"",
+									"pm.test(\"Status code should have message Created\", function () {",
+									"    pm.response.to.have.status(\"Created\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "eee7d5c2-de54-448f-bb0a-089e35734cc9",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"programDescription\": \"{{programDesc}}\",\n  \"programName\": \"{{programName}}{{serial}}\",\n  \"programStatus\": \"{{pgmStatus1}}\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BaseURL}}/saveprogram"
+					},
+					"response": []
+				},
+				{
+					"name": "Create Batch",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "fd130d7a-5d4b-418a-8046-58fc6ea51de2",
+								"exec": [
+									"pm.environment.set(\"counter\",215);",
+									"let counter = pm.environment.get(\"counter\");",
+									"counter ++ // increment by 1",
+									"pm.collectionVariables.set(\"serial\", counter);"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "cc4ca41b-f587-4621-9520-8deb0b591825",
+								"exec": [
+									"",
+									"const response=pm.response.json();",
+									"console.log(response);",
+									"pm.environment.set(\"batchId\", response.batchId);",
+									"",
+									"",
+									"console.log(response.batchId);",
+									"",
+									"pm.test(\"Successful POST request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);",
+									"});",
+									"",
+									"//Validating values on Response Body",
+									"pm.test(\"Validate Response Body values\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"batchId\");",
+									"    pm.expect(pm.response.text()).to.include(\"batchName\");",
+									"    pm.expect(pm.response.text()).to.include(\"batchDescription\");",
+									"    pm.expect(pm.response.text()).to.include(\"batchStatus\");",
+									"});",
+									"",
+									"pm.test(\"Status code should have message Created\", function () {",
+									"    pm.response.to.have.status(\"Created\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "0da3aa86-72cb-4a2d-b4d8-b42451b6901f",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"batchDescription\": \"{{batchDesc}}\",\n  \"batchName\": \"{{batchName}}{{serial}}\",\n  \"batchNoOfClasses\": 10,\n  \"batchStatus\": \"{{Status1}}\",\n  \"programId\": {{programId}}\n }\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BaseURL}}/batches"
+					},
+					"response": []
+				},
+				{
+					"name": "Create Admin User",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "9d80b02b-feba-46c0-ad2d-1b0cd9904b8d",
+								"exec": [
+									"pm.environment.set(\"counter\",215);",
+									"let counter = pm.environment.get(\"counter\");",
+									"counter ++ // increment by 1",
+									"pm.collectionVariables.set(\"serial\", counter);"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "f0bfe735-3fc7-421f-b5b1-91c8619d50ec",
+								"exec": [
+									"",
+									"const response=pm.response.json();",
+									"console.log(response);",
+									"pm.collectionVariables.set(\"userId\", response.userId);",
+									"",
+									"",
+									"console.log(response.userId);",
+									"",
+									"pm.test(\"Successful POST request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);",
+									"});",
+									"",
+									"pm.test(\"Content-Type is present\", function () {",
+									"    pm.response.to.have.header(\"Content-Type\");",
+									"});",
+									"",
+									"pm.test(\"Status code name has string\", function () {",
+									"    pm.response.to.have.status(\"Created\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "116ebdfa-1c47-4f41-9106-8507c0df68be",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userComments\": \"{{userComment}}\",\n    \"userEduPg\": \"{{PG}}\",\n    \"userEduUg\": \"{{UG}}\",\n    \"userFirstName\": \"{{firstName}}{{serial}}\",\n    \"userLastName\": \"{{$randomLastName}}\",\n    \"userLinkedinUrl\": \"{{linkedinUrl}}\",\n    \"userLocation\": \"{{$randomCity}}\",\n    \"userMiddleName\": \"\",\n    \"userPhoneNumber\": {{phoneNumber}},\n    \"userRoleMaps\": [\n        {\n            \"roleId\": \"{{Admin}}\",\n            \"userRoleStatus\": \"{{Status1}}\"\n        }\n    ],\n    \"userTimeZone\": \"{{timeZone1}}\",\n    \"userVisaStatus\": \"{{visaStatus1}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BaseURL}}/users/users/roleStatus"
+					},
+					"response": []
+				},
+				{
+					"name": "Create user Student",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "2c910195-da20-4b84-b4ca-ae0045db1e13",
+								"exec": [
+									"pm.environment.set(\"counter\",215);",
+									"let counter = pm.environment.get(\"counter\");",
+									"counter ++ // increment by 1",
+									"pm.collectionVariables.set(\"serial\", counter);"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "8ec3994b-db75-43cf-bfe1-3efeb406e15b",
+								"exec": [
+									"",
+									"const response=pm.response.json();",
+									"console.log(response);",
+									"pm.collectionVariables.set(\"studentId\", response.userId);",
+									"",
+									"",
+									"console.log(response.studentId);",
+									"",
+									"pm.test(\"Successful POST request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);",
+									"});",
+									"",
+									"pm.test(\"Content-Type is present\", function () {",
+									"    pm.response.to.have.header(\"Content-Type\");",
+									"});",
+									"",
+									"pm.test(\"Status code name has string\", function () {",
+									"    pm.response.to.have.status(\"Created\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "c397efe1-161b-47b2-98f5-ce21f93dbe3b",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userComments\": \"{{userComment}}\",\n    \"userEduPg\": \"{{PG}}\",\n    \"userEduUg\": \"{{UG}}\",\n    \"userFirstName\": \"{{firstName}}{{serial}}\",\n    \"userLastName\": \"{{$randomLastName}}\",\n    \"userLinkedinUrl\": \"{{linkedinUrl}}\",\n    \"userLocation\": \"{{$randomCity}}\",\n    \"userMiddleName\": \"\",\n    \"userPhoneNumber\": {{studentPhoneNumber}},\n    \"userRoleMaps\": [\n        {\n            \"roleId\": \"{{Student}}\",\n            \"userRoleStatus\": \"{{Status1}}\"\n        }\n    ],\n    \"userTimeZone\": \"{{timeZone1}}\",\n    \"userVisaStatus\": \"{{visaStatus1}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BaseURL}}/users/users/roleStatus"
+					},
+					"response": []
+				},
+				{
+					"name": "Create new Assignment",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "8ac39ba7-f3d7-4fc9-a731-b4ce36601dff",
+								"exec": [
+									"var moment=require('moment');",
+									"pm.globals.set (\"dueDate\",moment().add(1,'days').format());",
+									"",
+									"pm.environment.set(\"counter\",215);",
+									"let counter = pm.environment.get(\"counter\");",
+									"counter ++ // increment by 1",
+									"pm.collectionVariables.set(\"serial\", counter);"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "7f0b1087-a35b-4043-8d75-ad8358434ec8",
+								"exec": [
+									"const response=pm.response.json();",
+									"console.log(response);",
+									"//Set environment variable",
+									"pm.environment.set(\"assignmentId1\", response.assignmentId);",
+									"console.log(response.assignmentId1);",
+									"",
+									"//Validating Status code",
+									"pm.test(\"Successful POST request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);",
+									"});",
+									"",
+									"//Validating values on Response Body",
+									"pm.test(\"Validate Response Body values\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"assignmentId\");",
+									"    pm.expect(pm.response.text()).to.include(\"assignmentDescription\");",
+									"    pm.expect(pm.response.text()).to.include(\"assignmentName\");",
+									"});",
+									"",
+									"// Validating JSON value ",
+									"pm.test(\"Validate JSON data\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.assignmentId).to.eql(response.assignmentId);",
+									"});",
+									"",
+									"",
+									"//Validating Response Header has content-type",
+									"pm.test(\"Content-Type is present\", function () {",
+									"    pm.response.to.have.header(\"Content-Type\");",
+									"});",
+									"",
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "033cf4bb-78cf-4864-9c3a-a628b3bf47a0",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"assignmentDescription\": \"{{assignmentDesc2}}\",\n  \"assignmentName\": \"{{assignmentName}}{{serial}}\",\n  \"batchId\": {{batchId}},\n  \"comments\": \"{{userComment}}\",\n  \"createdBy\": \"{{userId}}\",\n  \"dueDate\": \"{{dueDate}}\",\n  \"graderId\": \"{{userId}}\",\n  \"pathAttachment1\": \"{{filepath1}}\",\n  \"pathAttachment2\": \"{{filepath2}}\",\n  \"pathAttachment3\": \"{{filepath3}}\",\n  \"pathAttachment4\": \"{{filepath4}}\",\n  \"pathAttachment5\": \"{{filepath5}}\"\n\n  }\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BaseURL}}/assignments"
+					},
+					"response": []
+				},
+				{
+					"name": "Submit  the  Assignment",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"//Parse the json response",
+									"const response=pm.response.json();",
+									"console.log(response);",
+									"",
+									"//Set Environment variable",
+									"pm.environment.set(\"submissionId\", response.submissionId);",
+									"",
+									"console.log(response.submissionId);",
+									"",
+									"pm.test(\"Status code name has string\", function () {",
+									"    pm.response.to.have.status(\"Created\");",
+									"});",
+									"",
+									"//Validating Status code",
+									"pm.test(\"Successful POST request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);",
+									"});",
+									"",
+									"//Validating values on Response Body",
+									"pm.test(\"Validate Response Body values\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"submissionId\");",
+									"    pm.expect(pm.response.text()).to.include(\"assignmentId\");",
+									"    pm.expect(pm.response.text()).to.include(\"userId\");",
+									"});",
+									"",
+									"// Validating JSON value ",
+									"pm.test(\"Validate JSON data\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.submissionId).to.eql(response.submissionId);",
+									"});",
+									"",
+									"//Validating Response Header has content-type",
+									"pm.test(\"Content-Type is present\", function () {",
+									"    pm.response.to.have.header(\"Content-Type\");",
+									"});",
+									"",
+									"",
+									"",
+									"const expectedSchema = ",
+									"{",
+									"  \"type\": \"object\",",
+									"  \"properties\": {",
+									"    \"submissionId\": {",
+									"      \"type\": \"integer\"",
+									"    },",
+									"    \"assignmentId\": {",
+									"      \"type\": \"integer\"",
+									"    },",
+									"    \"userId\": {",
+									"      \"type\": \"string\"",
+									"    },",
+									"    \"subDesc\": {",
+									"      \"type\": \"string\"",
+									"    },",
+									"    \"subComments\": {",
+									"      \"type\": \"string\"",
+									"    },",
+									"    \"subPathAttach1\": {",
+									"      \"type\": \"string\"",
+									"    },",
+									"    \"subPathAttach2\": {",
+									"      \"type\": \"string\"",
+									"    },",
+									"    \"subPathAttach3\": {",
+									"      \"type\": \"string\"",
+									"    },",
+									"    \"subPathAttach4\": {",
+									"      \"type\": \"string\"",
+									"    },",
+									"    \"subPathAttach5\": {",
+									"      \"type\": \"string\"",
+									"    },",
+									"    \"subDateTime\": {",
+									"      \"type\": \"string\"",
+									"    },",
+									"    \"gradedBy\": {",
+									"      \"type\": \"null\"",
+									"    },",
+									"    \"gradedDateTime\": {",
+									"      \"type\": \"null\"",
+									"    },",
+									"    \"grade\": {",
+									"      \"type\": \"integer\"",
+									"    }",
+									"  },",
+									"  \"required\": [",
+									"    \"submissionId\",",
+									"    \"assignmentId\",",
+									"    \"userId\",",
+									"    \"subDesc\",",
+									"    \"subComments\",",
+									"    \"subPathAttach1\",",
+									"    \"subPathAttach2\",",
+									"    \"subPathAttach3\",",
+									"    \"subPathAttach4\",",
+									"    \"subPathAttach5\",",
+									"    \"subDateTime\",",
+									"    \"gradedBy\",",
+									"    \"gradedDateTime\",",
+									"    \"grade\"",
+									"  ]",
+									"}",
+									"",
+									"//JSON Schema Validation",
+									"pm.test('Validating JSON Schema using AJV',  ()=> {",
+									"    pm.response.to.have.jsonSchema(expectedSchema);",
+									"   ",
+									"});",
+									"",
+									"pm.test(\"Status code should have message Created\", function () {",
+									"    pm.response.to.have.status(\"Created\");",
+									"});"
+								],
+								"type": "text/javascript",
+								"id": "6445cf69-d3f2-4d3b-bfc1-96305ef3196e"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var moment=require('moment');",
+									"pm.globals.set (\"subDateTime\",moment().format(\"MM-DD-YYYY HH:mm:ss\"));",
+									""
+								],
+								"type": "text/javascript",
+								"id": "c7f1bf81-6b27-463e-b334-0a0c2450917a"
+							}
+						}
+					],
+					"id": "586ef83c-d8b0-4383-b589-b07f203f0caf",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{        \"assignmentId\": \"{{assignmentId1}}\",\n        \"userId\": \"{{userId}}\",\n        \"subComments\": \"{{comments}}\",\n        \"subDesc\": \"{{assignmentDesc3}}\",\n        \"subPathAttach1\": \"{{filepath1}}\",\n        \"subPathAttach2\": \"{{filepath2}}\",\n        \"subPathAttach3\": \"{{filepath3}}\",\n        \"subPathAttach4\": \"{{filepath4}}\",\n        \"subPathAttach5\": \"{{filepath5}}\",\n        \"subDateTime\": \"{{subDateTime}}\"\n        \n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BaseURL}}/assignmentsubmission"
+					},
+					"response": []
+				},
+				{
+					"name": "All Assignment Submissions",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"//Validating status code",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"//Parsing the json response ",
+									"const response=pm.response.json();",
+									"console.log(response);",
+									"",
+									"",
+									"//Validating response body string values",
+									"pm.test(\"Body matches string\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"submissionId\");",
+									"    pm.expect(pm.response.text()).to.include(\"assignmentId\");",
+									"    pm.expect(pm.response.text()).to.include(\"userId\");",
+									"    pm.expect(pm.response.text()).to.include(\"subDesc\");",
+									"    pm.expect(pm.response.text()).to.include(\"subDateTime\");",
+									"});",
+									"",
+									"pm.test(\"Content-Type is present\", function () {",
+									"    pm.response.to.have.header(\"Content-Type\");",
+									"});",
+									"",
+									"pm.test(\"Status code name has string\", function () {",
+									"    pm.response.to.have.status(\"OK\");",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"id": "20b4f7fc-7821-4fbb-a7e7-cd90dd228b00"
+							}
+						}
+					],
+					"id": "e41aba49-81e2-471e-b92f-9dc9bd098151",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{BaseURL}}/assignmentsubmission"
+					},
+					"response": []
+				},
+				{
+					"name": "GET Assignment submission by UserID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"//Parsing the json response ",
+									"const response=pm.response.json();",
+									"console.log(response);",
+									"",
+									"//Validate Status code",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"//Storing json schema in a variable",
+									"const expectedSchema = ",
+									"{",
+									"  \"type\": \"array\",",
+									"  \"items\": [",
+									"    {",
+									"      \"type\": \"object\",",
+									"      \"properties\": {",
+									"        \"submissionId\": {",
+									"          \"type\": \"integer\"",
+									"        },",
+									"        \"assignmentId\": {",
+									"          \"type\": \"integer\"",
+									"        },",
+									"        \"userId\": {",
+									"          \"type\": \"string\"",
+									"        },",
+									"        \"subDesc\": {",
+									"          \"type\": \"string\"",
+									"        },",
+									"        \"subComments\": {",
+									"          \"type\": \"string\"",
+									"        },",
+									"        \"subPathAttach1\": {",
+									"          \"type\": \"string\"",
+									"        },",
+									"        \"subDateTime\": {",
+									"          \"type\": \"string\"",
+									"        },",
+									"        ",
+									"        \"grade\": {",
+									"          \"type\": \"integer\"",
+									"        }",
+									"      },",
+									"      \"required\": [",
+									"        \"submissionId\",",
+									"        \"assignmentId\",",
+									"        \"userId\",",
+									"        \"subDesc\",",
+									"        \"subComments\",",
+									"        \"subPathAttach1\",",
+									"        \"subDateTime\",",
+									"        \"gradedBy\",",
+									"        \"gradedDateTime\",",
+									"        \"grade\"",
+									"      ]",
+									"    }",
+									"  ]",
+									"};",
+									"",
+									"var jsonResponse=pm.response.json();",
+									"",
+									"//JSON Schema Validation",
+									"pm.test('Validating JSON Schema using Tiny Validator', ()=> {",
+									"    pm.expect(tv4.validate(jsonResponse,expectedSchema)).to.be.true;",
+									" ",
+									"});",
+									"",
+									"//JSON Schema Validation",
+									"pm.test('Validating JSON Schema using AJV',  ()=> {",
+									"    pm.response.to.have.jsonSchema(expectedSchema);",
+									"   ",
+									"});",
+									"",
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript",
+								"id": "6d35fcf7-ea1d-4441-a5d9-dc26a8bfd8f8"
+							}
+						}
+					],
+					"id": "45bfea12-4557-4c7e-97f0-82e89b7f000f",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{BaseURL}}/assignmentsubmission/student/{{userId}}"
+					},
+					"response": []
+				},
+				{
+					"name": "GET Assignment submission by  BatchId",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Content-Type is present\", function () {",
+									"    pm.response.to.have.header(\"Content-Type\");",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									"",
+									"//Validating values on Response Body",
+									"pm.test(\"Validate Response Body values\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"submissionId\");",
+									"    pm.expect(pm.response.text()).to.include(\"assignmentId\");",
+									"    pm.expect(pm.response.text()).to.include(\"userId\");",
+									"});"
+								],
+								"type": "text/javascript",
+								"id": "81412d40-c82a-49b8-8211-50685b02eb74"
+							}
+						}
+					],
+					"id": "724c0dc4-3e65-43f4-9af5-917a079349f6",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{BaseURL}}/assignmentsubmission/studentbatch/{{batchId}}"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Assignment Due date",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var moment=require('moment');",
+									"pm.globals.set (\"dueDate\",moment().format());"
+								],
+								"type": "text/javascript",
+								"id": "43833d99-aa03-47a4-a790-fb459a25f58f"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response=pm.response.json();",
+									"console.log(response);",
+									"//Set environment variable",
+									"//pm.environment.set(\"assignmentId\", response.assignmentId);",
+									"console.log(response.assignmentId);",
+									"",
+									"//Validating Status code",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"//Validating values on Response Body",
+									"pm.test(\"Validate Response Body values\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"assignmentId\");",
+									"    pm.expect(pm.response.text()).to.include(\"assignmentDescription\");",
+									"    pm.expect(pm.response.text()).to.include(\"assignmentName\");",
+									"});",
+									"",
+									"// Validating JSON value ",
+									"pm.test(\"Validate JSON data\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.assignmentId).to.eql(response.assignmentId);",
+									"});",
+									"",
+									"",
+									"//Validating Response Header has content-type",
+									"pm.test(\"Content-Type is present\", function () {",
+									"    pm.response.to.have.header(\"Content-Type\");",
+									"});",
+									"",
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript",
+								"id": "5468cfbb-93e8-4953-a9ac-f4abe98533c0"
+							}
+						}
+					],
+					"id": "5281d09a-0561-4872-b016-ec1e0350e035",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{   \"assignmentDescription\": \"{{assignmentDesc1}}\",\n  \"assignmentName\": \"{{assignmentName}}\",\n  \"batchId\": {{batchId}},\n  \"comments\": \"{{comments}}\",\n  \"createdBy\": \"{{userId}}\",\n  \"dueDate\": \"{{dueDate}}\",\n  \"graderId\": \"{{userId}}\"\n     }\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BaseURL}}/assignments/{{assignmentId1}}"
+					},
+					"response": []
+				},
+				{
+					"name": "Submit  Assignment post due date",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"id": "ee2d3701-b985-4a89-bd4a-6422e7155568"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response=pm.response.json();",
+									"console.log(response);",
+									"",
+									"//Validate Status code",
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Validating response body values\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"message\");",
+									"     pm.expect(pm.response.text()).to.include(\"success\");",
+									"});",
+									"",
+									"pm.test(\"Validating response header\", function () {",
+									"    pm.response.to.have.header(\"Content-Type\");",
+									"});",
+									"",
+									"//Validate message and success details",
+									"pm.test(\"Validating response body message\", ()=> {",
+									"    pm.expect(pm.response.json().message).to.eql(\"Cannot submit assignment post due date\");",
+									"      pm.expect(pm.response.json().success).to.eql(false);",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"id": "af93dec5-bb5c-4eb3-9591-a01dd11cccd9"
+							}
+						}
+					],
+					"id": "115987f6-b979-420d-b659-a2d7dc85aff4",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{        \"assignmentId\": {{postDueId}},\n        \"userId\": \"{{userId}}\",\n        \"subDesc\": \"{{assignmentDesc3}}\",\n        \"subPathAttach1\": \"file1.json\",\n        \"subPathAttach2\": \"file2.json\",\n        \"subPathAttach3\": \"file3.json\",\n        \"subPathAttach4\": \"file4.json\",\n        \"subPathAttach5\": \"file5.json\",\n        \"subDateTime\": \"{{postDueDate}}\"\n        \n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BaseURL}}/assignmentsubmission"
+					},
+					"response": []
+				},
+				{
+					"name": "Grade Assignment Submission",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response=pm.response.json();",
+									"console.log(response);",
+									"//Set environment variable",
+									"//pm.environment.set(\"assignmentId\", response.assignmentId);",
+									"console.log(response.assignmentId);",
+									"",
+									"//Validating Status code",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Status code name has string\", function () {",
+									"    pm.response.to.have.status(\"OK\");",
+									"});",
+									"",
+									"//Validating values on Response Body",
+									"pm.test(\"Validate Response Body values\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"assignmentId\");",
+									"    pm.expect(pm.response.text()).to.include(\"gradedBy\");",
+									"    pm.expect(pm.response.text()).to.include(\"grade\");",
+									"});",
+									"",
+									"// Validating JSON value ",
+									"pm.test(\"Validate JSON data\", function () {",
+									"    pm.expect(response).to.be.an(\"object\");",
+									"    pm.expect(response.assignmentId).to.eql(pm.variables.get(\"assignmentId\"));",
+									"    pm.expect(response.gradedBy).to.eql(pm.variables.get(\"userId\"));",
+									"     pm.expect(response.grade).to.eql(pm.variables.get(\"2\"));",
+									"});",
+									"",
+									"",
+									"//Validating Response Header has content-type",
+									"pm.test(\"Content-Type is present\", function () {",
+									"    pm.response.to.have.header(\"Content-Type\");",
+									"});",
+									"",
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript",
+								"id": "fbc9b294-2afc-48cc-81dc-e974cefe1de4"
+							}
+						}
+					],
+					"id": "55e42fd5-0967-4ebc-9502-2994f8a7b3a7",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": " {\n        \n        \"gradedBy\": \"{{userId}}\",\n        \"grade\": 2\n    }\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BaseURL}}/assignmentsubmission/gradesubmission/{{submissionId}}"
+					},
+					"response": []
+				},
+				{
+					"name": "Create new Assignment [student  submission]",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var moment=require('moment');",
+									"pm.globals.set (\"dueDate\",moment().add(1,'days').format());",
+									"",
+									"pm.environment.set(\"counter\",111);",
+									"let counter = pm.environment.get(\"counter\");",
+									"counter ++ // increment by 1",
+									"pm.collectionVariables.set(\"serial\", counter);"
+								],
+								"type": "text/javascript",
+								"id": "1e3c123a-9213-44ae-af6f-c3cf0efe9675"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response=pm.response.json();",
+									"console.log(response);",
+									"//Set environment variable",
+									"pm.environment.set(\"assignmentId2\", response.assignmentId);",
+									"console.log(response.assignmentId2);",
+									"",
+									"//Validating Status code",
+									"pm.test(\"Successful POST request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);",
+									"});",
+									"",
+									"//Validating values on Response Body",
+									"pm.test(\"Validate Response Body values\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"assignmentId\");",
+									"    pm.expect(pm.response.text()).to.include(\"assignmentDescription\");",
+									"    pm.expect(pm.response.text()).to.include(\"assignmentName\");",
+									"});",
+									"",
+									"// Validating JSON value ",
+									"pm.test(\"Validate JSON data\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.assignmentId).to.eql(response.assignmentId);",
+									"});",
+									"",
+									"",
+									"//Validating Response Header has content-type",
+									"pm.test(\"Content-Type is present\", function () {",
+									"    pm.response.to.have.header(\"Content-Type\");",
+									"});",
+									"",
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript",
+								"id": "eb68b810-1079-4541-ba5b-2a7083a50845"
+							}
+						}
+					],
+					"id": "7b0255ef-7811-428e-973f-7ae1646e7941",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"assignmentDescription\": \"{{assignmentDesc3}}\",\n  \"assignmentName\": \"{{assignmentName}}{{serial}}\",\n  \"batchId\": {{batchId}},\n  \"comments\": \"{{userComment}}\",\n  \"createdBy\": \"{{userId}}\",\n  \"dueDate\": \"{{dueDate}}\",\n  \"graderId\": \"{{userId}}\",\n  \"pathAttachment1\": \"{{filepath1}}\",\n  \"pathAttachment2\": \"{{filepath2}}\",\n  \"pathAttachment3\": \"{{filepath3}}\",\n  \"pathAttachment4\": \"{{filepath4}}\",\n  \"pathAttachment5\": \"{{filepath5}}\"\n\n  }\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BaseURL}}/assignments"
+					},
+					"response": []
+				},
+				{
+					"name": "Submit  the  Assignment [Student]",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"//Parse the json response",
+									"const response=pm.response.json();",
+									"console.log(response);",
+									"",
+									"//Set Environment variable",
+									"pm.environment.set(\"submissionIdStudent\", response.submissionId);",
+									"",
+									"console.log(response.submissionIdStudent);",
+									"",
+									"pm.test(\"Status code name has string\", function () {",
+									"    pm.response.to.have.status(\"Created\");",
+									"});",
+									"",
+									"//Validating Status code",
+									"pm.test(\"Successful POST request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);",
+									"});",
+									"",
+									"//Validating values on Response Body",
+									"pm.test(\"Validate Response Body values\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"submissionId\");",
+									"    pm.expect(pm.response.text()).to.include(\"assignmentId\");",
+									"    pm.expect(pm.response.text()).to.include(\"userId\");",
+									"});",
+									"",
+									"// Validating JSON value ",
+									"pm.test(\"Validate JSON data\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.submissionId).to.eql(response.submissionId);",
+									"});",
+									"",
+									"//Validating Response Header has content-type",
+									"pm.test(\"Content-Type is present\", function () {",
+									"    pm.response.to.have.header(\"Content-Type\");",
+									"});",
+									"",
+									"",
+									"",
+									"const expectedSchema = ",
+									"{",
+									"  \"type\": \"object\",",
+									"  \"properties\": {",
+									"    \"submissionId\": {",
+									"      \"type\": \"integer\"",
+									"    },",
+									"    \"assignmentId\": {",
+									"      \"type\": \"integer\"",
+									"    },",
+									"    \"userId\": {",
+									"      \"type\": \"string\"",
+									"    },",
+									"    \"subDesc\": {",
+									"      \"type\": \"string\"",
+									"    },",
+									"    \"subComments\": {",
+									"      \"type\": \"string\"",
+									"    },",
+									"    \"subPathAttach1\": {",
+									"      \"type\": \"string\"",
+									"    },",
+									"    \"subPathAttach2\": {",
+									"      \"type\": \"string\"",
+									"    },",
+									"    \"subPathAttach3\": {",
+									"      \"type\": \"string\"",
+									"    },",
+									"    \"subPathAttach4\": {",
+									"      \"type\": \"string\"",
+									"    },",
+									"    \"subPathAttach5\": {",
+									"      \"type\": \"string\"",
+									"    },",
+									"    \"subDateTime\": {",
+									"      \"type\": \"string\"",
+									"    },",
+									"    \"gradedBy\": {",
+									"      \"type\": \"null\"",
+									"    },",
+									"    \"gradedDateTime\": {",
+									"      \"type\": \"null\"",
+									"    },",
+									"    \"grade\": {",
+									"      \"type\": \"integer\"",
+									"    }",
+									"  },",
+									"  \"required\": [",
+									"    \"submissionId\",",
+									"    \"assignmentId\",",
+									"    \"userId\",",
+									"    \"subDesc\",",
+									"    \"subComments\",",
+									"    \"subPathAttach1\",",
+									"    \"subPathAttach2\",",
+									"    \"subPathAttach3\",",
+									"    \"subPathAttach4\",",
+									"    \"subPathAttach5\",",
+									"    \"subDateTime\",",
+									"    \"gradedBy\",",
+									"    \"gradedDateTime\",",
+									"    \"grade\"",
+									"  ]",
+									"}",
+									"",
+									"//JSON Schema Validation",
+									"pm.test('Validating JSON Schema using AJV',  ()=> {",
+									"    pm.response.to.have.jsonSchema(expectedSchema);",
+									"   ",
+									"});",
+									"",
+									"pm.test(\"Status code should have message Created\", function () {",
+									"    pm.response.to.have.status(\"Created\");",
+									"});"
+								],
+								"type": "text/javascript",
+								"id": "b33f8799-dc4f-4eab-b8a5-e22c242bd850"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var moment=require('moment');",
+									"pm.globals.set (\"subDateTime\",moment().format(\"MM-DD-YYYY HH:mm:ss\"));",
+									""
+								],
+								"type": "text/javascript",
+								"id": "ae673c9c-1023-4c67-89a4-efd6668a3d8c"
+							}
+						}
+					],
+					"id": "61c74945-5033-42ae-8cee-9bfbc34c5b70",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{        \"assignmentId\": {{assignmentId2}},\n        \"userId\": \"{{studentId}}\",\n        \"subComments\": \"{{comments}}\",\n        \"subDesc\": \"{{assignmentDesc3}}\",\n        \"subPathAttach1\": \"{{filepath1}}\",\n        \"subPathAttach2\": \"{{filepath2}}\",\n        \"subPathAttach3\": \"{{filepath3}}\",\n        \"subPathAttach4\": \"{{filepath4}}\",\n        \"subPathAttach5\": \"{{filepath5}}\",\n        \"subDateTime\": \"{{subDateTime}}\"\n        \n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BaseURL}}/assignmentsubmission"
+					},
+					"response": []
+				},
+				{
+					"name": "Grades  by  Assignment ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", ()=> {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"",
+									"const expectedSchema = ",
+									"{",
+									"  ",
+									"  \"type\": \"array\",",
+									"  \"items\": [",
+									"    {",
+									"      \"type\": \"object\",",
+									"      \"properties\": {",
+									"        \"submissionId\": {",
+									"          \"type\": \"integer\"",
+									"        },",
+									"        \"assignmentId\": {",
+									"          \"type\": \"integer\"",
+									"        },",
+									"        \"userId\": {",
+									"          \"type\": \"string\"",
+									"        },",
+									"        \"subDesc\": {",
+									"          \"type\": \"string\"",
+									"        },",
+									"        \"subComments\": {",
+									"          \"type\": \"string\"",
+									"        },",
+									"        \"subDateTime\": {",
+									"          \"type\": \"string\"",
+									"        },",
+									"        \"gradedBy\": {",
+									"          \"type\": \"null\"",
+									"        },",
+									"        \"gradedDateTime\": {",
+									"          \"type\": \"null\"",
+									"        },",
+									"        \"grade\": {",
+									"          \"type\": \"integer\"",
+									"        }",
+									"      },",
+									"      \"required\": [",
+									"        \"submissionId\",",
+									"        \"assignmentId\",",
+									"        \"userId\",",
+									"        \"subDesc\",",
+									"        \"subComments\",",
+									"        \"subDateTime\",",
+									"        \"gradedBy\",",
+									"        \"gradedDateTime\",",
+									"        \"grade\"",
+									"      ]",
+									"    }",
+									"  ]",
+									"};",
+									"",
+									"var jsonResponse=pm.response.json();",
+									"",
+									"pm.test('Validating JSON Schema using Tiny Validator', ()=> {",
+									"    pm.expect(tv4.validate(jsonResponse,expectedSchema)).to.be.true;",
+									" ",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript",
+								"id": "b2008484-6b77-474a-8c84-289374bdaf58"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"id": "74b52e7c-e1a8-4ff5-82b1-313cb32f8a62"
+							}
+						}
+					],
+					"id": "27c450e5-f752-4735-8625-d67bc1953ceb",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{BaseURL}}/assignmentsubmission/getGrades/{{assignmentId1}}"
+					},
+					"response": []
+				},
+				{
+					"name": "Grades  by  Student ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"id": "54de6aeb-576d-485d-bb83-16934b605b44"
+							}
+						}
+					],
+					"id": "5b8e247d-f3f6-4d13-a6bc-164b1b8635c9",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{BaseURL}}/assignmentsubmission/getGradesByStudentId/{{studentId}}"
+					},
+					"response": []
+				},
+				{
+					"name": "Grades  by  Batch ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"id": "0146a699-99d0-4c82-9a02-8f6821443f9c"
+							}
+						}
+					],
+					"id": "8aee7107-63a7-458a-9fca-af0b2cc67de4",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{BaseURL}}/assignmentsubmission/grades/{{batchId}}"
+					},
+					"response": []
+				},
+				{
+					"name": "Grades  by  invalid Assignment ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404 \", function () {",
+									"    pm.response.to.have.status(404);",
+									"});",
+									"pm.test(\"Status Code Message\", function () {",
+									"    pm.response.to.have.status(\"Not Found\");",
+									"});",
+									"",
+									"pm.test(\"Body matches string\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"message\");",
+									"    pm.expect(pm.response.text()).to.include(\"Assignment not found with Id :\");",
+									"    pm.expect(pm.response.text()).to.include(\"success\");",
+									"    pm.expect(pm.response.text()).to.include(\"false\");",
+									"});",
+									"",
+									"",
+									"",
+									"//Validate message and success details",
+									"pm.test(\"Validating response body message\", ()=> {",
+									"    pm.expect(pm.response.json().message).to.eql(\"Assignment not found with Id : \"+pm.collectionVariables.get(\"invalidID\")+\" \");",
+									"      pm.expect(pm.response.json().success).to.eql(false);",
+									"});",
+									"",
+									"pm.test(\"Content-Type is present\", function () {",
+									"    pm.response.to.have.header(\"Content-Type\");",
+									"});"
+								],
+								"type": "text/javascript",
+								"id": "f109a0fe-b5d3-4cd2-a1b2-e219974e5beb"
+							}
+						}
+					],
+					"id": "59e099a9-a032-46d6-ae08-399791d397b8",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{BaseURL}}/assignmentsubmission/getGrades/{{invalidID}}"
+					},
+					"response": []
+				},
+				{
+					"name": "Grades  by  invalid Student ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404 \", function () {",
+									"    pm.response.to.have.status(404);",
+									"});",
+									"pm.test(\"Status Code Message\", function () {",
+									"    pm.response.to.have.status(\"Not Found\");",
+									"});",
+									"",
+									"pm.test(\"Body matches string\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"message\");",
+									"    pm.expect(pm.response.text()).to.include(\"Student not found with Student ID\");",
+									"    pm.expect(pm.response.text()).to.include(\"success\");",
+									"    pm.expect(pm.response.text()).to.include(\"false\");",
+									"});",
+									"",
+									"",
+									"//Validate message and success details",
+									"pm.test(\"Validating response body message\", ()=> {",
+									"    pm.expect(pm.response.json().message).to.eql(\"Student not found with Student ID:  : \"+pm.collectionVariables.get(\"invalidID\")+\" \");",
+									"      pm.expect(pm.response.json().success).to.eql(false);",
+									"});",
+									"",
+									"pm.test(\"Content-Type is present\", function () {",
+									"    pm.response.to.have.header(\"Content-Type\");",
+									"});"
+								],
+								"type": "text/javascript",
+								"id": "98c942cf-7273-45ae-a0fd-f590691173a7"
+							}
+						}
+					],
+					"id": "79e70510-7c4d-48ff-8c7f-fdc659b46257",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{BaseURL}}/assignmentsubmission/getGradesByStudentId/{{invalidID}}"
+					},
+					"response": []
+				},
+				{
+					"name": "Grades  by  invalid Batch ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404 \", function () {",
+									"    pm.response.to.have.status(404);",
+									"});",
+									"pm.test(\"Status Code Message\", function () {",
+									"    pm.response.to.have.status(\"Not Found\");",
+									"});",
+									"",
+									"pm.test(\"Body matches string\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"message\");",
+									"    pm.expect(pm.response.text()).to.include(\"Assignments with grades does not exist for Batch ID \");",
+									"    pm.expect(pm.response.text()).to.include(\"success\");",
+									"    pm.expect(pm.response.text()).to.include(\"false\");",
+									"});",
+									"",
+									"",
+									"//Validate message and success details",
+									"pm.test(\"Validating response body message\", ()=> {",
+									"    pm.expect(pm.response.json().message).to.eql(\"Assignments with grades does not exist for Batch ID : \"+pm.collectionVariables.get(\"invalidBatchId\"));",
+									"      pm.expect(pm.response.json().success).to.eql(false);",
+									"});",
+									"",
+									"pm.test(\"Content-Type is present\", function () {",
+									"    pm.response.to.have.header(\"Content-Type\");",
+									"});"
+								],
+								"type": "text/javascript",
+								"id": "4a650000-8cca-4861-ad46-7a428e42045b"
+							}
+						}
+					],
+					"id": "d9886432-5cbd-4ba6-b1ee-a7cfda17f394",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{BaseURL}}/assignmentsubmission/grades/{{invalidBatchId}}"
+					},
+					"response": []
+				},
+				{
+					"name": "GET Assignment submission by invalid UserID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404 \", function () {",
+									"    pm.response.to.have.status(404);",
+									"});",
+									"pm.test(\"Status Code Message\", function () {",
+									"    pm.response.to.have.status(\"Not Found\");",
+									"});",
+									"",
+									"pm.test(\"Body matches string\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"message\");",
+									"    pm.expect(pm.response.text()).to.include(\"User not found with UserID\");",
+									"    pm.expect(pm.response.text()).to.include(\"success\");",
+									"    pm.expect(pm.response.text()).to.include(\"false\");",
+									"});",
+									"",
+									"",
+									"//Validate message and success details",
+									"pm.test(\"Validating response body message\", ()=> {",
+									"    pm.expect(pm.response.json().message).to.eql(\"User not found with UserID : \"+pm.collectionVariables.get(\"invalidID\")+\" \");",
+									"      pm.expect(pm.response.json().success).to.eql(false);",
+									"});",
+									"",
+									"pm.test(\"Content-Type is present\", function () {",
+									"    pm.response.to.have.header(\"Content-Type\");",
+									"});"
+								],
+								"type": "text/javascript",
+								"id": "46f368b0-c659-4a2b-a77a-4f2d52ce63bc"
+							}
+						}
+					],
+					"id": "218bc9da-f28c-4ab4-867a-7be1bc4f9a4c",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{BaseURL}}/assignmentsubmission/student/{{invalidID}}"
+					},
+					"response": []
+				},
+				{
+					"name": "GET Assignment submission by  invalid BatchId",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404 \", function () {",
+									"    pm.response.to.have.status(404);",
+									"});",
+									"pm.test(\"Status Code Message\", function () {",
+									"    pm.response.to.have.status(\"Not Found\");",
+									"});",
+									"",
+									"pm.test(\"Body matches string\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"message\");",
+									"    pm.expect(pm.response.text()).to.include(\"User not found with UserID\");",
+									"    pm.expect(pm.response.text()).to.include(\"success\");",
+									"    pm.expect(pm.response.text()).to.include(\"false\");",
+									"});",
+									"",
+									"",
+									"//Validate message and success details",
+									"pm.test(\"Validating response body message\", ()=> {",
+									"    pm.expect(pm.response.json().message).to.eql(\"User not found with UserID : \"+pm.collectionVariables.get(\"invalidBatchId\")+\" \");",
+									"      pm.expect(pm.response.json().success).to.eql(false);",
+									"});",
+									"",
+									"pm.test(\"Content-Type is present\", function () {",
+									"    pm.response.to.have.header(\"Content-Type\");",
+									"});"
+								],
+								"type": "text/javascript",
+								"id": "90e86d29-7f0d-4a95-8ea7-2a499e2bc949"
+							}
+						}
+					],
+					"id": "5d7a4edb-6bd2-4e4d-9a89-45beb9148a7f",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{BaseURL}}/assignmentsubmission/student/{{invalidBatchId}}"
+					},
+					"response": []
+				},
+				{
+					"name": "Submit  Assignment with  missing  userId",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"id": "502c0e58-d5e2-4de0-9ca2-af10a55ec778"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response = pm.response.json();",
+									"console.log(response);",
+									"",
+									"//Validate Status code",
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"",
+									"pm.test(\"Validate Response body\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"message\");",
+									"    pm.expect(pm.response.text()).to.include(\"User ID is mandatory\");",
+									"    pm.expect(pm.response.text()).to.include(\"success\");",
+									"    pm.expect(pm.response.text()).to.include(false);",
+									"",
+									"});",
+									"",
+									"pm.test(\"Validate json data value\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.message).to.eql(\"User ID is mandatory\\n \");",
+									"    pm.expect(jsonData.success).to.eql(false);",
+									"});",
+									"",
+									"pm.test(\"Content-Type is present\", function () {",
+									"    pm.response.to.have.header(\"Content-Type\");",
+									"});",
+									"",
+									"pm.test(\"Status code name has string\", function () {",
+									"    pm.response.to.have.status(\"Bad Request\");",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript",
+								"id": "c0c61832-41f9-460b-99d7-d4a86f7aced7"
+							}
+						}
+					],
+					"id": "7904fbc8-c0d2-40ed-b62f-228a27dc93ca",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{        \"assignmentId\": {{assignmentId}},\n        \"userId\": \"\",\n        \"subComments\": \"{{comments}}\",\n        \"subDesc\": \"{{assignmentDesc3}}\",\n        \"subPathAttach1\": \"{{filepath1}}\",\n        \"subPathAttach2\": \"{{filepath2}}\",\n        \"subPathAttach3\": \"{{filepath3}}\",\n        \"subPathAttach4\": \"{{filepath4}}\",\n        \"subPathAttach5\": \"{{filepath5}}\",\n        \"subDateTime\": \"{{subDateTime}}\"\n        \n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BaseURL}}/assignmentsubmission"
+					},
+					"response": []
+				},
+				{
+					"name": "Submit  Assignment with missing assignmentId",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"id": "cfe69d64-c83b-4f26-af9c-e4257235ac4a"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response = pm.response.json();",
+									"console.log(response);",
+									"",
+									"//Validate Status code",
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"",
+									"//Validate Response body",
+									"pm.test(\"Validate Response body\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"message\");",
+									"    pm.expect(pm.response.text()).to.include(\"Assignment ID is mandatory\");",
+									"    pm.expect(pm.response.text()).to.include(\"success\");",
+									"    pm.expect(pm.response.text()).to.include(false);",
+									"",
+									"});",
+									"",
+									"//Json data value",
+									"pm.test(\"Validate json value\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.message).to.eql(\"Assignment ID is mandatory\\n \");",
+									"    pm.expect(jsonData.success).to.eql(false);",
+									"});",
+									"",
+									"pm.test(\"Content-Type is present\", function () {",
+									"    pm.response.to.have.header(\"Content-Type\");",
+									"});",
+									"",
+									"pm.test(\"Status code name has string\", function () {",
+									"    pm.response.to.have.status(\"Bad Request\");",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript",
+								"id": "17744f85-16dc-45ab-b995-63376de0139d"
+							}
+						}
+					],
+					"id": "980dbf65-4d71-4c4b-b7c0-c820e813c6d5",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{       \n        \"userId\": \"{{U3794}}\",\n        \"subDesc\": \"{{assignmentDesc3}}\",\n        \"subComments\": \"{{comments}}\",\n        \"subPathAttach1\": \"{{filepath1}}\",\n        \"subPathAttach2\": \"{{filepath2}}\",\n        \"subPathAttach3\": \"{{filepath3}}\",\n        \"subPathAttach4\": \"{{filepath4}}\",\n        \"subPathAttach5\": \"{{filepath5}}\",\n        \"subDateTime\": \"{{subDateTime}}\"\n        \n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BaseURL}}/assignmentsubmission"
+					},
+					"response": []
+				},
+				{
+					"name": "Submit  Assignment with missing subDesc",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"id": "c2ff5710-e25e-499e-91f8-71b18b703b2a"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response = pm.response.json();",
+									"console.log(response);",
+									"",
+									"//Validate Status code",
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"",
+									"//Validate Response body",
+									"pm.test(\"Validate Response body\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"message\");",
+									"    pm.expect(pm.response.text()).to.include(\"Submission description is mandatory\");",
+									"    pm.expect(pm.response.text()).to.include(\"success\");",
+									"    pm.expect(pm.response.text()).to.include(false);",
+									"",
+									"});",
+									"",
+									"//Json data value",
+									"pm.test(\"Validate json value\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.message).to.eql(\"Submission description is mandatory\\n \");",
+									"    pm.expect(jsonData.success).to.eql(false);",
+									"});",
+									"",
+									"pm.test(\"Content-Type is present\", function () {",
+									"    pm.response.to.have.header(\"Content-Type\");",
+									"});",
+									"",
+									"pm.test(\"Status code name has string\", function () {",
+									"    pm.response.to.have.status(\"Bad Request\");",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript",
+								"id": "48c7ec8f-5732-486f-b7eb-731b68ea4115"
+							}
+						}
+					],
+					"id": "11bfb776-8a84-4c80-9ecd-a2460b7209aa",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{        \"assignmentId\": {{assignmentId}},\n        \"userId\": \"{{userId}}\",\n        \"subComments\": \"{{comments}}\",\n       \n        \"subPathAttach1\": \"{{filepath1}}\",\n        \"subPathAttach2\": \"{{filepath2}}\",\n        \"subPathAttach3\": \"{{filepath3}}\",\n        \"subPathAttach4\": \"{{filepath4}}\",\n        \"subPathAttach5\": \"{{filepath5}}\",\n        \"subDateTime\": \"{{subDateTime}}\"\n        \n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BaseURL}}/assignmentsubmission"
+					},
+					"response": []
+				},
+				{
+					"name": "Resubmit Assignment",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var moment=require('moment');",
+									"pm.globals.set (\"subDateTimeResubmit\",moment().add(1,'hours').format(\"MM-DD-YYYY HH:mm:ss\"));",
+									"//pm.globals.set (\"dueDate\",moment().subtract(1,'days').format());",
+									""
+								],
+								"type": "text/javascript",
+								"id": "53fcf974-37bf-4a90-9b01-f2f6bf0d6b08"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"//Parse the json response",
+									"const response=pm.response.json();",
+									"console.log(response);",
+									"",
+									"//Set Environment variable",
+									"pm.environment.set(\"resubmissionIdStudent\", response.submissionId);",
+									"",
+									"console.log(response.submissionId);",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"//Validating values on Response Body",
+									"pm.test(\"Validate Response Body values\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"submissionId\");",
+									"    pm.expect(pm.response.text()).to.include(\"assignmentId\");",
+									"    pm.expect(pm.response.text()).to.include(\"userId\");",
+									"});",
+									"",
+									"// Validating JSON value ",
+									"pm.test(\"Validate JSON data\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.submissionId).to.eql(response.submissionId);",
+									"});",
+									"",
+									"//Validating Response Header has content-type",
+									"pm.test(\"Content-Type is present\", function () {",
+									"    pm.response.to.have.header(\"Content-Type\");",
+									"});",
+									"",
+									"",
+									"",
+									"pm.test(\"Status code should have message Created\", function () {",
+									"    pm.response.to.have.status(\"Created\");",
+									"});"
+								],
+								"type": "text/javascript",
+								"id": "c80746eb-8b0b-4de5-9a4c-d17357a1d06e"
+							}
+						}
+					],
+					"id": "aa6f90a3-a593-433d-b770-304b9bf2ece9",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{        \"assignmentId\": \"{{assignmentId2}}\",\n        \"userId\": \"{{studentId}}\",\n        \"subComments\": \"{{resubmitComments}}\",\n        \"subDesc\": \"{{assignmentDesc1}}\",\n        \"subPathAttach1\": \"{{filepath1}}\",\n        \"subPathAttach2\": \"{{filepath2}}\",\n        \"subPathAttach3\": \"{{filepath3}}\",\n        \"subPathAttach4\": \"{{filepath4}}\",\n        \"subPathAttach5\": \"{{filepath5}}\",\n        \"subDateTime\": \"{{subDateTimeResubmit}}\"\n        \n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BaseURL}}/assignmentsubmission/{{submissionIdStudent}}"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Assignment submission 1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response=pm.response.json();",
+									"",
+									"pm.test(\"Status code is 404\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});",
+									"",
+									"pm.test(\"Content-Type is present\", function () {",
+									"    pm.response.to.have.header(\"Content-Type\");",
+									"});",
+									"",
+									"pm.test(\"Status code name has string\", function () {",
+									"    pm.response.to.have.status(\"Not Found\");",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript",
+								"id": "e24db3d2-2939-482a-8786-5b7829c3b11b"
+							}
+						}
+					],
+					"id": "480d24e4-338e-450c-9a16-184ff6a5649c",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "{{BaseURL}}/assignmentsubmission/{{submissionId}}"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Assignment submission by student",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response=pm.response.json();",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Content-Type is present\", function () {",
+									"    pm.response.to.have.header(\"Content-Type\");",
+									"});",
+									"",
+									"pm.test(\"Status code name has string\", function () {",
+									"    pm.response.to.have.status(\"OK\");",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript",
+								"id": "62d26305-44f7-419a-a818-d22d7f5d0e0a"
+							}
+						}
+					],
+					"id": "bae38cb5-08f5-4cce-8a56-c05de0172f7e",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "{{BaseURL}}/assignmentsubmission/{{submissionIdStudent}}"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Assignment submission by invalid submissionId",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response=pm.response.json();",
+									"",
+									"pm.test(\"Status code is 404\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});",
+									"",
+									"pm.test(\"Content-Type is present\", function () {",
+									"    pm.response.to.have.header(\"Content-Type\");",
+									"});",
+									"",
+									"pm.test(\"Status code name has string\", function () {",
+									"    pm.response.to.have.status(\"Not Found\");",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript",
+								"id": "cfef9594-60fe-4970-b8ba-b1b4e00a55a9"
+							}
+						}
+					],
+					"id": "3b4e967c-46fa-4583-b4c9-f3758d464ae7",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "{{BaseURL}}/assignmentsubmission/{{invalidID}}"
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE Assignment  1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response=pm.response.json();",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Content-Type is present\", function () {",
+									"    pm.response.to.have.header(\"Content-Type\");",
+									"});",
+									"",
+									"pm.test(\"Status code name has string\", function () {",
+									"    pm.response.to.have.status(\"OK\");",
+									"});",
+									"",
+									"//Json data value",
+									"pm.test(\"Validate json value\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.message).to.eql(\"Assignment deleted successfully\");",
+									"    pm.expect(jsonData.success).to.eql(true);",
+									"});",
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript",
+								"id": "8b1ca6a1-1765-4597-9b54-7c4643954f2f"
+							}
+						}
+					],
+					"id": "96e5abc0-66f5-4d73-adaa-cdc062dac2cd",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "{{BaseURL}}/assignments/{{assignmentId1}}"
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE Assignment  2",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response=pm.response.json();",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Content-Type is present\", function () {",
+									"    pm.response.to.have.header(\"Content-Type\");",
+									"});",
+									"",
+									"pm.test(\"Status code name has string\", function () {",
+									"    pm.response.to.have.status(\"OK\");",
+									"});",
+									"",
+									"//Json data value",
+									"pm.test(\"Validate json value\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.message).to.eql(\"Assignment deleted successfully\");",
+									"    pm.expect(jsonData.success).to.eql(true);",
+									"});",
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript",
+								"id": "bb4dbddf-f138-44a5-9eac-acafb5af9989"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"id": "4841d0f4-1d8a-443f-b47b-d66ca9b9c9ef"
+							}
+						}
+					],
+					"id": "3aec624f-e1d7-4253-8307-b77b4da6cb2d",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "{{BaseURL}}/assignments/{{assignmentId2}}"
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE  Admin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response=pm.response.json();",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Content-Type is present\", function () {",
+									"    pm.response.to.have.header(\"Content-Type\");",
+									"});",
+									"",
+									"pm.test(\"Status code name has string\", function () {",
+									"    pm.response.to.have.status(\"OK\");",
+									"});",
+									"",
+									"//Validating values on Response Body",
+									"pm.test(\"Validate Response Body values\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"Deleted User ID\");",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript",
+								"id": "5c79c7a0-d18c-486d-977d-7e9b42d6a414"
+							}
+						}
+					],
+					"id": "ddb43fc3-9b9b-44a6-b428-0512a752563e",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "{{BaseURL}}/users/users/{{userId}}"
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE  Student",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response=pm.response.json();",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Content-Type is present\", function () {",
+									"    pm.response.to.have.header(\"Content-Type\");",
+									"});",
+									"",
+									"pm.test(\"Status code name has string\", function () {",
+									"    pm.response.to.have.status(\"OK\");",
+									"});",
+									"",
+									"//Json data value",
+									"pm.test(\"Validate json value\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.message).to.eql(\"User deleted successfully\");",
+									"    pm.expect(jsonData.success).to.eql(true);",
+									"});",
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript",
+								"id": "cf74164d-cc50-44d7-8707-a0761ee6f2c4"
+							}
+						}
+					],
+					"id": "4ceeccbd-f9cd-4d46-bca1-e3f539f568f8",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "{{BaseURL}}/users/users/{{studentId}}"
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE Batch",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Body matches string\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"Message\");",
+									"     pm.expect(pm.response.text()).to.include(\"deleted Successfully!\");",
+									"       pm.expect(pm.response.text()).to.include(\"Batch with Id-\");",
+									"",
+									"});",
+									"",
+									"pm.test(\"Content-Type is present\", function () {",
+									"    pm.response.to.have.header(\"Content-Type\");",
+									"});",
+									"",
+									"pm.test(\"Status code name has string\", function () {",
+									"    pm.response.to.have.status(\"OK\");",
+									"});",
+									"",
+									"//Json data value",
+									"pm.test(\"Validate json value\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.Message).to.eql(\"Batch with Id-\"+ pm.environment.get(\"batchId\")+\" deleted Successfully! \");",
+									"    pm.expect(jsonData.success).to.eql(true);",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"id": "9738a7b1-70a0-49ec-b9fa-a4c2ad571622"
+							}
+						}
+					],
+					"id": "fe63cd24-ee5a-46b6-97cc-857a5802082e",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "{{BaseURL}}/batches/{{batchId}}"
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE  Program by ProgramName",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Content-Type is present\", function () {",
+									"    pm.response.to.have.header(\"Content-Type\");",
+									"});",
+									"",
+									"pm.test(\"Status code name has string\", function () {",
+									"    pm.response.to.have.status(\"OK\");",
+									"});",
+									"",
+									"//Json data value",
+									"pm.test(\"Validate json value\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.Message).to.eql(\"Program Name -\"+pm.collectionVariables.get(\"resPgmName\")+\" is deleted Successfully!\");",
+									"    pm.expect(jsonData.success).to.eql(true);",
+									"});",
+									"",
+									"//Deleting variables",
+									"pm.environment.unset(\"batchId\");",
+									"pm.environment.unset(\"assignmentId1\");",
+									"pm.environment.unset(\"assignmentId2\");",
+									"pm.environment.unset(\"submissionId\");",
+									"pm.environment.unset(\"submissionIdStudent\");",
+									"pm.environment.unset(\"counter\");",
+									"pm.environment.unset(\"userId\")",
+									"",
+									"//Deleting global variables",
+									"// pm.globals.unset(\"subDateTime\");",
+									"// pm.globals.unset(\"currentTime\");",
+									"// pm.globals.unset(\"dueDate\");",
+									"// pm.globals.unset(\"submissionId\");",
+									"// pm.globals.unset(\"subDateTimeResubmit\");",
+									"",
+									""
+								],
+								"type": "text/javascript",
+								"id": "65289167-fd68-43a1-9f43-1c183a76b651"
+							}
+						}
+					],
+					"id": "d8800e1f-e8d0-4444-abb9-5e2d452dbc7a",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "{{BaseURL}}/deletebyprogname/{{resPgmName}}"
+					},
+					"response": []
+				}
+			],
+			"id": "cd3977b4-fce9-4e9d-bb7d-6e677620f281",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						],
+						"id": "3ef9990a-ae2c-4991-8253-7191ca8b3dee"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						],
+						"id": "2983be9c-a0fa-43bc-874e-2b6352b8ad21"
+					}
+				}
+			]
 		}
 	],
 	"event": [
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "f46d8d0a-c22a-4fbd-8baf-61a2c3476b8b",
+				"id": "3a7200f0-33f8-46ac-bc45-67ba8cfd95de",
 				"type": "text/javascript",
 				"exec": [
 					"// Load data from file",
@@ -9257,7 +11561,7 @@
 		{
 			"listen": "test",
 			"script": {
-				"id": "4f0b96dc-48af-4222-8b3a-2579f263c534",
+				"id": "1c2b7715-fb31-45e6-937f-243681630534",
 				"type": "text/javascript",
 				"exec": [
 					""
@@ -9267,531 +11571,802 @@
 	],
 	"variable": [
 		{
-			"id": "8321c949-6830-4ea6-bf2c-8602f1a19f83",
+			"id": "37c62864-a3b4-4805-ba65-c91920e794d0",
 			"key": "BaseURL",
 			"value": "https://lms-api-hackathon-june2023-930a8b0f895d.herokuapp.com/lms",
 			"type": "string"
 		},
 		{
-			"id": "84c5a141-83eb-4995-942b-3bb944915e1d",
+			"id": "8a0ae138-b115-49f2-b79c-0dd6bc7eb6b0",
 			"key": "userComments",
 			"value": "creating new user",
 			"type": "string"
 		},
 		{
-			"id": "31590108-5a13-4443-802f-b7c53f5d427a",
+			"id": "54d64a57-2bb0-4c6a-aed0-cd2cd7aee454",
 			"key": "userEduPg",
 			"value": "MS",
 			"type": "string"
 		},
 		{
-			"id": "673dd024-df1a-402e-817f-a61c0f030d8d",
+			"id": "8b5f4a0b-7e4d-498d-b2bb-ea9d1acdf7bd",
 			"key": "userEduUg",
 			"value": "BE",
 			"type": "string"
 		},
 		{
-			"id": "02574bc5-396a-4006-a2a3-e58ba1cc8310",
+			"id": "10b429d4-db18-4337-8db9-f97424fdaccd",
 			"key": "userFirstName",
 			"value": "APICollectors_",
 			"type": "string"
 		},
 		{
-			"id": "f250e9a7-3b75-46f6-a84d-afe6b2c0db0a",
+			"id": "167a6a8f-3393-4537-a9f3-9b60fc204dea",
 			"key": "adminUserFirstName",
 			"value": "APICollectors_",
 			"type": "string"
 		},
 		{
-			"id": "48230f0c-07e0-4436-83a5-14190cd64345",
+			"id": "c6c03d24-a574-41c9-a007-5c246c13b1ed",
 			"key": "staffUserFirstName",
 			"value": "APICollectors_",
 			"type": "string"
 		},
 		{
-			"id": "ec27d2a1-0477-46e0-9c0d-50743baa4f62",
+			"id": "55bcda49-7da6-44fd-9334-f788d1c3c75e",
 			"key": "studentUserFirstName",
 			"value": "APICollectors_",
 			"type": "string"
 		},
 		{
-			"id": "7c3fbeca-5681-4c4a-ad86-a81831c5db1e",
+			"id": "fe9ad730-c447-4ce9-b215-2ea243ba6755",
 			"key": "userLastName",
 			"value": "User",
 			"type": "string"
 		},
 		{
-			"id": "2f46120f-1dcc-4930-bcfa-75966c6f527b",
+			"id": "21c445b0-5c82-4961-8420-be026cf72527",
 			"key": "userLinkedinUrl",
 			"value": "www.linkedin.com/Test1234",
 			"type": "string"
 		},
 		{
-			"id": "8c1e5827-3d9a-4bd0-84ca-14a617c8c97e",
+			"id": "f4e76f2f-93e7-4e70-89d4-5b1d66c3620d",
 			"key": "userLocation",
 			"value": "India",
 			"type": "string"
 		},
 		{
-			"id": "91f9b9ee-0480-4e9e-82d7-690898b5985d",
+			"id": "0516e855-1836-4494-be67-075eb7126f95",
 			"key": "userMiddleName",
 			"value": "",
 			"type": "string"
 		},
 		{
-			"id": "cc8e40ad-5301-4584-84c2-18a503ccf2f4",
+			"id": "d9bd2d37-9226-4457-866c-ec9ef52e7738",
 			"key": "roleId",
 			"value": "R02",
 			"type": "string"
 		},
 		{
-			"id": "6502bd0e-b433-47ef-a076-994af4f4b524",
+			"id": "d1193be1-c77a-4c0e-82e8-d6a6c0ba9de7",
 			"key": "userRoleStatus",
 			"value": "Active",
 			"type": "string"
 		},
 		{
-			"id": "fc826ef1-8540-4434-bf76-9e75bd876dcd",
+			"id": "a5d3a4c7-427a-4c23-8711-ecd6829994e8",
 			"key": "userTimeZone",
 			"value": "IST",
 			"type": "string"
 		},
 		{
-			"id": "0761551c-3de9-4d21-a9c0-512460c75566",
+			"id": "378f2f5a-5423-48a5-9636-446787926bdf",
 			"key": "userVisaStatus",
 			"value": "NA",
 			"type": "string"
 		},
 		{
-			"id": "a6e309a7-d166-4f0c-9e6f-cb1e7d865927",
+			"id": "06b07458-781e-4a96-8b11-c71714d5752c",
 			"key": "invalidUserRoleId",
 			"value": "invalidRoleID",
 			"type": "string"
 		},
 		{
-			"id": "a18427be-6fc5-47e9-bdc2-2fd2c72bd70d",
+			"id": "d1e42dbd-93b3-4983-8cc9-2ff4b2c4767d",
 			"key": "integerUserRoleId",
 			"value": "46546",
 			"type": "string"
 		},
 		{
-			"id": "73cef116-eb79-4e4f-83ed-01bbc754b6a8",
+			"id": "541b8757-92d7-497b-9da3-32d6ab7954d0",
 			"key": "invalidUserVisaStatus",
 			"value": "invalidVisaStatus",
 			"type": "string"
 		},
 		{
-			"id": "cfa2f1b5-4fd6-4cc4-a6f2-fde25d742258",
+			"id": "3c569dae-4af9-4563-96df-762901b6624c",
 			"key": "invalidUserTimeZone",
 			"value": "invalidTimeZone",
 			"type": "string"
 		},
 		{
-			"id": "c84d5e02-8e8e-46e8-9fca-ce8dc989da56",
+			"id": "0964362c-93bd-4076-a4ce-7826f8e6e472",
 			"key": "stringUserPhoneNumber",
 			"value": "strPhone",
 			"type": "string"
 		},
 		{
-			"id": "1f9232f0-9aa5-4edb-811a-5df8980d2f4c",
+			"id": "7549160a-584b-4a94-bc95-241989dde992",
 			"key": "blankRoleId",
 			"value": "",
 			"type": "string"
 		},
 		{
-			"id": "3953b0ca-bb71-4634-96b1-2639fa907a6b",
+			"id": "975da39f-0e9d-40f1-9f46-8d4ceb0daef6",
 			"key": "blankUserRoleStatus",
 			"value": "",
 			"type": "string"
 		},
 		{
-			"id": "f208de8e-80c6-420d-8124-10ab502bed87",
+			"id": "f8f3ff3b-6500-4c08-b57c-038dd12da90e",
 			"key": "blankUserFirstName",
 			"value": "",
 			"type": "string"
 		},
 		{
-			"id": "c56c27aa-ae59-4194-b520-30e3ce0a184c",
+			"id": "47c3623a-b466-4a81-b116-04be00864c0b",
 			"key": "blankUserLastName",
 			"value": "",
 			"type": "string"
 		},
 		{
-			"id": "b447f4ab-9b83-4ef9-a75b-e36c47a48edf",
+			"id": "327cbb34-c528-4b8b-9863-ce0d924995be",
 			"key": "blankUserTimeZone",
 			"value": "",
 			"type": "string"
 		},
 		{
-			"id": "2bc01524-169c-45e5-81d2-6d6b0e3a505c",
+			"id": "b94fbb26-80b1-4fff-b002-700317a95f53",
 			"key": "blankUserVisaStatus",
 			"value": "",
 			"type": "string"
 		},
 		{
-			"id": "94f6f0b1-51a1-4e6b-929f-c7cbc8a3ab89",
+			"id": "ed11204d-0264-448b-8938-19c8a40a3c6c",
 			"key": "userNameCounter",
 			"value": "0",
 			"type": "string"
 		},
 		{
-			"id": "0c4d7996-afe6-4882-aa2c-938723f51ee2",
+			"id": "5c470f26-7941-4244-bd3d-876216c8e6d2",
 			"key": "messageUpdateStatusSuccess",
 			"value": "UserStatus Updated for User: ",
 			"type": "string"
 		},
 		{
-			"id": "d8122281-3ef7-416e-a29f-59e3eb1e0ada",
+			"id": "336bd9c6-97fc-497e-a5ca-23bb3dc1a790",
 			"key": "message1UpdateStatusRoleid",
 			"value": "RoleID: ",
 			"type": "string"
 		},
 		{
-			"id": "f7c86047-97cb-44af-b346-b976633deddc",
+			"id": "a5605bd1-9560-4608-8fc4-984fc7145e6d",
 			"key": "message2UpdateStatusRoleid",
 			"value": " not found for the UserID: ",
 			"type": "string"
 		},
 		{
-			"id": "b16fcfa2-20d9-416c-9e0d-ea39233d7324",
+			"id": "f0dbf942-47f4-4975-b514-56c5328608c4",
 			"key": "messageMandatoryRoleStatus",
 			"value": "Role Status is Mandatory",
 			"type": "string"
 		},
 		{
-			"id": "2c1c8d09-5fe0-4353-ac4a-8f445fc6a658",
+			"id": "8bfe7809-f841-4e5e-b022-8ae612768a98",
 			"key": "messageMandatoryRoleid",
 			"value": "Role Id is mandatory",
 			"type": "string"
 		},
 		{
-			"id": "e122a910-becc-4faa-a586-c73ca619242a",
+			"id": "67374904-6a0b-4f21-8a03-443f0525709a",
 			"key": "messageUpdateRoleStatusInvalidroleid",
 			"value": "RoleID: invalidRoleID not found for the UserID: ",
 			"type": "string"
 		},
 		{
-			"id": "5a14740a-199d-423f-a931-22b21f33ddc8",
+			"id": "38909d47-6d2a-4535-970f-f44f4369463c",
 			"key": "messageMissingPhone",
 			"value": "Phone Number is required",
 			"type": "string"
 		},
 		{
-			"id": "a471c2bc-5d03-401a-9288-702df32d26d2",
+			"id": "407f1e5c-9dae-456b-9506-94722b3d6928",
 			"key": "messageStringPhone",
 			"value": "Phone Number cannot be string",
 			"type": "string"
 		},
 		{
-			"id": "6775c301-ea10-4e7d-8b40-9eda3aef7eba",
+			"id": "f2362a6f-387f-4e53-b98b-f857af63f377",
 			"key": "messageInvalidRoleid",
 			"value": "Invalid Role id",
 			"type": "string"
 		},
 		{
-			"id": "37c105e7-8bd7-44f6-86dc-6f9f618b7841",
+			"id": "29b7f03d-1cba-454f-803b-77b411b84435",
 			"key": "messageMandatoryFirstName",
 			"value": "User First Name cannot be null or empty",
 			"type": "string"
 		},
 		{
-			"id": "422f362e-be7c-4e33-a317-e8ab8e47c305",
+			"id": "8d94c954-c374-42ac-a97e-dd90f77549d3",
 			"key": "messageMandatoryLastName",
 			"value": "User Last Name cannot be null or empty",
 			"type": "string"
 		},
 		{
-			"id": "15e1f1df-cde1-49e7-80c0-4c1ea19be443",
+			"id": "197a3b33-84c2-4b5a-8c03-4981b159f384",
 			"key": "messageMandatoryTimeZone",
 			"value": "Failed to create user, as 'TimeZone' is invalid !! ",
 			"type": "string"
 		},
 		{
-			"id": "49f35af6-4199-4892-a029-faef355fe6c1",
+			"id": "0b1b59bc-5b71-4ce2-9074-977526c9446a",
 			"key": "messageMandatoryVisaStatus",
 			"value": "Failed to create user, as 'Visa Status' is invalid !! ",
 			"type": "string"
 		},
 		{
-			"id": "eee8d46b-8578-4216-ab8e-370d36e4d0f7",
+			"id": "d9bea49c-fdb1-4427-99c7-277930a27524",
 			"key": "integerRoleStatus",
 			"value": "1234",
 			"type": "string"
 		},
 		{
-			"id": "9a7c045a-c64a-4353-9098-d7eceb1db734",
+			"id": "ceedfb3d-296e-48b5-b5a8-a3c5668c7964",
 			"key": "putUserComments",
 			"value": "Updating user",
 			"type": "string"
 		},
 		{
-			"id": "eb3c98e6-99ef-45c0-a844-2721dcb56dbc",
+			"id": "61d17f19-439e-41e2-8140-a96018091859",
 			"key": "putUserEduPg",
 			"value": "MSc",
 			"type": "string"
 		},
 		{
-			"id": "f2f0b5ac-880e-4133-9fc7-c563ea44d47d",
+			"id": "e9cf4888-3172-40f7-ba00-1507e2931325",
 			"key": "putUserEduUg",
 			"value": "BSc",
 			"type": "string"
 		},
 		{
-			"id": "a41f2ca8-3b70-4dc1-b2d5-0926673f8651",
+			"id": "11032fdb-1e8c-471c-92af-7de6b7ffc89d",
 			"key": "putUserFirstName",
 			"value": "APICollectors_",
 			"type": "string"
 		},
 		{
-			"id": "74d3f4b7-85e6-4f24-bba6-11fd190324db",
+			"id": "7873f5f5-fd47-4c34-8a8e-2ee88250c0cc",
 			"key": "putUserLastName",
 			"value": "TestUser",
 			"type": "string"
 		},
 		{
-			"id": "251f136c-a13a-468a-b36a-1cfaee6fb452",
+			"id": "e8d7f901-7d58-425c-9cec-acbcfac65174",
 			"key": "putUserLinkedinUrl",
 			"value": "www.linkedin.com/TestUser",
 			"type": "string"
 		},
 		{
-			"id": "68cc2004-4ecd-4ee4-acdd-7ec702861cbf",
+			"id": "7799f9cb-2e77-4104-948d-7b99bec1084a",
 			"key": "putUserLocation",
 			"value": "Canada",
 			"type": "string"
 		},
 		{
-			"id": "d3cb6964-fff8-4eae-bae1-e6bec494ff3f",
+			"id": "8b440a26-f3c8-4a5b-ad7e-89cf688b8e81",
 			"key": "putUserTimeZone",
 			"value": "EST",
 			"type": "string"
 		},
 		{
-			"id": "9e3fb75e-c54f-4191-8529-684a2bbfb67a",
+			"id": "c7cd7cfe-a1f3-4508-bc5c-d3024dd25408",
 			"key": "putUserVisaStatus",
 			"value": "Canada-EAD",
 			"type": "string"
 		},
 		{
-			"id": "6bc043d4-f296-4545-89b7-24ebaf12b0bf",
+			"id": "dba7ebff-9f12-484c-906d-a60f46e5f45f",
 			"key": "userProgramDescription",
 			"value": "Creating program for user",
 			"type": "string"
 		},
 		{
-			"id": "0d7f95d9-174d-4740-aa06-a015e6faac4d",
+			"id": "4102d228-a02f-4e8c-93fb-275bd3b1589b",
 			"key": "userProgramStatus",
 			"value": "Active",
 			"type": "string"
 		},
 		{
-			"id": "911b1ea1-db18-44ae-9a28-e169c4334522",
+			"id": "93058c73-9c2e-4440-b489-cff345a471b8",
 			"key": "userProgramName",
 			"value": "Jun23-APICollectors-SDET-",
 			"type": "string"
 		},
 		{
-			"id": "6b8753a4-43bb-4fa7-87c9-67bd81a5b326",
+			"id": "ed9e1fa0-358e-493c-a958-d2fe1b1a0f90",
 			"key": "userBatchDescription",
 			"value": "Creating batch for user",
 			"type": "string"
 		},
 		{
-			"id": "c421501c-1d3c-46e0-a066-1aa1e3eaab19",
+			"id": "fdd7ba40-0352-4d89-a2c9-acadabad1f1d",
 			"key": "userBatchName",
 			"value": "Jun23-APICollectors-SDET-SDET01-",
 			"type": "string"
 		},
 		{
-			"id": "74444cc5-08c4-4a38-b960-a0a8290b6e3e",
+			"id": "461b0033-2426-4569-9599-7b7735be888a",
 			"key": "userBatchNoOfClasses",
 			"value": "1",
 			"type": "string"
 		},
 		{
-			"id": "10f28cdf-1802-4a13-943b-cfa66f8acf1e",
+			"id": "4fbe44d5-b663-4c93-8395-9760ce997553",
 			"key": "userBatchStatus",
 			"value": "Active",
 			"type": "string"
 		},
 		{
-			"id": "5a4fddde-a6c8-408e-adc0-17251d70552e",
+			"id": "96b71743-abd7-438d-a948-10d860c6e56f",
 			"key": "invalidRoleId",
 			"value": "Invalid role",
 			"type": "string"
 		},
 		{
-			"id": "06448a31-26b9-4878-a128-b9f7e8db9961",
+			"id": "e924dcc3-0447-493b-ad0e-717212c08f3f",
 			"key": "messagePutMandatoryFirstName",
 			"value": "User First Name is mandatory",
 			"type": "string"
 		},
 		{
-			"id": "b05f60e0-e226-45a0-a002-3846be19aa62",
+			"id": "6a72c072-7d2d-4251-a496-4bfa44da0ced",
 			"key": "messagePutMandatoryLastName",
 			"value": "User Last Name is mandatory",
 			"type": "string"
 		},
 		{
-			"id": "741eccc8-6be7-4fbd-8d6c-195ef9e78580",
+			"id": "5d9d4ff5-20d4-4d80-961c-d7eed1081703",
 			"key": "messagePutMandatoryTimeZone",
 			"value": "Failed to update user, as 'TimeZone' is invalid !! ",
 			"type": "string"
 		},
 		{
-			"id": "ef094e11-8b98-43f6-91ab-0c127cc58098",
+			"id": "c3a35c2b-14d0-42c5-8b13-6323eff630fa",
 			"key": "messagePutMandatoryVisaStatus",
 			"value": "Failed to update user, as 'Visa Status' is invalid !! ",
 			"type": "string"
 		},
 		{
-			"id": "ab22e2f1-28bc-4341-bf81-adda3d172197",
+			"id": "daf6b41f-081e-449c-acac-7230653afac7",
 			"key": "batchDescription",
 			"value": "Postman",
 			"type": "string"
 		},
 		{
-			"id": "4501406b-c676-46cc-bf20-40b093923be2",
+			"id": "2d64e8ab-04c6-4884-ae6d-9c2560c90c8e",
 			"key": "batchNoOfClasses",
 			"value": "2",
 			"type": "string"
 		},
 		{
-			"id": "27d35d3f-58f0-43aa-b724-c92f6f708037",
+			"id": "77cb5a80-9437-428c-bd5e-4a31f678e059",
 			"key": "batchStatus",
 			"value": "Active",
 			"type": "string"
 		},
 		{
-			"id": "371a9404-8dcf-44d0-af1c-1c16b5be1473",
+			"id": "e01cd809-ff1c-486a-8837-68ea26c70132",
 			"key": "programDescriptionbatch",
 			"value": "Postman",
 			"type": "string"
 		},
 		{
-			"id": "dee5a114-8002-40cf-af17-3c41c931da49",
+			"id": "0198008e-8d4e-40c8-bfcc-64d260be07d9",
 			"key": "programStatusbatch",
 			"value": "Active",
 			"type": "string"
 		},
 		{
-			"id": "6e36a8a1-e70f-4975-817e-6f6424edab2d",
+			"id": "37dc0d8c-7274-4b00-b099-f3b09cede809",
 			"key": "UpdtbatchNoOfClasses",
 			"value": "4",
 			"type": "string"
 		},
 		{
-			"id": "ef0264a8-4dff-4be3-a450-6efa52d5666b",
+			"id": "143211a0-93f9-4549-987c-22181e8727f8",
 			"key": "UpdtbatchStatus",
 			"value": "InActive",
 			"type": "string"
 		},
 		{
-			"id": "3e130cc6-041a-495b-b423-d218e6be568a",
+			"id": "657ae2c8-b419-4600-849f-ba2ab6ecc40c",
 			"key": "UpdtbatchDescription",
 			"value": "Rest Assure",
 			"type": "string"
 		},
 		{
-			"id": "f445fe59-2316-4618-8b0c-038227a0677c",
+			"id": "49ed4889-4763-40c0-9bfd-969012a3c707",
 			"key": "programDescription",
 			"value": "DA",
 			"type": "string"
 		},
 		{
-			"id": "17d52754-9175-40e5-85ee-125adcfe2155",
+			"id": "b090c49f-2ada-4f1b-b8bc-36780a330afd",
 			"key": "programStatus",
 			"value": "Active",
 			"type": "string"
 		},
 		{
-			"id": "8b75c3f5-d2ef-44f6-b79f-4a04360fa883",
+			"id": "1f456937-959d-4558-b6ac-b46de6c1ddf7",
 			"key": "UpdtprogramDescription",
 			"value": "Postman",
 			"type": "string"
 		},
 		{
-			"id": "291bc960-e090-42f7-ab61-edcf1766bcc1",
+			"id": "dc3f74b8-a269-4d3f-b41f-9c4114633232",
 			"key": "UpdtprogramDescription2",
 			"value": "Rest Assure",
 			"type": "string"
 		},
 		{
-			"id": "a531bd5f-36b8-4f2f-a73a-12e1b21627c9",
+			"id": "c4610335-7e5c-461c-a2a6-a876eb0dc67d",
 			"key": "programStatus1",
 			"value": "WIP",
 			"type": "string"
 		},
 		{
-			"id": "41c6863f-3abe-4a6e-a618-7a391bf735f4",
+			"id": "3b112f79-c13f-44f6-9f71-1a3e60e30540",
 			"key": "programDescription2",
 			"value": "TestData",
 			"type": "string"
 		},
 		{
-			"id": "d85c58cd-821c-456f-bfa1-6e8d697f0055",
+			"id": "113e0dc2-6fcd-408e-bc3f-2740c60431c9",
 			"key": "programName2",
 			"value": "June23-API_Collectors-Hackathon-05",
 			"type": "string"
 		},
 		{
-			"id": "e503e6a7-8da6-432f-8556-fa225f0e2b2f",
+			"id": "04f8e435-fae6-4822-a64e-266398f72cb1",
 			"key": "programStatus2",
 			"value": "Active",
 			"type": "string"
 		},
 		{
-			"id": "babb596f-0df2-40ed-9ceb-8c520f6ebd18",
+			"id": "0056165f-4974-420f-ad3f-e7e834cf9487",
 			"key": "programDescription3",
 			"value": "MissingData",
 			"type": "string"
 		},
 		{
-			"id": "b10f4ad6-5841-46a4-8d69-069e2e714d07",
+			"id": "62bdb8c5-7385-4194-bd6e-bc3969dde599",
 			"key": "programDescription1",
 			"value": "Tests",
 			"type": "string"
 		},
 		{
-			"id": "e6222795-f0aa-4787-8e69-472a55e2ce18",
+			"id": "431bf663-df37-46ed-b316-674f95b1b136",
 			"key": "programName1",
 			"value": "June23-API_Collectors-Hackathon-01",
 			"type": "string"
 		},
 		{
-			"id": "c6fb8218-59ea-44e5-8203-16cc0528f413",
+			"id": "97f05867-befc-4597-a9aa-850d328a2deb",
 			"key": "programName3",
 			"value": "June23-API_Collectors-Hackathon-10",
 			"type": "string"
 		},
 		{
-			"id": "94199f58-3c85-4259-9534-bf86638b9817",
+			"id": "5d73c916-5cab-4ffd-860c-4e6b7775cf77",
 			"key": "programStatus3",
 			"value": "Active",
 			"type": "string"
 		},
 		{
-			"id": "dabc2bdd-4082-4c4a-b873-f05b87d195ed",
+			"id": "fb306dd0-ade4-4e73-9f05-310f745183e1",
 			"key": "programDescription4",
 			"value": "Testing",
 			"type": "string"
 		},
 		{
-			"id": "ded4d92d-0044-4e1f-9760-fd046bfe8c12",
+			"id": "b0b99cef-930c-4b00-b39d-ec4bc83dffdb",
 			"key": "programName4",
 			"value": "June23-API_Collectors-Hackathon-15",
 			"type": "string"
 		},
 		{
-			"id": "bdfbcb14-9232-489a-8a42-553120b7c784",
+			"id": "ef65e4a6-952d-4b76-b148-06a4e8880fd1",
 			"key": "programStatus4",
 			"value": "active",
 			"type": "string"
 		},
 		{
-			"id": "8de69dcf-0787-48b5-8aea-e4a0665a9ca7",
+			"id": "745b7e2d-78d0-48c6-8719-88610643f177",
 			"key": "UpdatepgmDesc",
 			"value": "APITesting",
+			"type": "string"
+		},
+		{
+			"id": "8f3fbc41-4619-4485-82a2-7e63762eb097",
+			"key": "assignmentId",
+			"value": "643"
+		},
+		{
+			"id": "56302d45-f7c1-41dc-9159-517eb84109ee",
+			"key": "invalidID",
+			"value": "12",
+			"type": "string"
+		},
+		{
+			"id": "2f066e33-d812-43d4-b322-6e364b347242",
+			"key": "Admin",
+			"value": "R01",
+			"type": "string"
+		},
+		{
+			"id": "50f4e4cc-b13e-4fce-a39d-3772a75de39f",
+			"key": "Staff",
+			"value": "R02",
+			"type": "string"
+		},
+		{
+			"id": "1fabaadd-e014-4306-bb98-f2f948ef4231",
+			"key": "Student",
+			"value": "R03",
+			"type": "string"
+		},
+		{
+			"id": "7f834a95-1574-4e93-b19c-3f5b99b3a448",
+			"key": "Status1",
+			"value": "Active",
+			"type": "string"
+		},
+		{
+			"id": "054142dd-6f9d-46f1-a11a-62ea7bba32c8",
+			"key": "Status2",
+			"value": "Inactive",
+			"type": "string"
+		},
+		{
+			"id": "10b35cef-8d58-4aa3-b1e1-ffcb83fa457d",
+			"key": "programName",
+			"value": "Jun23-APICollectors-SDET-"
+		},
+		{
+			"id": "95b11902-57c0-45e4-972b-e1766d942b23",
+			"key": "programDesc",
+			"value": "Test Data for Hackathon",
+			"type": "string"
+		},
+		{
+			"id": "859d97d1-d619-4094-8fdd-fdd23701cb49",
+			"key": "resPgmName",
+			"value": "Jun23-APICollectors-SDET-106"
+		},
+		{
+			"id": "6cae3f70-41f1-4fa4-b1ce-d98d5b8ce1b1",
+			"key": "programId",
+			"value": "7514"
+		},
+		{
+			"id": "8b0f56c3-43a3-4a25-8f43-9a572d4e1d17",
+			"key": "pgmStatus1",
+			"value": "In Progress",
+			"type": "string"
+		},
+		{
+			"id": "4ed4936f-5997-4101-97bf-8eed3186f9af",
+			"key": "pgmStatus2",
+			"value": "Completed",
+			"type": "string"
+		},
+		{
+			"id": "93460b7f-b3f8-48cd-8f10-addeae7d58ba",
+			"key": "batchName",
+			"value": "Jun23-APICollectors-SDET-SDET01-",
+			"type": "string"
+		},
+		{
+			"id": "a8a68bf2-10f7-4b0f-b403-26a01aee3e65",
+			"key": "timeZone1",
+			"value": "EST",
+			"type": "string"
+		},
+		{
+			"id": "fd37e0bc-104c-45b5-8a73-e9afdf7351c0",
+			"key": "timeZone2",
+			"value": "CST",
+			"type": "string"
+		},
+		{
+			"id": "6eea5eeb-805f-4ff4-9103-245ffdff1dba",
+			"key": "visaStatus1",
+			"value": "H4-EAD",
+			"type": "string"
+		},
+		{
+			"id": "3f5f28ad-d59d-4751-934e-d23d566237c8",
+			"key": "visaStatus2",
+			"value": "GC-EAD",
+			"type": "string"
+		},
+		{
+			"id": "6988ff1e-f90b-45b8-8a5c-7ec1e2900852",
+			"key": "visaStatus3",
+			"value": "US-Citizen",
+			"type": "string"
+		},
+		{
+			"id": "949af9ec-19f3-4a23-8639-d099ee9c6415",
+			"key": "userComment",
+			"value": "Creating User",
+			"type": "string"
+		},
+		{
+			"id": "dde66f71-ee63-49b1-99cf-28f9486eab4b",
+			"key": "batchDesc",
+			"value": "Postman Hackathon batch",
+			"type": "string"
+		},
+		{
+			"id": "bf417272-8cb3-491a-9e6b-1397e794a679",
+			"key": "assignmentName",
+			"value": "Jun23-APICollectors-SDET-JAVA-",
+			"type": "string"
+		},
+		{
+			"id": "14224f51-a219-4392-bd2b-be4b422c7835",
+			"key": "firstName",
+			"value": "APICollectors_",
+			"type": "string"
+		},
+		{
+			"id": "a4572f6e-a36e-4a4b-b38b-8f9723274c7e",
+			"key": "userId",
+			"value": "U4413",
+			"type": "string"
+		},
+		{
+			"id": "e321bfa4-d7f9-449b-bc51-9bca4b7e2255",
+			"key": "assignmentDesc1",
+			"value": "Hackathon Testing ",
+			"type": "string"
+		},
+		{
+			"id": "1fc7178a-89d9-4f8d-b75f-1b14fe6c104f",
+			"key": "assignmentDesc2",
+			"value": "SQL Bootcamp Assignment",
+			"type": "string"
+		},
+		{
+			"id": "b4c9d268-5024-4af8-b1fc-ea620e93a606",
+			"key": "assignmentDesc3",
+			"value": "Cucumber BDD Assignment",
+			"type": "string"
+		},
+		{
+			"id": "7bc667d2-8321-43c5-8852-b41e1eade616",
+			"key": "comments",
+			"value": "Test Data",
+			"type": "string"
+		},
+		{
+			"id": "39513236-fe84-47f0-ab25-ad6c7f881f03",
+			"key": "postDueDate",
+			"value": "06-26-2023 17:20:00",
+			"type": "string"
+		},
+		{
+			"id": "7a75c0be-8080-4f29-bdea-e6730891971d",
+			"key": "filepath1",
+			"value": "file1.json",
+			"type": "string"
+		},
+		{
+			"id": "e30855d6-d320-4f94-97ee-b30bb137fe2b",
+			"key": "filepath2",
+			"value": "file2.json",
+			"type": "string"
+		},
+		{
+			"id": "615fda83-3ac4-4101-bd18-174b3c6675bd",
+			"key": "filepath3",
+			"value": "file3.json",
+			"type": "string"
+		},
+		{
+			"id": "d30d6220-8955-4598-bd9e-bcfeb925a02a",
+			"key": "filepath4",
+			"value": "file4.json",
+			"type": "string"
+		},
+		{
+			"id": "2a1e682a-928d-4051-8521-a8defec5b285",
+			"key": "filepath5",
+			"value": "file5.json",
+			"type": "string"
+		},
+		{
+			"id": "c87f153e-61a2-4e1b-a809-c9eb6d02d1fd",
+			"key": "linkedinUrl",
+			"value": "team@linkedin.com",
+			"type": "string"
+		},
+		{
+			"id": "65bad19b-6cc4-4c36-9517-be8b176c2c29",
+			"key": "serial",
+			"value": "106",
+			"type": "string"
+		},
+		{
+			"id": "d1c1c61f-dcf2-4bff-9811-80a172984656",
+			"key": "subComments",
+			"value": "Submitted successfully",
+			"type": "string"
+		},
+		{
+			"id": "775d93e1-cf7e-4f21-9a8b-8b2d9cefc71a",
+			"key": "resubmitComments",
+			"value": "Resubmitted successfully",
+			"type": "string"
+		},
+		{
+			"id": "041580a7-821c-4c7b-b2b0-7351072a9371",
+			"key": "invalidBatchId",
+			"value": "31012",
+			"type": "string"
+		},
+		{
+			"id": "dbcf4d82-8acb-409a-8ead-66d342857960",
+			"key": "postDueId",
+			"value": "1074",
+			"type": "string"
+		},
+		{
+			"id": "1d01d50c-c02a-4a68-8cd5-f49c3e242736",
+			"key": "lastName",
+			"value": "Test",
+			"type": "string"
+		},
+		{
+			"id": "97fc8ad8-0c33-4f05-ac2a-b67c01f148b8",
+			"key": "UG",
+			"value": "ug",
+			"type": "string"
+		},
+		{
+			"id": "4f34cf92-c24a-4f31-bf52-a43cc8f5b93b",
+			"key": "PG",
+			"value": "pg",
+			"type": "string"
+		},
+		{
+			"id": "38f5ff53-655c-4ed1-b840-5ad4150e26c8",
+			"key": "phoneNumber",
+			"value": "9880077881",
+			"type": "string"
+		},
+		{
+			"id": "eb70acfa-1952-455c-9e08-12f43f9a43a5",
+			"key": "studentId",
+			"value": ""
+		},
+		{
+			"id": "a8a8fe1b-6354-4afa-b635-77d6985f6434",
+			"key": "studentPhoneNumber",
+			"value": "9566373677",
 			"type": "string"
 		}
 	]
